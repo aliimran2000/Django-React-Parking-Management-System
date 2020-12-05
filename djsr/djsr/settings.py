@@ -47,8 +47,8 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
-'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ),  # 
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),  #
 }
 
 SIMPLE_JWT = {
@@ -65,7 +65,6 @@ SIMPLE_JWT = {
     'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
     'TOKEN_TYPE_CLAIM': 'token_type',
 }
-
 
 
 MIDDLEWARE = [
@@ -149,4 +148,4 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # Custom user model
-AUTH_USER_MODEL = "authentication.CustomUser"
+#AUTH_USER_MODEL = "authentication.Accounts"

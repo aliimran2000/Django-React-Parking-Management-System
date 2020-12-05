@@ -2,7 +2,7 @@
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework import serializers
-from .models import CustomUser
+from .models import Accounts
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -12,12 +12,9 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         token = super(MyTokenObtainPairSerializer, cls).get_token(user)
 
         # Add custom claims
-        token['fav_color'] = user.fav_color
         return token
 
-
-
-class CustomUserSerializer(serializers.ModelSerializer):
+class AccountsSerializer(serializers.ModelSerializer):
     """
     Currently unused in preference of the below.
     """
@@ -26,10 +23,14 @@ class CustomUserSerializer(serializers.ModelSerializer):
     )
     username = serializers.CharField()
     password = serializers.CharField(min_length=8, write_only=True)
+    DateOfBirth = serializers.DateField(required=True)
+    CNIC = serializers.CharField(max_length=13, required=True)
+    Address = serializers.CharField(max_length=100, required=True)
+    Phone_No = serializers.CharField(max_length=11, required=True)
 
     class Meta:
-        model = CustomUser
-        fields = ('email', 'username', 'password')
+        model = Accounts
+        fields = ('email', 'username', 'password', 'DateOfBirth', 'CNIC', 'Address', 'Phone_No')
         extra_kwargs = {'password': {'write_only': True}}
 
     
