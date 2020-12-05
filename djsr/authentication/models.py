@@ -11,6 +11,7 @@ class Accounts(User):
     Address = models.CharField(max_length=100, blank=False, null=False)
     Phone_No = models.CharField(max_length=11, blank=False, null=False)
 
+
 class Employee(models.Model):
     Employee_ID = models.AutoField(primary_key=True)
     Account_ID = models.ForeignKey(Accounts,on_delete=CASCADE, blank=False, null=False)
@@ -18,7 +19,7 @@ class Employee(models.Model):
 class Membership(models.Model):
     Membership_ID = models.AutoField(primary_key=True)
     Approved_By = models.ForeignKey(
-        Employee, on_delete=CASCADE, blank=False, null=False)
+    Employee, on_delete=CASCADE, blank=False, null=False)
     Valid_From = models.DateTimeField(default=timezone.now)
     Valid_To = models.DateTimeField(datetime, blank=False, null=False)
 
@@ -26,4 +27,6 @@ class Member(models.Model):
     Member_ID = models.AutoField(primary_key=True)
     Account_ID = models.ForeignKey(Accounts,on_delete=CASCADE, blank=False, null=False)
     Member_ID = models.ForeignKey(
-        Membership, on_delete=CASCADE, blank=False, null=False)
+    Membership, on_delete=CASCADE, blank=False, null=False)
+
+
