@@ -1,23 +1,22 @@
 from django.urls import path
 from rest_framework_simplejwt import views as jwt_views
-from .views import ObtainTokenPairWithColorView
-from .views import AccountsCreate , EmployeeCreate
+from .views import ObtainTokenPairWithAccountsView,Register_Member
+#from .BLL.accounthandler import AccountHandler
+
 
 urlpatterns = [
-    path('account/create/', AccountsCreate.as_view(), name="account_create"),
-    path('account/create/employee', EmployeeCreate.as_view(), name="employee_create"),   
-    path('token/obtain/', ObtainTokenPairWithColorView.as_view(), name='token_create'),
-    path('token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
+    path('signup/', Register_Member.as_view(), name="Register_Member"),
+    #path('account/create/employee', EmployeeCreate.as_view(), name="employee_create"),   
+    path('signin/', ObtainTokenPairWithAccountsView.as_view(), name='token_create'),
+    path('refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
 ]
 
-#curl --header "Content-Type: application/json" -X POST http://localhost:8000/api/user/create/ --data '{"email":"i181561@nu.edu.pk","username":"nomanaziz","password":"konnichiwa"}'
-#{"email":"ichiro@mariners.com","username":"ichiro1"}
 
+# urlpatterns = [
+#     path('signup/', ACC.create(), name="Register_Member"),
+#     #path('account/create/employee', EmployeeCreate.as_view(), name="employee_create"),   
+#     path('signin/', ACC,login(), name='token_create'),
+#     path('refresh/', ACC.refresh(), name='token_refresh'),
+# ]
 
-'''
-{
-    "refresh": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTYwODQwNTA5MSwianRpIjoiZmY1YzA5ZGI4MzEyNGY1MmIwZDA3MzBlMGU1OTgyNTMiLCJ1c2VyX2lkIjoxfQ.DgtZHCNcAIwpwee8bNCO-mqguBCec9yzGLCGKI-esRk",
-    "access": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjA3MTk1NzkxLCJqdGkiOiI3NTNiYjk5NmZiZTA0ZTIzOWI3YTc2MjljMjJlZDhjMCIsInVzZXJfaWQiOjF9.3JTNDEJ0AZtujicv_WSTZduxPwujczbdlpaL3k6cUOE"
-}
-'''
 

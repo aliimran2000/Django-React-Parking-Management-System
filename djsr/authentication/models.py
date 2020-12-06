@@ -15,11 +15,22 @@ class Accounts(User):
 class Employee(models.Model):
     Employee_ID = models.AutoField(primary_key=True)
     Account_ID = models.ForeignKey(Accounts,on_delete=CASCADE, blank=False, null=False)
+    
+    Employee_Type_List = [
+        ('PE','ParkingEmployee'),
+        ('PA','ParkingAdmin'),
+    ]
+    
+    Employee_Type = models.CharField(
+        max_length=2,
+        choices=Employee_Type_List,
+        default='ParkingEmployee',
+    )    
+
 
 class Membership(models.Model):
     Membership_ID = models.AutoField(primary_key=True)
-    Approved_By = models.ForeignKey(
-    Employee, on_delete=CASCADE, blank=False, null=False)
+    Approved_By = models.ForeignKey(Employee, on_delete=CASCADE, blank=False, null=False)
     Valid_From = models.DateTimeField(default=timezone.now)
     Valid_To = models.DateTimeField(datetime, blank=False, null=False)
 
