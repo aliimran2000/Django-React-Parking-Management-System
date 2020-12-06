@@ -2,7 +2,10 @@
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework import serializers
-from .models import Accounts,Employee
+from .models import Accounts,Employee,Member,Membership
+
+from rest_framework.response import Response
+from rest_framework import status, permissions
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 
@@ -45,16 +48,9 @@ class AccountsSerializer(serializers.ModelSerializer):
 
 
 class EmployeeSerializer(serializers.ModelSerializer):
-    
-    #Employee_ID = models.AutoField(primary_key=True)
-    Account_ID = serializers.IntegerField()
-    
-    class Meta:
-        model = Employee
-        fields = ('Account_ID',)
-    
 
-    def create(self, validated_data):
-        instance = self.Meta.model(**validated_data)  # as long as the fields are the same, we can just use this
-        instance.save()
-        return instance
+    pass
+
+class MemberSerializer(serializers.ModelSerializer):
+
+    pass

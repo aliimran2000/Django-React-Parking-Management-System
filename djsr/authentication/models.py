@@ -14,7 +14,7 @@ class Accounts(User):
 
 class Employee(models.Model):
     Employee_ID = models.AutoField(primary_key=True)
-    Account_ID = models.ForeignKey(Accounts,on_delete=CASCADE, blank=False, null=False)
+    Account_ID = models.OneToOneField(Accounts,on_delete=CASCADE, blank=False, null=False)
     
     Employee_Type_List = [
         ('PE','ParkingEmployee'),
@@ -36,8 +36,5 @@ class Membership(models.Model):
 
 class Member(models.Model):
     Member_ID = models.AutoField(primary_key=True)
-    Account_ID = models.ForeignKey(Accounts,on_delete=CASCADE, blank=False, null=False)
-    Member_ID = models.ForeignKey(
-    Membership, on_delete=CASCADE, blank=False, null=False)
-
-
+    Account_ID = models.OneToOneField(Accounts,on_delete=CASCADE, blank=False, null=False)
+    Membership_ID = models.ForeignKey(Membership, on_delete=CASCADE, blank=False, default=1)#CHANGE LATER ON DEFAULT=1

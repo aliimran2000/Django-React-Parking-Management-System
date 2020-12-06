@@ -1,13 +1,14 @@
 from django.urls import path
 from rest_framework_simplejwt import views as jwt_views
-from .views import ObtainTokenPairWithAccountsView,Register_Member
-#from .BLL.accounthandler import AccountHandler
-
+#from .views import ObtainTokenPairWithAccountsView,Register_Member
+from .BLL.Accounthandler import MemberAccountHandler, EmployeeAccountHandler
 
 urlpatterns = [
-    path('signup/', Register_Member.as_view(), name="Register_Member"),
+    path('member/signup/', MemberAccountHandler().signup(), name="Register_Member"),
+    path('employee/signup/', EmployeeAccountHandler().signup(), name="Register_Employee"),
     #path('account/create/employee', EmployeeCreate.as_view(), name="employee_create"),   
-    path('signin/', ObtainTokenPairWithAccountsView.as_view(), name='token_create'),
+    path('member/login/', MemberAccountHandler().login(), name='member_token_create'),
+    path('employee/login/', EmployeeAccountHandler().login(), name='employee_token_create'),
     path('refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
 ]
 
