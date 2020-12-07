@@ -6,6 +6,7 @@ from .views import MemberAccountHandler, EmployeeAccountHandler , LogoutAndBlack
 
 urlpatterns = [
     path('member/signup/', MemberAccountHandler().signup(), name="Register_Member"),
+    path('member/delete/', MemberAccountHandler().deregister(), name="Deregister_Member"),
     path('employee/signup/', EmployeeAccountHandler().signup(), name="Register_Employee"),
     path('logout/',LogoutAndBlacklistRefreshTokenForUserView().as_view(),name="logout"),
     #path('account/create/employee', EmployeeCreate.as_view(), name="employee_create"),   
