@@ -34,6 +34,7 @@ class Membership(models.Model):
     Valid_From = models.DateTimeField(default=timezone.now)
     Valid_To = models.DateTimeField(default= (timezone.now() + timezone.timedelta(days=365)) )
 
+
 class Member(models.Model):
     Member_ID = models.AutoField(primary_key=True)
     Account_ID = models.OneToOneField(Accounts,on_delete=CASCADE, blank=False, null=False)
