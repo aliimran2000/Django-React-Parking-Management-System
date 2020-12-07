@@ -1,5 +1,6 @@
-from ..models import Accounts
 from ..models import Employee as EmployeeDB
+from ..models import Member as MemberDB
+from ..models import Membership as MembershipDB
 from django.contrib.auth.models import Group
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -37,20 +38,44 @@ class Register_Employee(APIView):
 
 
 class Register_Member(APIView):
-    permission_classes = (permissions.AllowAny,)
+
+    permission_classes = (permissions.IsAuthenticated,)
     
     def post(self, request, format='json'):
-        
-        
-        serializer = AccountsSerializer(data=request.data)
 
-        if serializer.is_valid():
-            account = serializer.save()
+        accountID = request.user.id
+        approvedBy = EmployeeDB.objects.get(Account_ID = accountID)
+
+        if approvedBy is None:
+            return Response("Approved By Doesn't Exist",status=status.HTTP_400_BAD_REQUEST)
+
+        employeeTypeObj = approvedBy._meta.get_field('Employee_Type')
+        employeeType = employeeTypeObj.value_from_object(approvedBy)
+
+        if employeeType is None:
+            return Response("Employee Type Doesn't Exist",status=status.HTTP_400_BAD_REQUEST)
+
+        if employeeType != 'PA':
+            return Response("This Employee is Not Authorized to Register a Member",status=status.HTTP_400_BAD_REQUEST)
+
+        aSerializer = AccountsSerializer(data=request.data)
+
+        if aSerializer.is_valid():
+
+            account = aSerializer.save()
+
+            memSerializer = MembershipDB.objects.create(Approved_By = approvedBy)
+
+            if memSerializer is None:
+                return Response("MemberShip is Not Genrated",status=status.HTTP_400_BAD_REQUEST)
+
+            mSerializer = MemberDB.objects.create(Account_ID = account, Membership_ID = memSerializer)
+
             if account:
                 #json = serializer.data
                 return Response(account.id, status=status.HTTP_201_CREATED)
         
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(aSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 
