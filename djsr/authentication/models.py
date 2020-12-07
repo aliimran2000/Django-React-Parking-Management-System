@@ -1,16 +1,16 @@
 from datetime import datetime
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import User, Group , AbstractUser
 from django.db import models
 from django.db.models.deletion import CASCADE
 from django.db.models.fields import DateField
 from django.utils import timezone
 
-class Accounts(User):
+class Accounts(AbstractUser):
     DateOfBirth = models.DateField(blank=False, null=False)
     CNIC = models.CharField(max_length=13, blank=False, null=False)
     Address = models.CharField(max_length=100, blank=False, null=False)
     Phone_No = models.CharField(max_length=11, blank=False, null=False)
-
+    
 
 class Employee(models.Model):
     Employee_ID = models.AutoField(primary_key=True)

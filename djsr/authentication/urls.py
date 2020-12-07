@@ -1,11 +1,13 @@
 from django.urls import path
 from rest_framework_simplejwt import views as jwt_views
 #from .views import ObtainTokenPairWithAccountsView,Register_Member
-from .BLL.Accounthandler import MemberAccountHandler, EmployeeAccountHandler
+from .views import MemberAccountHandler, EmployeeAccountHandler , LogoutAndBlacklistRefreshTokenForUserView
+
 
 urlpatterns = [
     path('member/signup/', MemberAccountHandler().signup(), name="Register_Member"),
     path('employee/signup/', EmployeeAccountHandler().signup(), name="Register_Employee"),
+    path('logout/',LogoutAndBlacklistRefreshTokenForUserView().as_view(),name="logout"),
     #path('account/create/employee', EmployeeCreate.as_view(), name="employee_create"),   
     path('member/login/', MemberAccountHandler().login(), name='member_token_create'),
     path('employee/login/', EmployeeAccountHandler().login(), name='employee_token_create'),
