@@ -129,7 +129,7 @@ class ObtainTokenPairWithAccountsView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
 
 class LogoutAndBlacklistRefreshTokenForUserView(APIView):
-    permission_classes = (permissions.AllowAny,)
+    permission_classes = (permissions.IsAuthenticated,)
     authentication_classes = ()
 
     def post(self, request):

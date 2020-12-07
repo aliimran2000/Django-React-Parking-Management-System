@@ -7,7 +7,9 @@ function LoginPage(props){
 
     return(
         <React.Fragment>
-            
+            <Typography variant="h2">
+                Parking Managemeent System
+            </Typography>
             <Login_Form/>
         </React.Fragment>
     )
