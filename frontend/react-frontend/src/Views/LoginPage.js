@@ -4,8 +4,8 @@ import axiosInstance from '../Axios/AxiosInstance'
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
+//import FormControlLabel from '@material-ui/core/FormControlLabel';
+//import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -46,9 +46,9 @@ export default function LoginPage() {
   const[WrongPass,setWrongPass] = useState(false)
   
   
-  function HandleLogin() {
-      
-    let res =  axiosInstance.post('/member/login/', {
+  function HandleLogin(event) {
+    
+   axiosInstance.post('/member/login/', {
           username: username,
           password: password
       }).then(
@@ -58,21 +58,20 @@ export default function LoginPage() {
               localStorage.setItem('refresh_token', result.data.refresh);
 
               if(result.status === 200){
-
                 window.location.href = "/MemberView/"
                }
           }
       ).catch (error => {
-        console.log(res)  
         setWrongPass(true)
       })
   }
+
 
   function ReEnterPasswordMessage(){
     if(WrongPass){
         return (
                 <Typography color="error">
-                    UserID or password was incorrect !!!
+                    UserID or Password was incorrect !!!
                 </Typography>
         );
     }
@@ -91,8 +90,8 @@ export default function LoginPage() {
         <Typography component="h1" variant="h5" color="primary">
           Parking Management System
         </Typography>
-            
-        <form className={classes.form} onSubmit={HandleLogin}>
+              
+        <div className={classes.form} >
             <TextField margin="normal" required
                 fullWidth value={username} onChange={(event)=>{setUser(event.target.value)}} label="User ID" variant="outlined"/>
             <TextField margin="normal" required
@@ -100,16 +99,12 @@ export default function LoginPage() {
             
             {ReEnterPasswordMessage()}
 
-            <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-            />
             <Button
-                type="submit"
                 fullWidth
                 variant="contained"
                 color="primary"
                 className={classes.submit}
+                onClick={(event)=>{HandleLogin()}}
             >
                 Sign In
             </Button>
@@ -119,7 +114,7 @@ export default function LoginPage() {
             </Link>
             
  
-        </form>
+        </div>
 
         
       </div>
