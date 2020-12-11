@@ -2,17 +2,20 @@
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework import serializers
-from .models import Accounts,Employee,Member,Membership
+
+from .models import Employee as EmployeeDB
+from .models import Accounts as AccountDB
+from .models import Member as MemberDB
+from .models import Membership as MembershipDB
+from .models import Bill as BillDB
 
 from rest_framework.response import Response
 from rest_framework import status, permissions
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
-
     @classmethod
     def get_token(cls, user):
         token = super(MyTokenObtainPairSerializer, cls).get_token(user)
-
         # Add custom claims
         return token
 
@@ -31,7 +34,7 @@ class AccountsSerializer(serializers.ModelSerializer):
     Phone_No = serializers.CharField(max_length=11, required=True)
 
     class Meta:
-        model = Accounts
+        model = AccountDB
         fields = ('email', 'username', 'password', 'DateOfBirth', 'CNIC', 'Address', 'Phone_No')
         extra_kwargs = {'password': {'write_only': True}}
 
@@ -45,12 +48,20 @@ class AccountsSerializer(serializers.ModelSerializer):
         
         return instance
 
-
-
-class EmployeeSerializer(serializers.ModelSerializer):
+def EmployeeSerializer():
 
     pass
 
-class MemberSerializer(serializers.ModelSerializer):
 
-    pass
+def MemberSerializer(Email, Username, Password, Dob, Cnic, Address, PhoneNo):
+        
+    account = AccountDB.objects.create(email = Email, username = Username, password = Password, DateOfBirth = Dob , CNIC = Cnic, Address = Address, Phone_No = PhoneNo)
+    return MemberDB.objects.create(Account_ID = account)
+
+def MembershipSerializer(member):
+    
+    return MembershipDB.objects.create(Member_ID = member)
+
+def BillSerializer(membership, amount):
+
+    BillDB.objects.create(Membership_ID = membership, Bill_Amount = amount)

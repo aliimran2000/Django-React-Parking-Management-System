@@ -3,9 +3,8 @@ from rest_framework_simplejwt import views as jwt_views
 #from .views import ObtainTokenPairWithAccountsView,Register_Member
 from .views import MemberAccountHandler, EmployeeAccountHandler , LogoutAndBlacklistRefreshTokenForUserView
 
-
 urlpatterns = [
-    path('member/signup/', MemberAccountHandler().signup(), name="Register_Member"),
+    path('member/signup/', MemberAccountHandler().signup(), name="Register_Member_Request"),
     path('member/login/', MemberAccountHandler().login(), name='member_token_create'),
     path('member/deregister/', MemberAccountHandler().deregister(), name="Deregister_Member"),
     path('employee/signup/', EmployeeAccountHandler().signup(), name="Register_Employee"),

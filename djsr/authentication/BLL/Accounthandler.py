@@ -15,6 +15,7 @@ from ..serializers import MyTokenObtainPairSerializer, AccountsSerializer , Empl
 import json
 
 class Register_Employee(APIView):
+    
     permission_classes = (permissions.AllowAny,)
     
     def post(self, request, format='json'):
