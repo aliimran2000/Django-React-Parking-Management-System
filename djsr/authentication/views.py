@@ -1,6 +1,9 @@
 from abc import abstractmethod
-from .BLL.MemberManager import Register_Member_Request
-from .BLL.Accounthandler import ObtainTokenPairWithAccountsView, Deregister_Member, Register_Employee , LogoutAndBlacklistRefreshTokenForUserView
+
+from .BLL.MemberManager import Register_Member_Request, Deregister_Member
+from .BLL.AuthManager import ObtainTokenPairWithAccountsView, LogoutAndBlacklistRefreshTokenForUserView
+from .BLL.EmployeeManager import Register_Employee
+
 from rest_framework_simplejwt import views as jwt_views
 
 class AbsAccountHandler:
@@ -22,8 +25,6 @@ class AbsAccountHandler:
     
     def refresh(self):
         return jwt_views.TokenRefreshView.as_view()
-
-
 
 class MemberAccountHandler(AbsAccountHandler):    
 
