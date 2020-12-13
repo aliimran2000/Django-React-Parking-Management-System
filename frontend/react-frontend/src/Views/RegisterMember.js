@@ -113,7 +113,7 @@ export default function RegisterMember(props){
             email:email,
         }).then(
             result => {
-                if(result.status === 200){
+                if(result.status === 201){
                   window.location.href = "/"
                  }
             }
