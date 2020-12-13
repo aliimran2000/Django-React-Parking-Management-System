@@ -56,8 +56,11 @@ def EmployeeSerializer(Email, Username, Password, Dob, Cnic, Address, PhoneNo, E
     return EmployeeDB.objects.create(Account_ID = account, Employee_Type = EmployeeType)
 
 def MemberSerializer(Email, Username, Password, Dob, Cnic, Address, PhoneNo):
-        
+    #instance.set_password(password)
+    #use this to convert password
     account = AccountDB.objects.create(email = Email, username = Username, password = Password, DateOfBirth = Dob , CNIC = Cnic, Address = Address, Phone_No = PhoneNo)
+    account.set_password(Password)
+    account.save()
     return MemberDB.objects.create(Account_ID = account)
 
 def MembershipSerializer(member):

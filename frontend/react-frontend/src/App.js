@@ -1,12 +1,12 @@
 
 import {  BrowserRouter as Router ,Switch, Route} from "react-router-dom";
 //import { Link } from "react-router-dom";
-import MenuAppBar from "./Components/MenuAppBar";
+//import MenuAppBar from "./Components/MenuAppBar";
 import LoginPage from './Views/LoginPage'
+
+import RegisterMember from './Views/RegisterMember'
 import MemberView from './Views/MemberView'
-import RegisterMember from './Views/MemberView'
-
-
+//import AppBar from '@material-ui/core/AppBar';
 
 
 
@@ -20,21 +20,20 @@ function App() {
     <div className="App">
         <Router>
           <Switch>  
+            
             <Route exact path = "/" >
-                <LoginPage/>             
+                <LoginPage/>              
             </Route>
-
-            <MenuAppBar>  
-              <Route exact path = "/MemberView">
-                  <MemberView/>
-              </Route>
-              
+            
+           
               <Route exact path = "/RegisterMember">
                   <RegisterMember/>
               </Route>
-            </MenuAppBar>
-           
-          
+              
+              <Route exact path = "/MemberView">
+                  <MemberView/>
+              </Route>
+             
           </Switch>
 
         </Router>

@@ -22,7 +22,7 @@ class Register_Member_Request(APIView):
         Cnic = request.data['CNIC']
         Address = request.data['Address']
         Phone_No = request.data['Phone_No']
-
+                
         Member(email, username, password, DateOfBirth, Cnic, Address, Phone_No)
         return Response("Member Request for Registration is Parked For Approval", status=status.HTTP_201_CREATED)
 

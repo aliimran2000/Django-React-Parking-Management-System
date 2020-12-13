@@ -6,11 +6,12 @@ import {Typography} from '@material-ui/core';
 export default function MemberView(props){
 
     return(
-        <React.Fragment>
-            <Typography variant="h5" color="primary">
-                this is the member view
-            </Typography>
-        </React.Fragment>
+        <div>
+            <Typography variant="h2" color="error">
+                this is the member view {localStorage.getItem('access_token')}
+            </Typography>   
+            
+        </div>
     )
 
 };

@@ -1,6 +1,5 @@
 import {React,useState} from 'react';
 import axiosInstance from '../Axios/AxiosInstance'
-
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -56,7 +55,7 @@ export default function LoginPage() {
               axiosInstance.defaults.headers['Authorization'] = "JWT " + result.data.access;
               localStorage.setItem('access_token', result.data.access);
               localStorage.setItem('refresh_token', result.data.refresh);
-
+            
               if(result.status === 200){
                 window.location.href = "/MemberView/"
                }
@@ -65,7 +64,7 @@ export default function LoginPage() {
         setWrongPass(true)
       })
   }
-
+  
 
   function ReEnterPasswordMessage(){
     if(WrongPass){
@@ -109,7 +108,7 @@ export default function LoginPage() {
                 Sign In
             </Button>
 
-            <Link href="/MemberView"  variant="body2">
+            <Link href="/RegisterMember"  variant="body2">
             {"Want in? Request A MemberShip Here"}
             </Link>
             
