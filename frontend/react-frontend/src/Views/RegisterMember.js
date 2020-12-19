@@ -12,7 +12,7 @@ import Box from '@material-ui/core/Box';
 import axiosnojwt from '../Axios/axiosnojwt'
 
 
-import PersistentDrawerLeft from '../Components/Drawer'
+
 const useStyles = makeStyles((theme) => ({
     paper: {
       marginTop: theme.spacing(8),
@@ -49,7 +49,7 @@ export default function RegisterMember(props){
     const [email,setEmail] = useState("");
     const [errorState,SeterrorState] = useState(true);
     const [errorState2,SeterrorState2] = useState(true);
-    
+    const [isregistered,SetisRegsitered] = useState(false);
 
     function alphanumeric(value){
        if(value.match(/((^[0-9]+[a-z]+)|(^[a-z]+[0-9]+))+[0-9a-z]$/i)){
@@ -114,11 +114,12 @@ export default function RegisterMember(props){
         }).then(
             result => {
                 if(result.status === 201){
-                  window.location.href = "/"
+                  SetisRegsitered(true)
+                  //window.location.href = "/"
                  }
             }
         ).catch (error => {
-            console.log("yaind")
+            
           })
     }
 
@@ -140,15 +141,20 @@ export default function RegisterMember(props){
     }
    
     
-    
+    if(!isregistered){
+        
+    if(null == localStorage.getItem('access_token')){
+        {window.location.href = "/"}
+        
+    }
+
     return(
         <div>
-  
-        <PersistentDrawerLeft message="Register Member"></PersistentDrawerLeft>
+            
         <Container component="main" maxWidth="md"> 
         <Box spacing={2} m={10}>
         
-            <Grid container direction="row" md>
+            <Grid container direction="row" >
                 <TextField style = {{width: 350 ,  margin:10}} required label="First Name" variant="outlined"  value={first_name} onChange={(event)=>{setfirst_name(event.target.value)}}/>
                 <TextField style = {{width: 350 , margin:10}} required label="Last Name" variant="outlined"   value={last_name} onChange={(event)=>{setlast_name(event.target.value)}}/> 
             </Grid>
@@ -195,6 +201,18 @@ export default function RegisterMember(props){
         
         </div>  
     )
-
+    }
+    else{
+        return(
+        <div>
+        <br/>
+        <br/>
+        <br/>
+        
+        <Button fullWidth variant="contained" color="primary" className={useStyles.submit}  onClick={()=>{window.location.href = "/"}}>
+            CONGRATULATIONS YOUR MEMBERSHIP HAS BEEN REQUESTED GO BACK TO THE LOGIN PAGE
+        </Button>
+        </div>
+        )}
 };
 

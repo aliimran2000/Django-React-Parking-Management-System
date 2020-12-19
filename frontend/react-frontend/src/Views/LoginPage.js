@@ -37,14 +37,15 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-export default function LoginPage() {
+export default function LoginPage(props) {
   const classes = useStyles();
 
+  
   const[username,setUser] = useState("")
   const[password,setPassword] = useState("")
   const[WrongPass,setWrongPass] = useState(false)
   
-  
+
   function HandleLogin(event) {
     
    axiosInstance.post('/member/login/', {
@@ -58,6 +59,7 @@ export default function LoginPage() {
             
               if(result.status === 200){
                 window.location.href = "/MemberView/"
+
                }
           }
       ).catch (error => {
@@ -80,12 +82,12 @@ export default function LoginPage() {
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
-      
+      {localStorage.clear()}
       <div className={classes.paper}>
        
         <img src={parkinglogo} alt=" parkinglogo" />
        
-
+      
         <Typography component="h1" variant="h5" color="primary">
           Parking Management System
         </Typography>

@@ -15,9 +15,13 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
-
+import ReceiptIcon from '@material-ui/icons/Receipt';
+import LocalAtmIcon from '@material-ui/icons/LocalAtm';
+import DriveEtaIcon from '@material-ui/icons/DriveEta';
+import HowToRegIcon from '@material-ui/icons/HowToReg';
+import { Button } from '@material-ui/core';
+import { green } from '@material-ui/core/colors';
+import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -82,6 +86,10 @@ export default function PersistentDrawerLeft(props) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
+
+  
+
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -130,12 +138,29 @@ export default function PersistentDrawerLeft(props) {
         </div>
         <Divider />
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
+         
+        <ListItem button onClick={()=>{window.location.href = "/CarsView"}}>
+              <ListItemIcon><DriveEtaIcon/></ListItemIcon>
+              <ListItemText primary="My Cars" />
+        </ListItem> 
+        <ListItem button onClick={()=>{window.location.href = "/Payments"}}>
+              <ListItemIcon><LocalAtmIcon/></ListItemIcon>
+              <ListItemText primary="My Payments" />
+        </ListItem>
+        <ListItem button onClick={()=>{window.location.href = "/Bills"}}>
+              <ListItemIcon><ReceiptIcon/></ListItemIcon>
+              <ListItemText primary="My Bills" />
+        </ListItem>
+        <ListItem button onClick={()=>{window.location.href = "/Membership"}}>
+              <ListItemIcon><HowToRegIcon/></ListItemIcon>
+              <ListItemText primary="My Membership" />
+        </ListItem>
+        <Divider />
+        <ListItem button style={{color : green[500] , fontSize: 100 }}>
+        <ListItemIcon><PowerSettingsNewIcon /></ListItemIcon>
+        <ListItemText primary="LOGOUT" />
+        </ListItem>
+        
         </List>
       </Drawer>
     
