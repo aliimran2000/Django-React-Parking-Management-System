@@ -6,22 +6,26 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .modelManager import MyTokenObtainPairSerializer
+from .modelManager import getAccountName
 
 from .BLL.MemberManager import MemberManager
 from .BLL.MembershipManager import MembershipManager
 from .BLL.EmployeeManager import EmployeeManager
 from .BLL.BillingManager import BillingManager
+from .BLL.VehicleManager import VehicleManager
 
 #GLOBAL VARIABLES
 MemberMan = MemberManager()
 MembershipMan = MembershipManager()
 BillingMan = BillingManager()
 EmployeeMan = EmployeeManager()
+VehicleMan = VehicleManager()
 
 def initializeManagers():
 
-    MemberMan.initializeManagers(MembershipMan)
+    MemberMan.initializeManagers(MembershipMan, VehicleMan)
     MembershipMan.initializeManagers(BillingMan)
+    VehicleMan.initializeManagers(BillingMan)
 
 class ObtainTokenPairWithAccountsView(TokenObtainPairView):
 
@@ -45,7 +49,6 @@ class LogoutAndBlacklistRefreshTokenForUserView(APIView):
 
 class registerMemberApiView(APIView):
 
-    #IMPLEMENT REGISTER MEMBER VIEW IN FRONTEND OF ADMIN
     permission_classes = (permissions.IsAuthenticated,)
     
     def post(self, request, format='json'):
@@ -57,7 +60,7 @@ class registerMemberApiView(APIView):
         Cnic = request.data['CNIC']
         Address = request.data['Address']
         Phone_No = request.data['Phone_No']
-        Approved_By = request.data.id
+        Approved_By = request.user.id
 
         MemberMan.registerMember(email, username, password, DateOfBirth, Cnic, Address, Phone_No, Approved_By)
 
@@ -65,8 +68,7 @@ class registerMemberApiView(APIView):
 
 class deregisterMemberApiView(APIView):
 
-    #IMPLEMENT DEREGISTER MEMBER VIEW IN FRONTEND OF ADMIN
-    permission_classes = (permissions.AllowAny,)
+    permission_classes = (permissions.IsAuthenticated,)
     
     def post(self, request, format='json'):
 
@@ -98,3 +100,49 @@ class registerEmployeeApiView(APIView):
         EmployeeMan.registerEmployee(email, username, password, DateOfBirth, Cnic, Address, Phone_No, Employee_Type)
 
         return Response("Employee of Type " + Employee_Type + " has successfully been registered", status=status.HTTP_201_CREATED)
+
+class registerVehicleApiView(APIView):
+
+    permission_classes = (permissions.IsAuthenticated,)
+    
+    def post(self, request, format='json'):
+
+        Vehicle_ID = request.data['Vehicle_ID']        
+        Member_ID = request.data['Member_ID']
+        Vehicle_Model = request.data['Vehicle_Model']
+
+        MemberMan.registerVehicle(Vehicle_ID, Member_ID, Vehicle_Model)
+
+        return Response("Vehicle " + Vehicle_ID + " has successfully been registered against Member " + Member_ID, status=status.HTTP_201_CREATED)
+
+class employeeTypeApiView(APIView):
+
+    permission_classes = (permissions.IsAuthenticated,)
+    
+    def post(self, request, format='json'):
+
+        accountId = request.user.id
+        empType = EmployeeMan.getEmployeeType(accountId)
+        return Response(empType, status.HTTP_200_OK)
+
+class accountNameApiView(APIView):
+
+    permission_classes = (permissions.IsAuthenticated,)
+    
+    def post(self, request, format='json'):
+
+        accountId = request.user.id
+        name = getAccountName(accountId)
+        return Response(name, status.HTTP_200_OK)
+
+class memberDetailsApiView(APIView):
+
+    permission_classes = (permissions.IsAuthenticated,)
+    
+    def post(self, request, format='json'):
+
+        memberId = request.data['Member_ID']
+
+        memberDetails = MemberMan.getMemberDetails(memberId)
+
+        return Response(memberDetails, status.HTTP_200_OK)

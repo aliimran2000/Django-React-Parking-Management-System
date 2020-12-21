@@ -1,14 +1,15 @@
 from .Member import Member
 
-from ..modelManager import GetMemberObject, DeleteMemberObject
+from ..modelManager import GetMemberObject, DeleteMemberObject, GetMemberDetails
 
 class MemberManager:
 
     def __init__(self):
         self.MembershipMan = None
 
-    def initializeManagers(self, MembershipMan):
+    def initializeManagers(self, MembershipMan, VehicleMan):
         self.MembershipMan = MembershipMan
+        self.VehicleMan = VehicleMan
 
     def registerMember(self, email, username, password, DateOfBirth, Cnic, Address, Phone_No, Approved_By):
 
@@ -30,3 +31,14 @@ class MemberManager:
 
     def getMemberById(self, memberId):
         return GetMemberObject(memberId)
+
+    def registerVehicle(self, Vehicle_ID, Member_ID, Vehicle_Model):
+
+        M1 = self.getMemberById(Member_ID)
+        Mem1 = self.MembershipMan.getActiveMembership(M1)
+        self.VehicleMan.registerVehicle(M1, Mem1, Vehicle_ID, Vehicle_Model)
+
+    def getMemberDetails(self, memberId):
+
+        memberDetails = GetMemberDetails(memberId)
+        return memberDetails

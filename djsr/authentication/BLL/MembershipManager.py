@@ -5,20 +5,23 @@ from ..modelManager import DeleteMembershipObject, getActiveMembershipObject, ge
 class MembershipManager:
 
     def __init__(self):
-        self.__membershipInitiationFee = 1000
         self.BillingMan = None
 
     def initializeManagers(self, BillingMan):
         self.BillingMan = BillingMan
 
-    def InitiateMembership(self, member, Approved_By):
-
-        Mem1 = Membership(member, self.__membershipInitiationFee, self.BillingMan, Approved_By)
-
     def getActiveMembership(self, member):
         
         return getActiveMembershipObject(member)
 
+    def InitiateMembership(self, member, Approved_By):
+
+        Membership(member, Approved_By)
+        
+        Mem1 = self.getActiveMembership(member)
+
+        self.BillingMan.GenerateMembershipRegistrationBill(Mem1)
+    
     def getAllMemberships(self, member):
 
         return getAllMembershipObjects(member)

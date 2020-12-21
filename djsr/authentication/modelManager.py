@@ -5,6 +5,7 @@ from .models import Accounts as AccountDB
 from .models import Member as MemberDB
 from .models import Membership as MembershipDB
 from .models import Bill as BillDB
+from .models import Vehicle as VehicleDB
 
 from rest_framework.response import Response
 from rest_framework import status, permissions
@@ -36,15 +37,24 @@ def MemberSerializer(Email, Username, Password, Dob, Cnic, Address, PhoneNo):
 def MembershipSerializer(member, accountID):
     
     employee = EmployeeDB.objects.get(Account_ID = accountID)
-    return MembershipDB.objects.create(Member_ID = member, Approved_By = employee)
+    MembershipDB.objects.create(Member_ID = member, Approved_By = employee)
 
-def BillSerializer(membership, amount):
+def BillSerializer(membership, amount, type):
 
-    BillDB.objects.create(Membership_ID = membership, Bill_Amount = amount)
+    BillDB.objects.create(Membership_ID = membership, Bill_Amount = amount, Bill_Type = type)
+
+def VehicleSerializer(Member, vehicleID, vehicleModel):
+
+    vehicle = VehicleDB.objects.create(Vehicle_ID = vehicleID, Member_ID = Member, Vehicle_Model = vehicleModel)
+    return vehicle
 
 def GetMemberObject(memberID):
 
     return MemberDB.objects.get(Member_ID = memberID)
+
+def getVehicleObject(vehicleID):
+
+    return VehicleDB.objects.get(Vehicle_ID = vehicleID)
 
 def DeleteAccountObject(accountId):
     
@@ -96,4 +106,37 @@ def getBillsAmount(membership):
 
         totalAmount += int(amount)
 
-    return totalAmount  
+    return totalAmount
+
+def getEmployeeType(accountId):
+
+    empType = EmployeeDB.objects.filter(Account_ID = accountId).values('Employee_Type')
+    return empType
+
+def getAccountName(accountId):
+
+    name = AccountDB.objects.filter(id = accountId).values('username')
+    return name
+
+def GetMemberDetails(memberId):
+
+    accountId = MemberDB.objects.filter(Member_ID = memberId).values('Account_ID')
+    accountId = accountId[0]['Account_ID']
+    
+    memberDetails = []
+
+    username = AccountDB.objects.filter(id = accountId).values_list('username')
+    email = AccountDB.objects.filter(id = accountId).values('email')
+    DateOfBirth = AccountDB.objects.filter(id = accountId).values('DateOfBirth')
+    CNIC = AccountDB.objects.filter(id = accountId).values('CNIC')
+    Address = AccountDB.objects.filter(id = accountId).values('Address')
+    Phone_No = AccountDB.objects.filter(id = accountId).values('Phone_No')
+    
+    memberDetails.append({'username':username[0][0]})
+    memberDetails.append({'email':email[0]['email']})
+    memberDetails.append({'DateOfBirth':DateOfBirth[0]['DateOfBirth']})
+    memberDetails.append({'CNIC':CNIC[0]['CNIC']})
+    memberDetails.append({'Address':Address[0]['Address']})
+    memberDetails.append({'Phone_No':Phone_No[0]['Phone_No']})
+
+    return memberDetails

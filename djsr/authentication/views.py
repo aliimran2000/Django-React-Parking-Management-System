@@ -6,6 +6,10 @@ from .apiView import initializeManagers
 from .apiView import LogoutAndBlacklistRefreshTokenForUserView, ObtainTokenPairWithAccountsView
 from .apiView import registerMemberApiView, deregisterMemberApiView
 from .apiView import registerEmployeeApiView
+from .apiView import registerVehicleApiView
+from .apiView import employeeTypeApiView
+from .apiView import memberDetailsApiView
+from .apiView import accountNameApiView
 
 class AbsApiCaller:
     
@@ -34,6 +38,12 @@ class MemberAccountApiCaller(AbsApiCaller):
     def deregister(self):
         return deregisterMemberApiView.as_view()
 
+    def registerVehicle(self):
+        return registerVehicleApiView.as_view()
+
+    def getDetails(self):
+        return memberDetailsApiView.as_view()
+
 class EmployeeAccountApiCaller(AbsApiCaller):
 
     def __init__(self):
@@ -42,3 +52,9 @@ class EmployeeAccountApiCaller(AbsApiCaller):
 
     def signup(self):
         return registerEmployeeApiView.as_view()
+
+    def getType(self):
+        return employeeTypeApiView.as_view()
+
+    def getName(self):
+        return accountNameApiView.as_view()
