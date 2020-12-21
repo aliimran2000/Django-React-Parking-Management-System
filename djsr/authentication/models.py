@@ -51,3 +51,22 @@ class Bill(models.Model):
     Due_Date = models.DateTimeField(default= (timezone.now() + timezone.timedelta(weeks=4)))
     Paid_Status = models.BooleanField(default = False, blank=False, null=False)
     Bill_Amount = models.CharField(max_length=10, blank=False, null=False)
+
+    Bill_Type_List = [
+        ('MC','MemberRegistration'),
+        ('VR','VehicleRegistration'),
+        ('PV','ParkVehicle'),
+        ('MR','MembershipRenewal'),
+    ]
+
+    Bill_Type = models.CharField(
+        max_length=2,
+        choices=Bill_Type_List,
+        default='MemberRegistration',
+    )    
+
+class Vehicle(models.Model):
+
+    Vehicle_ID = models.CharField(primary_key=True, max_length=10)
+    Member_ID = models.ForeignKey(Member, on_delete=CASCADE, blank=False, null=False)
+    Vehicle_Model = models.CharField(max_length=50, blank=False, null=False)
