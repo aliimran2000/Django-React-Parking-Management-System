@@ -53,6 +53,8 @@ class AccountsSerializer(serializers.ModelSerializer):
 def EmployeeSerializer(Email, Username, Password, Dob, Cnic, Address, PhoneNo, EmployeeType):
 
     account = AccountDB.objects.create(email = Email, username = Username, password = Password, DateOfBirth = Dob , CNIC = Cnic, Address = Address, Phone_No = PhoneNo)
+    account.set_password(Password)
+    account.save()
     return EmployeeDB.objects.create(Account_ID = account, Employee_Type = EmployeeType)
 
 def MemberSerializer(Email, Username, Password, Dob, Cnic, Address, PhoneNo):

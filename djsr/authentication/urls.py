@@ -1,14 +1,17 @@
 from django.urls import path
 from rest_framework_simplejwt import views as jwt_views
 #from .views import ObtainTokenPairWithAccountsView,Register_Member
-from .views import MemberAccountHandler, EmployeeAccountHandler , LogoutAndBlacklistRefreshTokenForUserView
+from .views import MemberAccountApiCaller, EmployeeAccountApiCaller , LogoutAndBlacklistRefreshTokenForUserView
+
+MemAccountApiCaller = MemberAccountApiCaller()
+EmpAccountApiCaller = EmployeeAccountApiCaller()
 
 urlpatterns = [
-    path('member/signup/', MemberAccountHandler().signup(), name="Register_Member_Request"),
-    path('member/login/', MemberAccountHandler().login(), name='member_token_create'),
-    path('member/deregister/', MemberAccountHandler().deregister(), name="Deregister_Member"),
-    path('employee/signup/', EmployeeAccountHandler().signup(), name="Register_Employee"),
-    path('employee/login/', EmployeeAccountHandler().login(), name='employee_token_create'),
+    path('member/signup/', MemAccountApiCaller.signup(), name="Register_Member"),
+    path('member/login/', MemAccountApiCaller.login(), name='member_token_create'),
+    path('member/deregister/', MemAccountApiCaller.deregister(), name="Deregister_Member"),
+    path('employee/signup/', EmpAccountApiCaller.signup(), name="Register_Employee"),
+    path('employee/login/', EmpAccountApiCaller.login(), name='employee_token_create'),
     path('logout/',LogoutAndBlacklistRefreshTokenForUserView().as_view(),name="logout"),
     path('refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
 ]
