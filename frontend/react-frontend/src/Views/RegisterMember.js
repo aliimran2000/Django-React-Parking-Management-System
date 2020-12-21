@@ -90,7 +90,7 @@ export default function RegisterMember(props){
             
             return (
                 <Typography color="error">
-                    Invalid Email
+                     Invalid Email
                 </Typography>
             )
         }else{
@@ -143,11 +143,12 @@ export default function RegisterMember(props){
     
     if(!isregistered){
         
-    if(null == localStorage.getItem('access_token')){
-        {window.location.href = "/"}
+        if(null == localStorage.getItem('access_token')){
+            {window.location.href = "/"}
         
-    }
+        }
 
+        
     return(
         <div>
             

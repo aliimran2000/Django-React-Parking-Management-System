@@ -1,5 +1,6 @@
 import {React,useState} from 'react';
 import axiosInstance from '../Axios/AxiosInstance'
+
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -7,7 +8,7 @@ import TextField from '@material-ui/core/TextField';
 //import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+  import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import parkinglogo from '../Images/logo.png'
 
@@ -37,15 +38,14 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-export default function LoginPage(props) {
+export default function LoginPage() {
   const classes = useStyles();
 
-  
   const[username,setUser] = useState("")
   const[password,setPassword] = useState("")
   const[WrongPass,setWrongPass] = useState(false)
   
-
+  
   function HandleLogin(event) {
     
    axiosInstance.post('/member/login/', {
@@ -56,10 +56,10 @@ export default function LoginPage(props) {
               axiosInstance.defaults.headers['Authorization'] = "JWT " + result.data.access;
               localStorage.setItem('access_token', result.data.access);
               localStorage.setItem('refresh_token', result.data.refresh);
-            
+
               if(result.status === 200){
                 window.location.href = "/MemberView/"
-
+                console.log(localStorage.getItem('access_token'))
                }
           }
       ).catch (error => {
@@ -82,19 +82,19 @@ export default function LoginPage(props) {
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
-      {localStorage.clear()}
+      
       <div className={classes.paper}>
        
         <img src={parkinglogo} alt=" parkinglogo" />
        
-      
+
         <Typography component="h1" variant="h5" color="primary">
           Parking Management System
         </Typography>
               
         <div className={classes.form} >
             <TextField margin="normal" required
-                fullWidth value={username} onChange={(event)=>{setUser(event.target.value)}} label="User ID" variant="outlined"/>
+                fullWidth value={username} onChange={(event)=>{setUser(event.target.value)}} label="Email" variant="outlined"/>
             <TextField margin="normal" required
                 fullWidth value={password} onChange={(event)=>{setPassword(event.target.value)}}  label="Password" variant="outlined" type="password" />
             

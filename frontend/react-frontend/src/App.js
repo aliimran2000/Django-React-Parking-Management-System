@@ -7,6 +7,8 @@ import LoginPage from './Views/LoginPage'
 
 import RegisterMember from './Views/RegisterMember'
 import MemberView from './Views/MemberView'
+import AdminView from './Views/Admin_View'
+
 import NotFound from './Views/NotFound'
 
 
@@ -35,6 +37,12 @@ function App() {
             <Route exact path = "/MemberView">
                   <MemberView />  
             </Route>
+
+            <Route exact path = "/Admin">
+                  <AdminView />  
+            </Route>
+
+            
             
             
             
