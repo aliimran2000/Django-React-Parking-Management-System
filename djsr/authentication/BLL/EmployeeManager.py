@@ -4,7 +4,7 @@ from rest_framework.response import Response
 
 from .Employee import Employee
 
-class Register_Employee(APIView):
+class registerEmployeeApiView(APIView):
 
     #IMPLEMENT REGISTER EMPLOYEE VIEW IN FRONTEND OF ADMIN
     permission_classes = (permissions.AllowAny,)
@@ -22,3 +22,8 @@ class Register_Employee(APIView):
 
         Employee(email, username, password, DateOfBirth, Cnic, Address, Phone_No, Employee_Type)
         return Response("Employee of Type " + Employee_Type + " has successfully been registered", status=status.HTTP_201_CREATED)
+
+class EmployeeManager:
+
+    def registerEmployee(self):
+        return registerEmployeeApiView.as_view()

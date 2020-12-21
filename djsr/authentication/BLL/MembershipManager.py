@@ -7,34 +7,41 @@ from .Membership import Membership
 
 from ..serializers import DeleteMembershipObject, getActiveMembershipObject, getAllMembershipObjects
 
-from .BillingManager import getRemainingDues
+class MembershipManager:
 
-def InitiateMembership(member):
+    def __init__(self):
+        self.__membershipInitiationFee = 1000
+        self.BillingMan = None
 
-    Mem1 = Membership(member)
+    def initializeManagers(self, BillingMan):
+        self.BillingMan = BillingMan
 
-def getActiveMembership(member):
-    
-    return getActiveMembershipObject(member)
+    def InitiateMembership(self, member):
 
-def getAllMemberships(member):
+        Mem1 = Membership(member, self.__membershipInitiationFee, self.BillingMan)
 
-    return getAllMembershipObjects(member)
+    def getActiveMembership(self, member):
+        
+        return getActiveMembershipObject(member)
 
-def removeMembership(M1):
+    def getAllMemberships(self, member):
 
-    Mem1 = getAllMemberships(M1)
+        return getAllMembershipObjects(member)
 
-    if Mem1 is not None:
-        for one in Mem1:
-            DeleteMembershipObject(one)
+    def removeMembership(self, M1):
 
-def getActiveMembershipDues(M1):
+        Mem1 = self.getAllMemberships(M1)
 
-    Mem1 = getActiveMembership(M1)
+        if Mem1 is not None:
+            for one in Mem1:
+                DeleteMembershipObject(one)
 
-    #NO ACTIVE MEMBERSHIP, HENCE NO REMAINING DUES
-    if Mem1 is None:
-        return 0
-    else:
-        return getRemainingDues(Mem1)
+    def getActiveMembershipDues(self, M1):
+
+        Mem1 = self.getActiveMembership(M1)
+
+        #NO ACTIVE MEMBERSHIP, HENCE NO REMAINING DUES
+        if Mem1 is None:
+            return 0
+        else:
+            return self.BillingMan.getRemainingDues(Mem1)

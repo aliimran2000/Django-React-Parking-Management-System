@@ -6,11 +6,12 @@ from .Bill import Bill
 
 from ..serializers import getBillsAmount
 
-def GenerateMembershipRegistrationBill(membership):
+class BillingManager:
 
-    #1000Rs is MembershipGeneration Fee
-    B1 = Bill(membership, 1000)
+    def GenerateMembershipRegistrationBill(self, membership, fee):
 
-def getRemainingDues(membership):
+        B1 = Bill(membership, fee)
 
-    return getBillsAmount(membership)
+    def getRemainingDues(self, membership):
+
+        return getBillsAmount(membership)
