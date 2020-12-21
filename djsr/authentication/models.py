@@ -39,7 +39,7 @@ class Membership(models.Model):
 
     Membership_ID = models.AutoField(primary_key=True)
     Member_ID = models.ForeignKey(Member, on_delete=CASCADE, blank=False, null=False)
-    Approved_By = models.ForeignKey(Employee, on_delete=CASCADE, blank=True, null=True)
+    Approved_By = models.ForeignKey(Employee, on_delete=CASCADE, blank=False, null=False)
     Valid_From = models.DateTimeField(default=timezone.now)
     Valid_To = models.DateTimeField(default= (timezone.now() + timezone.timedelta(days=365)))
 

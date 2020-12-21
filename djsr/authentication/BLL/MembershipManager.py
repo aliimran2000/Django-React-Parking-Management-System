@@ -1,11 +1,6 @@
-from datetime import datetime, timezone
-from rest_framework.views import APIView
-from rest_framework import status, permissions
-from rest_framework.response import Response
-
 from .Membership import Membership
 
-from ..serializers import DeleteMembershipObject, getActiveMembershipObject, getAllMembershipObjects
+from ..modelManager import DeleteMembershipObject, getActiveMembershipObject, getAllMembershipObjects
 
 class MembershipManager:
 
@@ -16,9 +11,9 @@ class MembershipManager:
     def initializeManagers(self, BillingMan):
         self.BillingMan = BillingMan
 
-    def InitiateMembership(self, member):
+    def InitiateMembership(self, member, Approved_By):
 
-        Mem1 = Membership(member, self.__membershipInitiationFee, self.BillingMan)
+        Mem1 = Membership(member, self.__membershipInitiationFee, self.BillingMan, Approved_By)
 
     def getActiveMembership(self, member):
         
@@ -30,10 +25,10 @@ class MembershipManager:
 
     def removeMembership(self, M1):
 
-        Mem1 = self.getAllMemberships(M1)
+        MemX = self.getAllMemberships(M1)
 
-        if Mem1 is not None:
-            for one in Mem1:
+        if MemX is not None:
+            for one in MemX:
                 DeleteMembershipObject(one)
 
     def getActiveMembershipDues(self, M1):

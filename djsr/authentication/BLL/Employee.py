@@ -1,4 +1,4 @@
-from ..serializers import EmployeeSerializer
+from ..modelManager import EmployeeSerializer
 
 class Employee:
 
