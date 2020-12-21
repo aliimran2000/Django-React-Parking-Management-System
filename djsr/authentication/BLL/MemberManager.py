@@ -38,6 +38,12 @@ class MemberManager:
         Mem1 = self.MembershipMan.getActiveMembership(M1)
         self.VehicleMan.registerVehicle(M1, Mem1, Vehicle_ID, Vehicle_Model)
 
+    def deregisterVehicle(self, Vehicle_ID, Member_ID):
+
+        M1 = self.getMemberById(Member_ID)
+        Mem1 = self.MembershipMan.getActiveMembership(M1)
+        self.VehicleMan.registerVehicle(M1, Mem1, Vehicle_ID, Vehicle_Model)
+
     def getMemberDetails(self, memberId):
 
         memberDetails = GetMemberDetails(memberId)

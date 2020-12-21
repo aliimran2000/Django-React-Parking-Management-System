@@ -115,6 +115,19 @@ class registerVehicleApiView(APIView):
 
         return Response("Vehicle " + Vehicle_ID + " has successfully been registered against Member " + Member_ID, status=status.HTTP_201_CREATED)
 
+class deregisterVehicleApiView(APIView):
+
+    permission_classes = (permissions.IsAuthenticated,)
+    
+    def post(self, request, format='json'):
+
+        Vehicle_ID = request.data['Vehicle_ID']        
+        Member_ID = request.data['Member_ID']
+
+        MemberMan.deregisterVehicle(Vehicle_ID, Member_ID)
+
+        return Response("Vehicle " + Vehicle_ID + " has successfully been deregistered against Member " + Member_ID, status=status.HTTP_201_CREATED)
+
 class employeeTypeApiView(APIView):
 
     permission_classes = (permissions.IsAuthenticated,)
