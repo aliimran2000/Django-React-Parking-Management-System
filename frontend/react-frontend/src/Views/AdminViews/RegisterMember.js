@@ -1,4 +1,5 @@
 import React from 'react'
+import { useHistory } from "react-router-dom";
 import {Typography} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField'
@@ -9,7 +10,7 @@ import validator from 'validator';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
-import axiosnojwt from '../Axios/axiosnojwt'
+import axiosInstance from '../../Axios/AxiosInstance'
 
 
 
@@ -37,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function RegisterMember(props){
 
+    let history = useHistory();
     
     const [first_name,setfirst_name] = useState('');
     const [last_name,setlast_name] = useState(''); 
@@ -49,7 +51,8 @@ export default function RegisterMember(props){
     const [email,setEmail] = useState("");
     const [errorState,SeterrorState] = useState(true);
     const [errorState2,SeterrorState2] = useState(true);
-    const [isregistered,SetisRegsitered] = useState(false);
+    const [done,isdone] = useState(false)
+    
 
     function alphanumeric(value){
        if(value.match(/((^[0-9]+[a-z]+)|(^[a-z]+[0-9]+))+[0-9a-z]$/i)){
@@ -101,7 +104,7 @@ export default function RegisterMember(props){
 
     
     function handleSubmit(event){
-        axiosnojwt.post('member/signup/', {
+        axiosInstance.post('member/signup/', {
             username: username,
             password: password,
             first_name : first_name,
@@ -113,8 +116,9 @@ export default function RegisterMember(props){
             email:email,
         }).then(
             result => {
+                
                 if(result.status === 201){
-                  SetisRegsitered(true)
+                  isdone(true)
                   //window.location.href = "/"
                  }
             }
@@ -139,29 +143,29 @@ export default function RegisterMember(props){
             )
         }
     }
-   
     
-    if(!isregistered){
-        
-        if(null == localStorage.getItem('access_token')){
-            {window.location.href = "/"}
-        
-        }
-
-        
+    
+    
+    if(!done){
     return(
         <div>
-            
+        <Button color='primary' onClick={() => {history.goBack()}}>
+                    GO BACK
+        </Button>   
         <Container component="main" maxWidth="md"> 
-        <Box spacing={2} m={10}>
-        
+        <Box spacing={3} m={10}>
+            <Grid>
+                <Typography variant='h3' color="primary" style = {{width: 10000 ,  margin:10}} >
+                    Member Registration Form
+                </Typography>
+            </Grid>
             <Grid container direction="row" >
                 <TextField style = {{width: 350 ,  margin:10}} required label="First Name" variant="outlined"  value={first_name} onChange={(event)=>{setfirst_name(event.target.value)}}/>
                 <TextField style = {{width: 350 , margin:10}} required label="Last Name" variant="outlined"   value={last_name} onChange={(event)=>{setlast_name(event.target.value)}}/> 
             </Grid>
 
             <Grid>
-                <InputMask style = {{width: 350 ,  margin:10}}mask="99999-9999999-9" maskChar=" " value={CNIC} onChange={(event)=>{setCNIC(event.target.value.replaceAll("-",""))}} >
+                <InputMask style = {{width: 350 ,  margin:10}} mask="99999-9999999-9" maskChar=" " value={CNIC} onChange={(event)=>{setCNIC(event.target.value.replaceAll("-",""))}} >
                     {()=><TextField required label="CNIC" variant="outlined" style = {{width: 350 ,  margin:10}}  />}
                 </InputMask>
             </Grid>
@@ -205,15 +209,14 @@ export default function RegisterMember(props){
     }
     else{
         return(
-        <div>
-        <br/>
-        <br/>
-        <br/>
-        
-        <Button fullWidth variant="contained" color="primary" className={useStyles.submit}  onClick={()=>{window.location.href = "/"}}>
-            CONGRATULATIONS YOUR MEMBERSHIP HAS BEEN REQUESTED GO BACK TO THE LOGIN PAGE
-        </Button>
-        </div>
-        )}
+            <div>
+                <Button onClick={() => {history.goBack()}}>
+                    GO BACK
+                </Button>
+            </div>
+        )
+    }
+    
+   
 };
 

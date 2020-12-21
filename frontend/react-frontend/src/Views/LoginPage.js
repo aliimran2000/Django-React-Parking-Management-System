@@ -109,12 +109,6 @@ export default function LoginPage() {
             >
                 Sign In
             </Button>
-
-            <Link href="/RegisterMember"  variant="body2">
-            {"Want in? Request A MemberShip Here"}
-            </Link>
-            
- 
         </div>
 
         

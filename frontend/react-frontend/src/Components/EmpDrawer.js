@@ -15,8 +15,6 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import ReceiptIcon from '@material-ui/icons/Receipt';
-import LocalAtmIcon from '@material-ui/icons/LocalAtm';
 import DriveEtaIcon from '@material-ui/icons/DriveEta';
 import HowToRegIcon from '@material-ui/icons/HowToReg';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
@@ -24,7 +22,8 @@ import { green,red,blue } from '@material-ui/core/colors';
 import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
 import LocalParkingIcon from '@material-ui/icons/LocalParking';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-const drawerWidth = 300;
+
+const drawerWidth = 320;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -83,6 +82,44 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
+function foradmin(b1){
+  
+  if(!b1){
+    return 
+  }
+
+  return (
+    <div>
+      <Divider />
+        <ListItem button onClick={()=>{window.location.href = "/RenewMembership"}}>
+              <ListItemIcon><HowToRegIcon style={{ color: blue[500] }}/></ListItemIcon>
+              <ListItemText primary="Renew Membership" />
+        </ListItem> 
+        <ListItem button onClick={()=>{window.location.href = "/RegisterMember"}}>
+              <ListItemIcon><AccountCircleIcon  style={{ color: green[500] }} /></ListItemIcon>
+              <ListItemText primary="Register Member" />
+        </ListItem>
+        <ListItem button onClick={()=>{window.location.href = "/DeRegisterMember"}}>
+              <ListItemIcon><AccountCircleIcon  style={{ color: red[500] }} /></ListItemIcon>
+              <ListItemText primary="De-Register Member" />
+        </ListItem>
+        <Divider /> 
+        <ListItem button onClick={()=>{window.location.href = "/Payments"}}>
+              <ListItemIcon><DriveEtaIcon style={{ color: green[500] }}/></ListItemIcon>
+              <ListItemText primary="Add Member Vehicle" />
+        </ListItem>
+        <ListItem button onClick={()=>{window.location.href = "/Payments"}}>
+              <ListItemIcon><DriveEtaIcon style={{ color: red[500] }}/></ListItemIcon>
+              <ListItemText primary="Remove Member Vehicle" />
+        </ListItem>
+    </div>
+  )
+}
+
+
+
+
 export default function EmpDrawer(props) {
   const classes = useStyles();
   const theme = useTheme();
@@ -138,41 +175,18 @@ export default function EmpDrawer(props) {
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
         </div>
-        <Divider />
         <List>
-        <ListItem button onClick={()=>{window.location.href = "/Membership"}}>
-              <ListItemIcon><HowToRegIcon style={{ color: blue[500] }}/></ListItemIcon>
-              <ListItemText primary="Renew Membership" />
-        </ListItem> 
-        <ListItem button onClick={()=>{window.location.href = "/RegisterMember"}}>
-              <ListItemIcon><AccountCircleIcon  style={{ color: green[500] }} /></ListItemIcon>
-              <ListItemText primary="Register Member" />
-        </ListItem>
-        <ListItem button onClick={()=>{window.location.href = "/CarsView"}}>
-              <ListItemIcon><AccountCircleIcon  style={{ color: red[500] }} /></ListItemIcon>
-              <ListItemText primary="De-Register Member" />
-        </ListItem>
-        <Divider /> 
-        <ListItem button onClick={()=>{window.location.href = "/Payments"}}>
-              <ListItemIcon><DriveEtaIcon style={{ color: green[500] }}/></ListItemIcon>
-              <ListItemText primary="Add Member Vehicle" />
-        </ListItem>
-        <ListItem button onClick={()=>{window.location.href = "/Payments"}}>
-              <ListItemIcon><DriveEtaIcon style={{ color: red[500] }}/></ListItemIcon>
-              <ListItemText primary="Remove Member Vehicle" />
-        </ListItem>
+        {foradmin(props.adminpage)}
         <Divider />
-        <ListItem button onClick={()=>{window.location.href = "/Bills"}}>
+        <ListItem button onClick={()=>{window.location.href = "/ParkCar"}}>
               <ListItemIcon><LocalParkingIcon style={{ color: green[500] }}/></ListItemIcon>
               <ListItemText primary="Park Car" />
         </ListItem>
-        <ListItem button onClick={()=>{window.location.href = "/Bills"}}>
+        <ListItem button onClick={()=>{window.location.href = "/UnParkCar"}}>
               <ListItemIcon><ExitToAppIcon style={{ color: red[500] }}/></ListItemIcon>
               <ListItemText primary="Un-Park Car" />
         </ListItem>
         <Divider />
-      
-        
         <Divider />
         <ListItem button style={{color : green[500] , fontSize: 100 }}>
         <ListItemIcon><PowerSettingsNewIcon /></ListItemIcon>
