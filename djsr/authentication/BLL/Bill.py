@@ -1,4 +1,4 @@
-from ..serializers import BillSerializer
+from ..modelManager import BillSerializer
 
 class Bill:
 

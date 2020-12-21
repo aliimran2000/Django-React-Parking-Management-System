@@ -1,13 +1,11 @@
 from abc import abstractmethod
 
-from .BLL.MemberManager import MemberManager
-from .BLL.MembershipManager import MembershipManager
-from .BLL.EmployeeManager import EmployeeManager
-from .BLL.BillingManager import BillingManager
-
-from .BLL.AuthManager import ObtainTokenPairWithAccountsView, LogoutAndBlacklistRefreshTokenForUserView
-
 from rest_framework_simplejwt import views as jwt_views
+
+from .apiView import initializeManagers
+from .apiView import LogoutAndBlacklistRefreshTokenForUserView, ObtainTokenPairWithAccountsView
+from .apiView import registerMemberApiView, deregisterMemberApiView
+from .apiView import registerEmployeeApiView
 
 class AbsApiCaller:
     
@@ -16,7 +14,6 @@ class AbsApiCaller:
     
     def logout(self):
         return LogoutAndBlacklistRefreshTokenForUserView.as_view()
-
 
     @abstractmethod
     def signup(self):
@@ -31,25 +28,17 @@ class AbsApiCaller:
 
 class MemberAccountApiCaller(AbsApiCaller):    
 
-    def __init__(self):
-        
-        self.MemberMan = MemberManager()
-        self.MembershipMan = MembershipManager()
-        self.BillingMan = BillingManager()
-
-        self.MemberMan.initializeManagers(self.MembershipMan)
-        self.MembershipMan.initializeManagers(self.BillingMan)
-
     def signup(self):
-        return self.MemberMan.registerMember()
+        return registerMemberApiView.as_view()
 
     def deregister(self):
-        return self.MemberMan.deregisterMember()
+        return deregisterMemberApiView.as_view()
 
 class EmployeeAccountApiCaller(AbsApiCaller):
 
     def __init__(self):
-        self.EmployeeMan = EmployeeManager()
+        
+        initializeManagers()
 
     def signup(self):
-        return self.EmployeeMan.registerEmployee()
+        return registerEmployeeApiView.as_view()
