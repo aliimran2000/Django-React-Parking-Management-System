@@ -47,14 +47,14 @@ export default function LoginPage() {
   
   
   function SetType(){
-  axiosInstance.post('/employee/gettype/').then(
+  axiosInstance.post('/account/gettype/').then(
     result=>{
-      console.log(result.data.Employee_Type)
-      sessionStorage.setItem("TYPE",result.data.Employee_Type)
+      console.log(result.data)
+      sessionStorage.setItem("TYPE",result.data)
 
-      if(result.data.Employee_Type === "PA" ){
+      if(result.data === "PA" ){
         window.location.href = "/Admin"
-      }else if(result.data.Employee_Type === "PE"){
+      }else if(result.data === "PE"){
         window.location.href = "/Employ"
       }else{
         window.location.href = "/Member"

@@ -10,7 +10,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import axiosInstance from '../Axios/AxiosInstance'
-import axiosnojwt from '../Axios/axiosnojwt'
 import { green,red,blue } from '@material-ui/core/colors';
 
 const useStyles = makeStyles({
