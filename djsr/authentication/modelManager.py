@@ -126,32 +126,11 @@ def getAccountName(accountId):
 def GetMemberDetails(memberId):
 
     accountId = MemberDB.objects.filter(Member_ID = memberId).values('Account_ID')
-<<<<<<< HEAD
-    accountId = accountId[0]['Account_ID']
     
-    memberDetails = {}
-
-    username = AccountDB.objects.filter(id = accountId).values_list('username')
-    email = AccountDB.objects.filter(id = accountId).values('email')
-    DateOfBirth = AccountDB.objects.filter(id = accountId).values('DateOfBirth')
-    CNIC = AccountDB.objects.filter(id = accountId).values('CNIC')
-    Address = AccountDB.objects.filter(id = accountId).values('Address')
-    Phone_No = AccountDB.objects.filter(id = accountId).values('Phone_No')
-=======
->>>>>>> f7abfc2c8669efc81c6e0edd531c1b1fdf3b379c
-    
-<<<<<<< HEAD
-    memberDetails['username'] = username[0][0]
-    memberDetails['email'] = email[0]['email']
-    memberDetails['DateOfBirth'] = DateOfBirth[0]['DateOfBirth']
-    memberDetails['CNIC'] = CNIC[0]['CNIC']
-    memberDetails['Address'] = Address[0]['Address']
-    memberDetails['Phone_No'] = Phone_No[0]['Phone_No']
-
-    return memberDetails
-=======
     dict = {}
+    
     try:
+    
         accountId = accountId[0]['Account_ID']
         username = AccountDB.objects.filter(id = accountId).values_list('username')
         email = AccountDB.objects.filter(id = accountId).values('email')
@@ -166,17 +145,10 @@ def GetMemberDetails(memberId):
         dict['CNIC'] = CNIC[0]['CNIC']
         dict['Address']= Address[0]['Address']
         dict['Phone_No']=Phone_No[0]['Phone_No']
+    
     except Exception as E:
+    
         print(E)
         dict['username'] = 'NOT FOUND'
     
-    
-
-
-<<<<<<< HEAD
     return dict
->>>>>>> 3cc398445ab3d1d9b3aa9b4ad00c65e2c37540f5
-=======
-    
-    return dict
->>>>>>> f7abfc2c8669efc81c6e0edd531c1b1fdf3b379c
