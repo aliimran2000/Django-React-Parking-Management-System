@@ -27,6 +27,7 @@ def EmployeeSerializer(Email, Username, Password, Dob, Cnic, Address, PhoneNo, E
     return EmployeeDB.objects.create(Account_ID = account, Employee_Type = EmployeeType)
 
 def MemberSerializer(Email, Username, Password, Dob, Cnic, Address, PhoneNo):
+    
     #instance.set_password(password)
     #use this to convert password
     account = AccountDB.objects.create(email = Email, username = Username, password = Password, DateOfBirth = Dob , CNIC = Cnic, Address = Address, Phone_No = PhoneNo)
@@ -112,11 +113,14 @@ def getBillsAmount(membership):
 
     return totalAmount
 
-def getEmployeeType(accountId):
+def getAccountType(accountId):
 
-    empType = EmployeeDB.objects.filter(Account_ID = accountId).values('Employee_Type')
-    
-    return empType[0]
+    #FIRST CHECK IF THE ACCOUNT IS EMPLOYEE
+    try:
+        emp = EmployeeDB.objects.filter(Account_ID = accountId).values('Employee_Type')
+        return emp[0]['Employee_Type']
+    except:
+        return "M"
 
 def getAccountName(accountId):
 
@@ -152,3 +156,16 @@ def GetMemberDetails(memberId):
         dict['username'] = 'NOT FOUND'
     
     return dict
+
+def isMemberCredentialValid(userName, password):
+
+    try:
+        account = AccountDB.objects.get(username = userName)
+    except:
+        #INVALID USERNAME
+        return False
+
+    if (account.check_password(password) == True):
+        return True
+    else:
+        return False

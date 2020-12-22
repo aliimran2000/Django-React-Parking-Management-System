@@ -43,3 +43,20 @@ class MembershipManager:
             return 0
         else:
             return self.BillingMan.getRemainingDues(Mem1)
+
+    def isActiveMembershipExpired(self, M1):
+
+        Mem1 = self.getActiveMembership(M1)
+        
+        if Mem1 is None:
+            return True
+        else:
+            return False
+
+    def renewMembership(self, M1, approvedBy):
+
+        Membership(M1, approvedBy)
+        
+        Mem1 = self.getActiveMembership(M1)
+
+        self.BillingMan.generateMembershipRenewalBill(Mem1)
