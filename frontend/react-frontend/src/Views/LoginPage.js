@@ -46,6 +46,27 @@ export default function LoginPage() {
   const[WrongPass,setWrongPass] = useState(false)
   
   
+  function SetType(){
+  axiosInstance.post('/employee/gettype/').then(
+    result=>{
+      console.log(result.data.Employee_Type)
+      sessionStorage.setItem("TYPE",result.data.Employee_Type)
+
+      if(result.data.Employee_Type === "PA" ){
+        window.location.href = "/Admin"
+      }else if(result.data.Employee_Type === "PE"){
+        window.location.href = "/Employ"
+      }else{
+        window.location.href = "/Member"
+      }
+
+    }
+  ).catch(error=>{
+    console.log(error)
+  })
+  }
+
+
   function HandleLogin(event) {
     
    axiosInstance.post('/member/login/', {
@@ -58,8 +79,11 @@ export default function LoginPage() {
               localStorage.setItem('refresh_token', result.data.refresh);
 
               if(result.status === 200){
-                window.location.href = "/MemberView/"
+                window.location.href = "/Admin"
+
+                sessionStorage.setItem("USER_NAME",username)
                 console.log(localStorage.getItem('access_token'))
+                SetType()
                }
           }
       ).catch (error => {
@@ -94,7 +118,7 @@ export default function LoginPage() {
               
         <div className={classes.form} >
             <TextField margin="normal" required
-                fullWidth value={username} onChange={(event)=>{setUser(event.target.value)}} label="Email" variant="outlined"/>
+                fullWidth value={username} onChange={(event)=>{setUser(event.target.value)}} label="User" variant="outlined"/>
             <TextField margin="normal" required
                 fullWidth value={password} onChange={(event)=>{setPassword(event.target.value)}}  label="Password" variant="outlined" type="password" />
             

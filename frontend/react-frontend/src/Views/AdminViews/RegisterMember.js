@@ -12,7 +12,7 @@ import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import axiosInstance from '../../Axios/AxiosInstance'
 
-
+import isLoggedin from '../../Utils/LoginCheck'
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -37,6 +37,14 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function RegisterMember(props){
+
+    if(!(isLoggedin() === "PA")){
+        console.log(isLoggedin()) 
+        window.location.href = "/"
+    }
+    else{
+        console.log(isLoggedin())
+    }
 
     let history = useHistory();
     

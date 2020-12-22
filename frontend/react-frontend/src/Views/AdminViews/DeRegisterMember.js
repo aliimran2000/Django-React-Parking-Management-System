@@ -10,6 +10,7 @@ import GoBack from '../../Components/GoBack'
 import { makeStyles } from '@material-ui/core/styles';
 import { green,red,blue } from '@material-ui/core/colors';
 import MemberDataDisplay from '../../Components/MemberDataDisplay'
+import isLoggedin from '../../Utils/LoginCheck'
 
 const useStyles = makeStyles({
     root: {
@@ -30,6 +31,16 @@ const useStyles = makeStyles({
 
 export default function DeRegisterMember(){
     const classes = useStyles();    
+    let AccountID  = ""
+    
+    if(!(isLoggedin() === "PA")){
+      console.log(isLoggedin()) 
+      window.location.href = "/"
+    }
+    else{
+        console.log(isLoggedin())
+    }
+
     
     return(
         <div>
@@ -45,6 +56,7 @@ export default function DeRegisterMember(){
             <Grid>
                   <MemberDataDisplay/>
             </Grid>
+
   
 
             </Box>
