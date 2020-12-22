@@ -132,11 +132,13 @@ def GetMemberDetails(memberId):
     Address = AccountDB.objects.filter(id = accountId).values('Address')
     Phone_No = AccountDB.objects.filter(id = accountId).values('Phone_No')
     
-    memberDetails.append({'username':username[0][0]})
-    memberDetails.append({'email':email[0]['email']})
-    memberDetails.append({'DateOfBirth':DateOfBirth[0]['DateOfBirth']})
-    memberDetails.append({'CNIC':CNIC[0]['CNIC']})
-    memberDetails.append({'Address':Address[0]['Address']})
-    memberDetails.append({'Phone_No':Phone_No[0]['Phone_No']})
+    dict = {}
 
-    return memberDetails
+    dict['username'] = username[0][0]
+    dict['email'] = email[0]['email']
+    dict['DateOfBirth'] = DateOfBirth[0]['DateOfBirth']
+    dict['CNIC'] = CNIC[0]['CNIC']
+    dict['Address']= Address[0]['Address']
+    dict['Phone_No']=Phone_No[0]['Phone_No']
+
+    return dict
