@@ -1,5 +1,6 @@
 import {React,useState} from 'react';
 import axiosInstance from '../Axios/AxiosInstance'
+
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -7,7 +8,7 @@ import TextField from '@material-ui/core/TextField';
 //import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+  import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import parkinglogo from '../Images/logo.png'
 
@@ -55,9 +56,10 @@ export default function LoginPage() {
               axiosInstance.defaults.headers['Authorization'] = "JWT " + result.data.access;
               localStorage.setItem('access_token', result.data.access);
               localStorage.setItem('refresh_token', result.data.refresh);
-            
+
               if(result.status === 200){
                 window.location.href = "/MemberView/"
+                console.log(localStorage.getItem('access_token'))
                }
           }
       ).catch (error => {
@@ -92,7 +94,7 @@ export default function LoginPage() {
               
         <div className={classes.form} >
             <TextField margin="normal" required
-                fullWidth value={username} onChange={(event)=>{setUser(event.target.value)}} label="User ID" variant="outlined"/>
+                fullWidth value={username} onChange={(event)=>{setUser(event.target.value)}} label="Email" variant="outlined"/>
             <TextField margin="normal" required
                 fullWidth value={password} onChange={(event)=>{setPassword(event.target.value)}}  label="Password" variant="outlined" type="password" />
             
@@ -107,12 +109,6 @@ export default function LoginPage() {
             >
                 Sign In
             </Button>
-
-            <Link href="/RegisterMember"  variant="body2">
-            {"Want in? Request A MemberShip Here"}
-            </Link>
-            
- 
         </div>
 
         

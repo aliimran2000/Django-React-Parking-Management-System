@@ -137,6 +137,7 @@ def GetMemberDetails(memberId):
     Address = AccountDB.objects.filter(id = accountId).values('Address')
     Phone_No = AccountDB.objects.filter(id = accountId).values('Phone_No')
     
+<<<<<<< HEAD
     memberDetails['username'] = username[0][0]
     memberDetails['email'] = email[0]['email']
     memberDetails['DateOfBirth'] = DateOfBirth[0]['DateOfBirth']
@@ -145,3 +146,15 @@ def GetMemberDetails(memberId):
     memberDetails['Phone_No'] = Phone_No[0]['Phone_No']
 
     return memberDetails
+=======
+    dict = {}
+
+    dict['username'] = username[0][0]
+    dict['email'] = email[0]['email']
+    dict['DateOfBirth'] = DateOfBirth[0]['DateOfBirth']
+    dict['CNIC'] = CNIC[0]['CNIC']
+    dict['Address']= Address[0]['Address']
+    dict['Phone_No']=Phone_No[0]['Phone_No']
+
+    return dict
+>>>>>>> 3cc398445ab3d1d9b3aa9b4ad00c65e2c37540f5

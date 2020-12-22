@@ -2,4 +2,13 @@
 Pipfile
 Pipfile.lock
 __pycache__
+<<<<<<< HEAD
+db.sqlite3
+<<<<<<< HEAD
+node_modules
+=======
 curlQueries.txt
+>>>>>>> e9bfc890e236545563682c819529627be6aa7f4b
+=======
+curlQueries.txt
+>>>>>>> ea563a4efb9b943bc221b999637f3c0e9b653df1
