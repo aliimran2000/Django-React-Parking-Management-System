@@ -221,6 +221,9 @@ export default function RegisterMember(props){
                 <Button onClick={() => {history.goBack()}}>
                     GO BACK
                 </Button>
+                <Typography variant='h3' color="primary" style = {{width: 10000 ,  margin:10}} >
+                    MEMBER REGISTRATION SUCCESSFULL
+                </Typography>
             </div>
         )
     }

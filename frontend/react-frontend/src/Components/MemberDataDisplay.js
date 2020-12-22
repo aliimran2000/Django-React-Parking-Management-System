@@ -29,30 +29,34 @@ const useStyles = makeStyles({
     },
   });
 
-
 export default function MemberDataDisplay(props){
     const classes = useStyles();    
     
     const [Member_ID,setMember_ID] = useState(1);
+    //let UD = {username:''}
     const [UD,setUD] = useState({username:''});
     
 
     async function getDatabyID(){
-      let prom = await axiosInstance.post('member/getdetails/',{Member_ID:Member_ID})
-
-      setUD(prom.data)
-
+      let val = props.Rid
+      let prom = await axiosInstance.post('member/getdetails/',{Member_ID:val})
+    
+      this.setState({UD:prom.data})
+      //setUD(prom.data)
+     
+      
       }
-        
+
+    
+    //getDatabyID()
+    
+
     return(
       <div>
-
+      
       <Card style = {{width:1000,margin:5}} className={classes.root} variant="outlined">
         
         <CardContent>
-            <Grid>
-                  <TextField style = {{width:960,margin:5}} required label="Enter User Account ID" variant="outlined" onChange={(event)=>{setMember_ID(event.target.value)}}/>
-            </Grid>
             <Typography variant="h5" component="h2">
             Name : {UD.username}   
             </Typography>
@@ -67,11 +71,8 @@ export default function MemberDataDisplay(props){
             </Typography>
         </CardContent>
         
-        </Card>
-        
-        <Button  style={{ width:1005 ,color: green[1000],background:blue[400] ,margin:5}} onClick={()=>getDatabyID()}>
-            Search User
-        </Button>
+      </Card>
+      
     </div>
       )
     

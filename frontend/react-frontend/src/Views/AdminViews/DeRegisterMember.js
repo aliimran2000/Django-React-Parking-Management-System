@@ -10,14 +10,29 @@ import GoBack from '../../Components/GoBack'
 import { makeStyles } from '@material-ui/core/styles';
 import isLoggedin from '../../Utils/LoginCheck'
 import Memberverifier from '../../Components/MemberVerifier'
+import MemberDataDisplay from '../../Components/MemberDataDisplay'
 
 
 
+
+let gotid = true;
 
 export default function DeRegisterMember(){
-       
-    
-    
+      
+
+    const [UID,setUID] = useState(-1);
+    const [done,setdone] = useState(0);
+
+    function MemDis(){
+      if(UID !== -1){
+        return(
+          <MemberDataDisplay UID={1}/>
+        )
+      }
+    }
+
+
+
     if(!(isLoggedin() === "PA")){
       console.log(isLoggedin()) 
       window.location.href = "/"
@@ -26,7 +41,7 @@ export default function DeRegisterMember(){
         console.log(isLoggedin())
     }
 
-
+    
     return(
         <div>
             <GoBack/>
@@ -40,10 +55,9 @@ export default function DeRegisterMember(){
                 </Typography>
             </Grid>
             <Grid>
-                <Memberverifier/>                 
-            </Grid>
+                <Memberverifier/>
 
-  
+            </Grid>
 
             </Box>
             </Container>

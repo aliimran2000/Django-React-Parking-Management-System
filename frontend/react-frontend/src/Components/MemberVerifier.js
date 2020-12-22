@@ -31,12 +31,17 @@ const useStyles = makeStyles({
 
 
 export default function MemberVerifier(props){
+    const classes = useStyles();   
     const [username,setUser] = useState("");
     const [password,setPassword] = useState("");
     const [isverified,setverify] = useState(false);
+    const [UD,setUD] = useState({username:"notfound"})
+   
+    
 
 
     function HandleVerify(){
+      let prom
         axiosInstance.post('member/verifycredentials/',{
             username: username,
             password: password,}
@@ -44,8 +49,13 @@ export default function MemberVerifier(props){
         .then(
           result=>{
             if(result.status === 200)
-                props.uid = result.data            
-          }
+  
+                axiosInstance.post('member/getdetails/',{Member_ID:result.data}).then(result1=>{
+                  setUD(result1.data)
+                  setverify(true)
+                })
+                 
+            }
         )
         .catch(error=>{
           console.log(error)
@@ -58,9 +68,23 @@ export default function MemberVerifier(props){
         if(isverified){
             return (
             <div>
-                <Typography variant='h3' color="error" style = {{width: 1000 ,  margin:0}} >
-                    VERFIED
-                </Typography>
+                <Card style = {{width:1000,margin:5}} className={classes.root} variant="outlined">
+                  <CardContent>
+                      <Typography variant="h5" component="h2">
+                      Name : {UD.username}   
+                      </Typography>
+                      <Typography className={classes.pos} color="textSecondary">
+                      Date of Birth : {UD.DateOfBirth}
+                      </Typography>
+                      <Typography variant="body2" component="p">
+                      CNIC :  {UD.CNIC}
+                      </Typography>
+                      <Typography variant="body2" component="p">
+                      Email :  {UD.email}
+                      </Typography>
+                  </CardContent>
+                  
+                </Card>
             </div>)
         }
     }
@@ -75,10 +99,11 @@ export default function MemberVerifier(props){
             <Grid>
                 <TextField style = {{width: 1000 ,  margin:5}} required value={password} onChange={(event)=>{setPassword(event.target.value)}}  label="Password" variant="outlined" type="password" />
             </Grid>
+            {display()}
             <Button fullWidth variant="contained" color="primary" onClick={() => {HandleVerify()}}>
                 Submit 
             </Button>
-            {display()}
+            
 
                 
 
