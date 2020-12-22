@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .modelManager import MyTokenObtainPairSerializer
-from .modelManager import getAccountName
+from .modelManager import getAccountName, getAccountType, isMemberCredentialValid
 
 from .BLL.MemberManager import MemberManager
 from .BLL.MembershipManager import MembershipManager
@@ -47,6 +47,20 @@ class LogoutAndBlacklistRefreshTokenForUserView(APIView):
         except:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
+class verifyCredentialsApiView(APIView):
+
+    permission_classes = (permissions.IsAuthenticated,)
+    
+    def post(self, request, format='json'):
+
+        username = request.data['username']
+        password = request.data['password']
+        
+        if (isMemberCredentialValid(username, password) == True):
+            return Response("OK", status=status.HTTP_200_OK)
+        else:
+            return Response("INVALD", status=status.HTTP_401_UNAUTHORIZED)
+
 class registerMemberApiView(APIView):
 
     permission_classes = (permissions.IsAuthenticated,)
@@ -80,6 +94,24 @@ class deregisterMemberApiView(APIView):
             return Response("Member "+ memberId +" has uncleared dues. Unable to deregister member", status=status.HTTP_402_PAYMENT_REQUIRED)
         else:
             return Response("Member "+ memberId +" Has Successfully Been deregistered", status=status.HTTP_201_CREATED)
+
+class renewMembershipApiView(APIView):
+
+    permission_classes = (permissions.IsAuthenticated,)
+    
+    def post(self, request, format='json'):
+
+        memberId = request.data['Member_ID']
+
+        Approved_By = request.user.id
+
+        resp = MemberMan.renewMembership(memberId, Approved_By)
+
+        if resp == "Not Expired":
+            return Response("Member "+ memberId +"'s Membership has not yet expired, hence, unable to renew membership", status=status.HTTP_406_NOT_ACCEPTABLE)
+        else:
+            return Response("Member "+ memberId +" Membership Has Successfully Been Renewed", status=status.HTTP_201_CREATED)
+
 
 class registerEmployeeApiView(APIView):
 
@@ -127,15 +159,17 @@ class deregisterVehicleApiView(APIView):
 
         return Response("Vehicle " + Vehicle_ID + " has successfully been deregistered", status=status.HTTP_200_OK)
 
-class employeeTypeApiView(APIView):
+class accountTypeApiView(APIView):
 
     permission_classes = (permissions.IsAuthenticated,)
     
     def post(self, request, format='json'):
 
         accountId = request.user.id
-        empType = EmployeeMan.getEmployeeType(accountId)
-        return Response(empType, status.HTTP_200_OK)
+ 
+        type = getAccountType(accountId)
+
+        return Response(type, status.HTTP_200_OK)
 
 class accountNameApiView(APIView):
 

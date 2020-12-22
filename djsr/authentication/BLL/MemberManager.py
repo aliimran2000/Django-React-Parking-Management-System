@@ -30,6 +30,7 @@ class MemberManager:
             return "OK"          
 
     def getMemberById(self, memberId):
+        
         return GetMemberObject(memberId)
 
     def registerVehicle(self, Vehicle_ID, Member_ID, Vehicle_Model):
@@ -42,3 +43,14 @@ class MemberManager:
 
         memberDetails = GetMemberDetails(memberId)
         return memberDetails
+
+    def renewMembership(self, memberId, approvedBy):
+
+        M1 = self.getMemberById(memberId)
+
+        if (self.MembershipMan.isActiveMembershipExpired(M1) == False):
+            return "Not Expired"
+        
+        self.MembershipMan.renewMembership(M1, approvedBy)
+
+        return "OK"

@@ -14,12 +14,14 @@ urlpatterns = [
     path('member/registervehicle/', MemAccountApiCaller.registerVehicle(), name="Register_Vehicle"),
     path('member/deregistervehicle/', MemAccountApiCaller.deregisterVehicle(), name="Deregister_Vehicle"),
     path('member/getdetails/', MemAccountApiCaller.getDetails(), name='get_member_details'),
+    path('member/renewmembership/', MemAccountApiCaller.renewMembership(), name='renew_membership'),
+    path('member/verifycredentials/', MemAccountApiCaller.verifyCredentials(), name='verify_credentials'),
 
     path('account/getname/', EmpAccountApiCaller.getName(), name='get_account_name'),
+    path('account/gettype/', EmpAccountApiCaller.getType(), name='get_account_type'),
 
     path('employee/signup/', EmpAccountApiCaller.signup(), name="Register_Employee"),
     path('employee/login/', EmpAccountApiCaller.login(), name='employee_token_create'),
-    path('employee/gettype/', EmpAccountApiCaller.getType(), name='get_employee_type'),
 
     path('logout/',EmpAccountApiCaller.logout(),name="logout"),
     path('refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
