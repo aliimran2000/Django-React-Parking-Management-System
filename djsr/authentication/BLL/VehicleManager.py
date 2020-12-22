@@ -1,6 +1,6 @@
 from .Vehicle import Vehicle
 
-from ..modelManager import getVehicleObject
+from ..modelManager import getVehicleObject, DeleteVehicleObject
 
 class VehicleManager:
 
@@ -16,3 +16,8 @@ class VehicleManager:
 
         V1 = getVehicleObject(Vehicle_ID)
         self.BillingMan.generateVehicleRegistrationBill(Mem1)
+    
+    def deregisterVehicle(self, Vehicle_ID):
+
+        V1 = getVehicleObject(Vehicle_ID)
+        DeleteVehicleObject(V1)

@@ -121,12 +121,11 @@ class deregisterVehicleApiView(APIView):
     
     def post(self, request, format='json'):
 
-        Vehicle_ID = request.data['Vehicle_ID']        
-        Member_ID = request.data['Member_ID']
+        Vehicle_ID = request.data['Vehicle_ID']
 
-        MemberMan.deregisterVehicle(Vehicle_ID, Member_ID)
+        VehicleMan.deregisterVehicle(Vehicle_ID)
 
-        return Response("Vehicle " + Vehicle_ID + " has successfully been deregistered against Member " + Member_ID, status=status.HTTP_201_CREATED)
+        return Response("Vehicle " + Vehicle_ID + " has successfully been deregistered", status=status.HTTP_200_OK)
 
 class employeeTypeApiView(APIView):
 

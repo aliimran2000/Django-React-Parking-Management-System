@@ -73,6 +73,10 @@ def DeleteMembershipObject(membership):
 
     membership.delete()
 
+def DeleteVehicleObject(vehicle):
+
+    vehicle.delete()
+
 def getActiveMembershipObject(member):
 
     memberships = member.membership_set.all()
@@ -111,19 +115,20 @@ def getBillsAmount(membership):
 def getEmployeeType(accountId):
 
     empType = EmployeeDB.objects.filter(Account_ID = accountId).values('Employee_Type')
-    return empType
+    
+    return empType[0]
 
 def getAccountName(accountId):
 
     name = AccountDB.objects.filter(id = accountId).values('username')
-    return name
+    return name[0]
 
 def GetMemberDetails(memberId):
 
     accountId = MemberDB.objects.filter(Member_ID = memberId).values('Account_ID')
     accountId = accountId[0]['Account_ID']
     
-    memberDetails = []
+    memberDetails = {}
 
     username = AccountDB.objects.filter(id = accountId).values_list('username')
     email = AccountDB.objects.filter(id = accountId).values('email')
@@ -132,11 +137,11 @@ def GetMemberDetails(memberId):
     Address = AccountDB.objects.filter(id = accountId).values('Address')
     Phone_No = AccountDB.objects.filter(id = accountId).values('Phone_No')
     
-    memberDetails.append({'username':username[0][0]})
-    memberDetails.append({'email':email[0]['email']})
-    memberDetails.append({'DateOfBirth':DateOfBirth[0]['DateOfBirth']})
-    memberDetails.append({'CNIC':CNIC[0]['CNIC']})
-    memberDetails.append({'Address':Address[0]['Address']})
-    memberDetails.append({'Phone_No':Phone_No[0]['Phone_No']})
+    memberDetails['username'] = username[0][0]
+    memberDetails['email'] = email[0]['email']
+    memberDetails['DateOfBirth'] = DateOfBirth[0]['DateOfBirth']
+    memberDetails['CNIC'] = CNIC[0]['CNIC']
+    memberDetails['Address'] = Address[0]['Address']
+    memberDetails['Phone_No'] = Phone_No[0]['Phone_No']
 
     return memberDetails

@@ -11,8 +11,8 @@ urlpatterns = [
     path('member/signup/', MemAccountApiCaller.signup(), name="Register_Member"),
     path('member/login/', MemAccountApiCaller.login(), name='member_token_create'),
     path('member/deregister/', MemAccountApiCaller.deregister(), name="Deregister_Member"),
-    path('member/registerVehicle/', MemAccountApiCaller.registerVehicle(), name="Register_Vehicle"),
-    path('member/deregisterVehicle/', MemAccountApiCaller.deregisterVehicle(), name="Deregister_Vehicle"),
+    path('member/registervehicle/', MemAccountApiCaller.registerVehicle(), name="Register_Vehicle"),
+    path('member/deregistervehicle/', MemAccountApiCaller.deregisterVehicle(), name="Deregister_Vehicle"),
     path('member/getdetails/', MemAccountApiCaller.getDetails(), name='get_member_details'),
 
     path('account/getname/', EmpAccountApiCaller.getName(), name='get_account_name'),
