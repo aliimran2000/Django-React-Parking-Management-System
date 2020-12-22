@@ -40,8 +40,13 @@ export default function MemberDataDisplay(props){
 
     async function getDatabyID(){
       let prom = await axiosInstance.post('member/getdetails/',{Member_ID:Member_ID})
-      setUD(prom.data)      
-    }
+
+      setUD(prom.data)
+
+      }
+    
+      
+    
       
     return(
       <div>
@@ -52,20 +57,18 @@ export default function MemberDataDisplay(props){
             <Grid>
                   <TextField style = {{width:960,margin:5}} required label="Enter User Account ID" variant="outlined" onChange={(event)=>{setMember_ID(event.target.value)}}/>
             </Grid>
-            
             <Typography variant="h5" component="h2">
             Name : {UD.username}   
             </Typography>
             <Typography className={classes.pos} color="textSecondary">
             Date of Birth : {UD.DateOfBirth}
-            </Typography>lulloo pudoo har kubooter dunda doli
+            </Typography>
             <Typography variant="body2" component="p">
             CNIC :  {UD.CNIC}
             </Typography>
             <Typography variant="body2" component="p">
             Email :  {UD.email}
             </Typography>
-            
         </CardContent>
         
         </Card>

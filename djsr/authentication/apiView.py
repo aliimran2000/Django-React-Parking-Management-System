@@ -156,5 +156,5 @@ class memberDetailsApiView(APIView):
         memberId = request.data['Member_ID']
 
         memberDetails = MemberMan.getMemberDetails(memberId)
-
+    
         return Response(memberDetails, status.HTTP_200_OK)

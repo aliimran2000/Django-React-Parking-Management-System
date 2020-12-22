@@ -105,11 +105,11 @@ function foradmin(b1){
               <ListItemText primary="De-Register Member" />
         </ListItem>
         <Divider /> 
-        <ListItem button onClick={()=>{window.location.href = "/Payments"}}>
+        <ListItem button onClick={()=>{window.location.href = "/AddVehicle"}}>
               <ListItemIcon><DriveEtaIcon style={{ color: green[500] }}/></ListItemIcon>
               <ListItemText primary="Add Member Vehicle" />
         </ListItem>
-        <ListItem button onClick={()=>{window.location.href = "/Payments"}}>
+        <ListItem button onClick={()=>{window.location.href = "/RemoveVehicle"}}>
               <ListItemIcon><DriveEtaIcon style={{ color: red[500] }}/></ListItemIcon>
               <ListItemText primary="Remove Member Vehicle" />
         </ListItem>

@@ -25,22 +25,23 @@ function App() {
     <div className="App">
         <Router>
           <Switch>  
-            
-            
             <Route exact path = "/" >
                 <LoginPage />              
             </Route>
-              
+    
+
             <Route exact path = "/RegisterMember">
                 <RegisterMember/>
-            </Route>      
+            </Route>
             <Route exact path = "/DeRegisterMember">
                 <DeRegisterMember/>
             </Route>
-
-            <Route>
+            <Route exact path = "/AddVehicle">
               <AddVehicle/>
             </Route>
+
+
+
 
             <Route exact path = "/Member">
                   <MemberView />  
