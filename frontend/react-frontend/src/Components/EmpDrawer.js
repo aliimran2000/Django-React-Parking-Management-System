@@ -157,7 +157,7 @@ export default function EmpDrawer(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            {props.message}
+            {sessionStorage.getItem("USER_NAME")}
           </Typography>
         </Toolbar>
       </AppBar>

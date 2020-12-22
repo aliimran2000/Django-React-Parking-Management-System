@@ -44,10 +44,7 @@ export default function MemberDataDisplay(props){
       setUD(prom.data)
 
       }
-    
-      
-    
-      
+        
     return(
       <div>
 

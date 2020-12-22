@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField'
 import Grid from '@material-ui/core/Grid';
 import { useState } from 'react';
-
+import isLoggedin from '../../Utils/LoginCheck'
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
@@ -37,6 +37,14 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AddVehicle(props){
 
+    if(!(isLoggedin() === "PA")){
+        console.log(isLoggedin()) 
+        window.location.href = "/"
+    }
+    else{
+        console.log(isLoggedin())
+    }
+    
     let history = useHistory();
     
     const [first_name,setfirst_name] = useState('');
