@@ -13,6 +13,7 @@ from .BLL.MembershipManager import MembershipManager
 from .BLL.EmployeeManager import EmployeeManager
 from .BLL.BillingManager import BillingManager
 from .BLL.VehicleManager import VehicleManager
+from .BLL.ParkingLotManager import ParkingLotManager
 
 #GLOBAL VARIABLES
 MemberMan = MemberManager()
@@ -20,6 +21,7 @@ MembershipMan = MembershipManager()
 BillingMan = BillingManager()
 EmployeeMan = EmployeeManager()
 VehicleMan = VehicleManager()
+ParkingLotMan = ParkingLotManager()
 
 def initializeManagers():
 
@@ -49,15 +51,17 @@ class LogoutAndBlacklistRefreshTokenForUserView(APIView):
 
 class verifyCredentialsApiView(APIView):
 
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (permissions.AllowAny,)
     
     def post(self, request, format='json'):
 
         username = request.data['username']
         password = request.data['password']
         
-        if (isMemberCredentialValid(username, password) == True):
-            return Response("OK", status=status.HTTP_200_OK)
+        memberId = isMemberCredentialValid(username, password)
+
+        if (memberId != None):
+            return Response(memberId, status=status.HTTP_200_OK)
         else:
             return Response("INVALD", status=status.HTTP_401_UNAUTHORIZED)
 

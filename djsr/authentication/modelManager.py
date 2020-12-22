@@ -163,9 +163,16 @@ def isMemberCredentialValid(userName, password):
         account = AccountDB.objects.get(username = userName)
     except:
         #INVALID USERNAME
-        return False
+        return None
 
     if (account.check_password(password) == True):
-        return True
+
+        accountIdObj = account._meta.get_field('id')
+        accountId = accountIdObj.value_from_object(account)
+
+        memberId = MemberDB.objects.filter(Account_ID = accountId).values_list('Member_ID')
+
+        return memberId[0][0]
+
     else:
-        return False
+        return None
