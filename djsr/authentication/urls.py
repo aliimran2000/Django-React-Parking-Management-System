@@ -19,7 +19,8 @@ urlpatterns = [
     path('member/parkvehicle/', MemAccountApiCaller.parkVehicle(), name='park_vehicle'),
     path('member/exitvehicle/', MemAccountApiCaller.exitVehicle(), name='exit_vehicle'),
     path('member/getvehiclesdetail/', MemAccountApiCaller.getVehiclesDetail(), name='get_vehicles_detail'),
-    
+    path('member/getbillsdetail/', MemAccountApiCaller.getBillsDetail(), name='get_bills_detail'),
+
     path('account/getname/', EmpAccountApiCaller.getName(), name='get_account_name'),
     path('account/gettype/', EmpAccountApiCaller.getType(), name='get_account_type'),
 

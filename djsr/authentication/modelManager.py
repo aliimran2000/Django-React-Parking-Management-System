@@ -157,6 +157,50 @@ def getVehiclesDetail(memberId):
 
     return details
 
+def getBillsDetail(memberships):
+
+    billDetails = []
+
+    for one in memberships:
+
+        bills = BillDB.objects.filter(Membership_ID = one)
+
+        dict = {}
+
+        for one_bill in bills:
+
+            membershipIdObj = one_bill._meta.get_field('Membership_ID')
+            membershipId = membershipIdObj.value_from_object(one_bill)
+
+            genDateObj = one_bill._meta.get_field('Generated_Date')
+            genDate = genDateObj.value_from_object(one_bill)
+
+            dueDateObj = one_bill._meta.get_field('Due_Date')
+            dueDate = dueDateObj.value_from_object(one_bill)
+
+            paidStatusObj = one_bill._meta.get_field('Paid_Status')
+            paidStatus = paidStatusObj.value_from_object(one_bill)
+
+            billAmountObj = one_bill._meta.get_field('Bill_Amount')
+            billAmount = billAmountObj.value_from_object(one_bill)
+
+            billTypeObj = one_bill._meta.get_field('Bill_Type')
+            billType = billTypeObj.value_from_object(one_bill)
+
+            dict['Membership_ID'] = membershipId
+            dict['Generated_Date'] = genDate
+            dict['Due_Date'] = dueDate
+            dict['Paid_Status'] = paidStatus
+            dict['Bill_Amount'] = billAmount
+            dict['Bill_Type'] = billType
+
+            billDetails.append(dict)
+
+    if not billDetails:
+        return None
+
+    return billDetails
+
 def DeleteAccountObject(accountId):
     
     account = AccountDB.objects.get(id = accountId)
