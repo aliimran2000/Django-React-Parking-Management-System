@@ -28,6 +28,7 @@ def initializeManagers():
     MemberMan.initializeManagers(MembershipMan, VehicleMan)
     MembershipMan.initializeManagers(BillingMan)
     VehicleMan.initializeManagers(BillingMan)
+    ParkingLotMan.initializeManagers(MemberMan, BillingMan, VehicleMan)
 
 class ObtainTokenPairWithAccountsView(TokenObtainPairView):
 
@@ -162,6 +163,28 @@ class deregisterVehicleApiView(APIView):
         VehicleMan.deregisterVehicle(Vehicle_ID)
 
         return Response("Vehicle " + Vehicle_ID + " has successfully been deregistered", status=status.HTTP_200_OK)
+
+class parkVehicleApiView(APIView):
+
+    permission_classes = (permissions.IsAuthenticated,)
+    
+    def post(self, request, format='json'):
+
+        Vehicle_ID = request.data['Vehicle_ID']
+        Member_ID = request.data['Member_ID']
+
+        slot = ParkingLotMan.parkVehicle(Member_ID, Vehicle_ID)
+
+        if slot == "EXPIRED":
+            return Response("Member " + Member_ID + " Membership has been expired, please renew it", status=status.HTTP_406_NOT_ACCEPTABLE)
+        elif slot == "NOT REGISTERED":
+            return Response("Vehicle " + Vehicle_ID + " is not registered against this Member", status=status.HTTP_401_UNAUTHORIZED)
+        elif slot == "UNCLEARED DUES":
+            return Response("Member " + Member_ID + " has uncleared overdue bills, please pay bill", status=status.HTTP_402_PAYMENT_REQUIRED)            
+        elif slot == "PARKING FULL":
+            return Response("Parking is Full", status=status.HTTP_306_RESERVED)
+        else:
+            return Response(slot , status=status.HTTP_200_OK)
 
 class accountTypeApiView(APIView):
 
