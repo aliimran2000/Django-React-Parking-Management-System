@@ -10,7 +10,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import axiosInstance from '../Axios/AxiosInstance'
-import { green,red,blue } from '@material-ui/core/colors';
+
 
 const useStyles = makeStyles({
     root: {
@@ -51,14 +51,16 @@ export default function MemberVerifier(props){
             if(result.status === 200)
   
                 axiosInstance.post('member/getdetails/',{Member_ID:result.data}).then(result1=>{
-                  setUD(result1.data)
+                  setUD(result1.data)//this is user details
                   setverify(true)
+                  props.Ddata[1](result.data)//this is user id
                 })
                  
             }
         )
         .catch(error=>{
-          console.log(error)
+          props.Ddata[1](-1)
+                  
           setverify(false)
         })
     
@@ -87,26 +89,30 @@ export default function MemberVerifier(props){
                 </Card>
             </div>)
         }
+        else{
+          return(
+            <div>
+            <Typography variant="caption" color="error">
+                Please Enter Correct MemberID and Password
+            </Typography>
+            </div>
+          )
+        }
     }
 
     return(
     <div>
-
             <Grid>
-                <TextField style = {{width: 1000 ,  margin:5}} required value={username} onChange={(event)=>{setUser(event.target.value)}} label="User ID" variant="outlined" />
+                <TextField style = {{width: 1000 ,  margin:5}} required value={username} onChange={(event)=>{setUser(event.target.value)}} label="Member ID" variant="outlined" />
             </Grid>
             
             <Grid>
                 <TextField style = {{width: 1000 ,  margin:5}} required value={password} onChange={(event)=>{setPassword(event.target.value)}}  label="Password" variant="outlined" type="password" />
             </Grid>
             {display()}
-            <Button fullWidth variant="contained" color="primary" onClick={() => {HandleVerify()}}>
-                Submit 
+            <Button style = {{width: 1000 ,  margin:5}} variant="contained" color="primary" onClick={() => {HandleVerify()}}>
+                Verify  
             </Button>
-            
-
-                
-
     </div>
       )
     

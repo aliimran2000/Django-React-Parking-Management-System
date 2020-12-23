@@ -95,9 +95,9 @@ class deregisterMemberApiView(APIView):
         resp = MemberMan.deregisterMember(memberId)
 
         if resp == "Fail":
-            return Response("Member "+ memberId +" has uncleared dues. Unable to deregister member", status=status.HTTP_402_PAYMENT_REQUIRED)
+            return Response("Member "+ str(memberId) +" has uncleared dues. Unable to deregister member", status=status.HTTP_402_PAYMENT_REQUIRED)
         else:
-            return Response("Member "+ memberId +" Has Successfully Been deregistered", status=status.HTTP_201_CREATED)
+            return Response("Member "+ str(memberId) +" Has Successfully Been deregistered", status=status.HTTP_201_CREATED)
 
 class renewMembershipApiView(APIView):
 
