@@ -2,7 +2,7 @@
 Pipfile
 Pipfile.lock
 __pycache__
-authentication/__pycache__
+djsr/authentication/__pycache__
 <<<<<<< HEAD
 db.sqlite3
 <<<<<<< HEAD
@@ -13,3 +13,5 @@ curlQueries.txt
 =======
 curlQueries.txt
 >>>>>>> ea563a4efb9b943bc221b999637f3c0e9b653df1
+djsr/db.sqlite3
+djsr/authentication/BLL/__pycache__
