@@ -1,6 +1,6 @@
 from .Vehicle import Vehicle
 
-from ..modelManager import getVehicleObject, DeleteVehicleObject, validateVehicleByMember
+from ..modelManager import getVehicleObject, DeleteVehicleObject, validateVehicleByMember, getVehiclesDetail
 
 class VehicleManager:
 
@@ -34,3 +34,7 @@ class VehicleManager:
         DeleteVehicleObject(V1)
 
         return "OK"
+
+    def getVehiclesDetail(self, memberId):
+
+        return getVehiclesDetail(memberId)

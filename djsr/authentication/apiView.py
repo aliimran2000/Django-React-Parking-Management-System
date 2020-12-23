@@ -239,3 +239,18 @@ class memberDetailsApiView(APIView):
         memberDetails = MemberMan.getMemberDetails(memberId)
     
         return Response(memberDetails, status.HTTP_200_OK)
+
+class getVehiclesDetailApiView(APIView):
+
+    permission_classes = (permissions.IsAuthenticated,)
+    
+    def post(self, request, format='json'):
+
+        memberId = request.data['Member_ID']
+
+        vehiclesDetail = VehicleMan.getVehiclesDetail(memberId)
+    
+        if vehiclesDetail is None:
+            return Response("No Vehicle is Registered Against Member " + memberId, status.HTTP_404_NOT_FOUND)
+        else:
+            return Response(vehiclesDetail, status.HTTP_200_OK)

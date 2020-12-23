@@ -131,6 +131,32 @@ def validateVehicleByMember(M1, vehicleId):
     else:
         return None
 
+def getVehiclesDetail(memberId):
+
+    vehicles = VehicleDB.objects.filter(Member_ID = memberId)
+
+    details = []
+
+    for one in vehicles:
+
+        dict = {}
+
+        vehicleIdObj = one._meta.get_field('Vehicle_ID')
+        vehicleId = vehicleIdObj.value_from_object(one)     
+
+        vehicleModelObj = one._meta.get_field('Vehicle_Model')
+        vehicleModel = vehicleModelObj.value_from_object(one)     
+
+        dict['Vehicle_ID'] = vehicleId
+        dict['Vehicle_Model'] = vehicleModel
+
+        details.append(dict)
+
+    if not details:
+        return None
+
+    return details
+
 def DeleteAccountObject(accountId):
     
     account = AccountDB.objects.get(id = accountId)
