@@ -1,7 +1,6 @@
 import React from 'react'
 import {Typography} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField'
 import Grid from '@material-ui/core/Grid';
 import { useState } from 'react';
 import isLoggedin from '../../Utils/LoginCheck'
@@ -77,7 +76,7 @@ export default function Renewmembership(){
 
 
     function HandleRenewal(){
-        let prom = axiosInstance.post('member/renewmembership/',{
+        axiosInstance.post('member/renewmembership/',{
             Member_ID:UID
         }).then(
             result=>{
@@ -104,24 +103,23 @@ export default function Renewmembership(){
 
             if(success===2){
                 return ( 
-                    <Typography align="center" variant="h5" style={{color:red[500]}}>
+                    <Typography align="left" variant="h7" style={{color:red[500],margin:5}}>
                         {errorMessage}
-                        
                     </Typography>)
             }
 
             return(
             <div>
-                <Card style = {{width:1000,margin:5,backgroundColor:green[100]}} className={classes.root} variant="outlined">
+                <Card align="center" style = {{width:1000,margin:5,backgroundColor:green[100]}} className={classes.root} variant="outlined">
                 <CardContent>
-                    <Grid>
+                    <Grid align="center">
                         <Typography align="center" variant="h6" style={{color:green[500]}}>
                             MemberShip will only be renewed if Current MemberShip is expired   
                         </Typography>
                     </Grid>
-                    
-                    {DisplayRenew()}
-                   
+                    <Grid align="center">
+                        {DisplayRenew()}
+                    </Grid>
                  </CardContent>
                 </Card>
             </div>    

@@ -48,7 +48,7 @@ export default function DeRegisterMember(){
       }else if(success===2){
         return(
         <Typography variant="caption" color="error">
-          Unable to delete member please pay your dues first          
+          Unable to delete member remaining dues need to be cleared        
         </Typography>
       )
       }else {
