@@ -120,8 +120,8 @@ export default function AddVehicle(props){
             <Box spacing={3} m={10}>
 
             <Grid>
-                <Typography align="center" variant='h3' color="primary" style = {{width: 1000 ,  margin:0}} >
-                   ADD VEHICLE
+                <Typography align="center" variant='h2' color="primary" style = {{width: 1000 ,  margin:0}} >
+                   Register Vehicle
                 </Typography>
             </Grid>
             <Grid>

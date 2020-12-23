@@ -113,9 +113,9 @@ class renewMembershipApiView(APIView):
         resp = MemberMan.renewMembership(memberId, Approved_By)
 
         if resp == "Not Expired":
-            return Response("Member "+ memberId +"'s Membership has not yet expired, hence, unable to renew membership", status=status.HTTP_406_NOT_ACCEPTABLE)
+            return Response("Member "+ str(memberId) +"'s Membership has not yet expired, hence, unable to renew membership", status=status.HTTP_406_NOT_ACCEPTABLE)
         else:
-            return Response("Member "+ memberId +" Membership Has Successfully Been Renewed", status=status.HTTP_201_CREATED)
+            return Response("Member "+ str(memberId) +" Membership Has Successfully Been Renewed", status=status.HTTP_201_CREATED)
 
 
 class registerEmployeeApiView(APIView):
