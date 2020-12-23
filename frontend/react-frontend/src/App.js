@@ -9,6 +9,7 @@ import RegisterMember from './Views//AdminViews/RegisterMember'
 import DeRegisterMember from './Views//AdminViews/DeRegisterMember'
 import MemberView from './Views/MemberViews/Member_View'
 import AdminView from './Views/AdminViews/Admin_View'
+import RenewMembership from './Views/AdminViews/RenewMembership'
 import AddVehicle from './Views/AdminViews/AddVehicle'
 import EmployView from './Views/Employ_View'
 import NotFound from './Views/NotFound'
@@ -35,6 +36,9 @@ function App() {
             </Route>
             <Route exact path = "/DeRegisterMember">
                 <DeRegisterMember/>
+            </Route>
+            <Route exact path = "/RenewMembership">
+              <RenewMembership/>
             </Route>
             <Route exact path = "/AddVehicle">
               <AddVehicle/>
