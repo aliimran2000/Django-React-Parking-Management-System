@@ -27,7 +27,7 @@ def initializeManagers():
 
     MemberMan.initializeManagers(MembershipMan, VehicleMan)
     MembershipMan.initializeManagers(BillingMan)
-    VehicleMan.initializeManagers(BillingMan)
+    VehicleMan.initializeManagers(BillingMan, MemberMan)
     ParkingLotMan.initializeManagers(MemberMan, BillingMan, VehicleMan)
 
 class ObtainTokenPairWithAccountsView(TokenObtainPairView):
@@ -158,11 +158,15 @@ class deregisterVehicleApiView(APIView):
     
     def post(self, request, format='json'):
 
+        Member_ID = request.data['Member_ID']
         Vehicle_ID = request.data['Vehicle_ID']
 
-        VehicleMan.deregisterVehicle(Vehicle_ID)
+        ret = VehicleMan.deregisterVehicle(Member_ID, Vehicle_ID)
 
-        return Response("Vehicle " + Vehicle_ID + " has successfully been deregistered", status=status.HTTP_200_OK)
+        if ret == "401":
+            return Response("Vehicle " + Vehicle_ID + " is not Registered with Member " + Member_ID, status=status.HTTP_401_UNAUTHORIZED)
+        else:
+            return Response("Vehicle " + Vehicle_ID + " has successfully been deregistered", status=status.HTTP_200_OK)
 
 class parkVehicleApiView(APIView):
 
