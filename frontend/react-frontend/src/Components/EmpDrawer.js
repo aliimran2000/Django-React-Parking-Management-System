@@ -22,7 +22,8 @@ import { green,red,blue } from '@material-ui/core/colors';
 import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
 import LocalParkingIcon from '@material-ui/icons/LocalParking';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-
+import ReceiptIcon from '@material-ui/icons/Receipt';
+import LocalAtmIcon from '@material-ui/icons/LocalAtm';
 const drawerWidth = 320;
 
 const useStyles = makeStyles((theme) => ({
@@ -105,14 +106,24 @@ function foradmin(b1){
               <ListItemText primary="De-Register Member" />
         </ListItem>
         <Divider /> 
+        <ListItem button onClick={()=>{window.location.href = "/ViewBills"}}>
+              <ListItemIcon><ReceiptIcon style={{ color: blue[500] }}/></ListItemIcon>
+              <ListItemText primary="View Bills" />
+        </ListItem>
+        <ListItem button onClick={()=>{window.location.href = "/PayBill"}}>
+              <ListItemIcon><LocalAtmIcon style={{ color: green[500] }}/></ListItemIcon>
+              <ListItemText primary="Pay Bills" />
+        </ListItem>
+        <Divider /> 
         <ListItem button onClick={()=>{window.location.href = "/AddVehicle"}}>
               <ListItemIcon><DriveEtaIcon style={{ color: green[500] }}/></ListItemIcon>
-              <ListItemText primary="Add Member Vehicle" />
+              <ListItemText primary="Register Vehicle" />
         </ListItem>
         <ListItem button onClick={()=>{window.location.href = "/RemoveVehicle"}}>
               <ListItemIcon><DriveEtaIcon style={{ color: red[500] }}/></ListItemIcon>
-              <ListItemText primary="Remove Member Vehicle" />
+              <ListItemText primary="DeRegister Vehicle" />
         </ListItem>
+        
     </div>
   )
 }

@@ -1,6 +1,5 @@
 import React from 'react'
 import {Typography} from '@material-ui/core';
-import TextField from '@material-ui/core/TextField'
 import Grid from '@material-ui/core/Grid';
 import { useState } from 'react';
 import Button from '@material-ui/core/Button';
@@ -9,23 +8,21 @@ import Box from '@material-ui/core/Box';
 import GoBack from '../../Components/GoBack'
 import isLoggedin from '../../Utils/LoginCheck'
 import Memberverifier from '../../Components/MemberVerifier'
-import { green,red,blue } from '@material-ui/core/colors';
+import { red} from '@material-ui/core/colors';
 import axiosInstance from '../../Axios/AxiosInstance'
 
 
 
 
-let gotid = true;
+
 
 export default function DeRegisterMember(){
       
 
     const [UID,setUID] = useState(-1);
-    const [done,setdone] = useState(0);
-    const [DregB,showDregB] = useState(false);
     const [success,setsuccess] = useState(0);
-    let recmessage = ""
 
+      
 
     function HandleDergister(){
       axiosInstance.post('member/deregister/',{Member_ID:UID})

@@ -113,9 +113,9 @@ class renewMembershipApiView(APIView):
         resp = MemberMan.renewMembership(memberId, Approved_By)
 
         if resp == "Not Expired":
-            return Response("Member "+ memberId +"'s Membership has not yet expired, hence, unable to renew membership", status=status.HTTP_406_NOT_ACCEPTABLE)
+            return Response("Member "+ str(memberId) +"'s Membership has not yet expired, hence, unable to renew membership", status=status.HTTP_406_NOT_ACCEPTABLE)
         else:
-            return Response("Member "+ memberId +" Membership Has Successfully Been Renewed", status=status.HTTP_201_CREATED)
+            return Response("Member "+ str(memberId) +" Membership Has Successfully Been Renewed", status=status.HTTP_201_CREATED)
 
 
 class registerEmployeeApiView(APIView):
@@ -150,7 +150,7 @@ class registerVehicleApiView(APIView):
 
         MemberMan.registerVehicle(Vehicle_ID, Member_ID, Vehicle_Model)
 
-        return Response("Vehicle " + Vehicle_ID + " has successfully been registered against Member " + Member_ID, status=status.HTTP_201_CREATED)
+        return Response("Vehicle " + str(Vehicle_ID) + " has successfully been registered against Member " + str(Member_ID), status=status.HTTP_201_CREATED)
 
 class deregisterVehicleApiView(APIView):
 
@@ -164,9 +164,9 @@ class deregisterVehicleApiView(APIView):
         ret = VehicleMan.deregisterVehicle(Member_ID, Vehicle_ID)
 
         if ret == "401":
-            return Response("Vehicle " + Vehicle_ID + " is not Registered with Member " + Member_ID, status=status.HTTP_401_UNAUTHORIZED)
+            return Response("Vehicle " + str(Vehicle_ID) + " is not Registered with Member " + Member_ID, status=status.HTTP_401_UNAUTHORIZED)
         else:
-            return Response("Vehicle " + Vehicle_ID + " has successfully been deregistered", status=status.HTTP_200_OK)
+            return Response("Vehicle " + str(Vehicle_ID) + " has successfully been deregistered", status=status.HTTP_200_OK)
 
 class parkVehicleApiView(APIView):
 
