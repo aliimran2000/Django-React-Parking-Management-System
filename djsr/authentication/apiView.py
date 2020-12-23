@@ -62,7 +62,7 @@ class verifyCredentialsApiView(APIView):
         memberId = isMemberCredentialValid(username, password)
 
         if (memberId != None):
-            return Response(memberId, status=status.HTTP_200_OK)
+            return Response(str(memberId), status=status.HTTP_200_OK)
         else:
             return Response("INVALD", status=status.HTTP_401_UNAUTHORIZED)
 
@@ -136,7 +136,7 @@ class registerEmployeeApiView(APIView):
 
         EmployeeMan.registerEmployee(email, username, password, DateOfBirth, Cnic, Address, Phone_No, Employee_Type)
 
-        return Response("Employee of Type " + Employee_Type + " has successfully been registered", status=status.HTTP_201_CREATED)
+        return Response("Employee of Type " + str(Employee_Type) + " has successfully been registered", status=status.HTTP_201_CREATED)
 
 class registerVehicleApiView(APIView):
 
@@ -180,15 +180,15 @@ class parkVehicleApiView(APIView):
         slot = ParkingLotMan.parkVehicle(Member_ID, Vehicle_ID)
 
         if slot == "EXPIRED":
-            return Response("Member " + Member_ID + " Membership has been expired, please renew it", status=status.HTTP_406_NOT_ACCEPTABLE)
+            return Response("Member " + str(Member_ID) + " Membership has been expired, please renew it", status=status.HTTP_406_NOT_ACCEPTABLE)
         elif slot == "NOT REGISTERED":
-            return Response("Vehicle " + Vehicle_ID + " is not registered against this Member", status=status.HTTP_401_UNAUTHORIZED)
+            return Response("Vehicle " + str(Vehicle_ID) + " is not registered against this Member", status=status.HTTP_401_UNAUTHORIZED)
         elif slot == "UNCLEARED DUES":
-            return Response("Member " + Member_ID + " has uncleared overdue bills, please pay bill", status=status.HTTP_402_PAYMENT_REQUIRED)            
+            return Response("Member " + str(Member_ID) + " has uncleared overdue bills, please pay bill", status=status.HTTP_402_PAYMENT_REQUIRED)            
         elif slot == "PARKING FULL":
             return Response("Parking is Full", status=status.HTTP_306_RESERVED)
         else:
-            return Response(slot , status=status.HTTP_200_OK)
+            return Response(str(slot) , status=status.HTTP_200_OK)
 
 class exitVehicleApiView(APIView):
 
@@ -202,9 +202,9 @@ class exitVehicleApiView(APIView):
         fees = ParkingLotMan.exitVehicle(Member_ID, Vehicle_ID)
 
         if fees == "NOT REGISTERED":
-            return Response("Vehicle " + Vehicle_ID + " is not registered against this Member", status=status.HTTP_401_UNAUTHORIZED)
+            return Response("Vehicle " + str(Vehicle_ID) + " is not registered against this Member", status=status.HTTP_401_UNAUTHORIZED)
         else:
-            return Response(fees , status=status.HTTP_200_OK)    
+            return Response(str(fees) , status=status.HTTP_200_OK)    
 
 class accountTypeApiView(APIView):
 
@@ -216,7 +216,7 @@ class accountTypeApiView(APIView):
  
         type = getAccountType(accountId)
 
-        return Response(type, status.HTTP_200_OK)
+        return Response(str(type), status.HTTP_200_OK)
 
 class accountNameApiView(APIView):
 
