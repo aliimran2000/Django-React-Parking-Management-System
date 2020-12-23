@@ -1,5 +1,5 @@
 from .Parking import Parking
-from ..modelManager import getFreeSlot, getSlotIdBySlot
+from ..modelManager import getFreeSlot, getSlotIdBySlot, freeOccupiedSlot
 
 class ParkingLotManager:
 
@@ -17,6 +17,9 @@ class ParkingLotManager:
 
     def getFreeSlot(self):
         return getFreeSlot()
+
+    def freeOccupiedSlot(self, V1):
+        return freeOccupiedSlot(V1)
 
     def parkVehicle(self, memberId, vehicleId):
 
@@ -43,3 +46,16 @@ class ParkingLotManager:
         P1 = Parking(V1, S1)
 
         return getSlotIdBySlot(S1)
+
+    def exitVehicle(self, memberId, vehicleId):
+
+        M1, Mem1 = self.MemberMan.getMemberAndMembership(memberId)
+
+        V1 = self.VehicleMan.validateVehicle(M1, vehicleId)
+
+        if V1 is None:
+            return "NOT REGISTERED"
+
+        hoursParked = self.freeOccupiedSlot(V1)
+
+        return self.BillingMan.generateParkingFee(Mem1, hoursParked)

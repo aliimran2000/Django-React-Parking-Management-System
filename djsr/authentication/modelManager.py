@@ -75,6 +75,39 @@ def getSlotIdBySlot(S1):
 
     return slotId
 
+def markParkingExitTime(V1):
+
+    P1 = ParkingDB.objects.get(Vehicle_ID = V1, Out_Time = None)
+
+    currentTime = timezone.now()
+
+    P1.Out_Time = currentTime
+    P1.save()
+
+    parkedTimeObj = P1._meta.get_field('In_Time')
+    parkedTime = parkedTimeObj.value_from_object(P1)
+
+    duration = currentTime - parkedTime
+    duration_in_s = duration.total_seconds()
+
+    #Seconds in an hour = 3600
+    hoursParked = divmod(duration_in_s, 3600)[0] 
+
+    return P1, hoursParked
+
+def freeOccupiedSlot(V1):
+
+    P1, hoursParked = markParkingExitTime(V1)
+
+    slotObj = P1._meta.get_field('Slot_Given')
+    slotId = slotObj.value_from_object(P1)
+
+    S1 = SlotDB.objects.get(Slot_ID = slotId)
+    S1.Occupied_Status = False
+    S1.save()
+
+    return hoursParked
+
 def GetMemberObject(memberID):
 
     return MemberDB.objects.get(Member_ID = memberID)
