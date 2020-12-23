@@ -150,7 +150,7 @@ class registerVehicleApiView(APIView):
 
         MemberMan.registerVehicle(Vehicle_ID, Member_ID, Vehicle_Model)
 
-        return Response("Vehicle " + Vehicle_ID + " has successfully been registered against Member " + Member_ID, status=status.HTTP_201_CREATED)
+        return Response("Vehicle " + str(Vehicle_ID) + " has successfully been registered against Member " + str(Member_ID), status=status.HTTP_201_CREATED)
 
 class deregisterVehicleApiView(APIView):
 
@@ -162,7 +162,7 @@ class deregisterVehicleApiView(APIView):
 
         VehicleMan.deregisterVehicle(Vehicle_ID)
 
-        return Response("Vehicle " + Vehicle_ID + " has successfully been deregistered", status=status.HTTP_200_OK)
+        return Response("Vehicle " + str(Vehicle_ID) + " has successfully been deregistered", status=status.HTTP_200_OK)
 
 class parkVehicleApiView(APIView):
 

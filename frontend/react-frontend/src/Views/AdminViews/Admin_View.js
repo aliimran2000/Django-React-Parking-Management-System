@@ -12,12 +12,8 @@ import isLoggedin from '../../Utils/LoginCheck'
 
 export default function AdminView(props){
     
-    if(!(isLoggedin() === "PA")){
-        console.log(isLoggedin()) 
+    if(!(sessionStorage.getItem("TYPE") === "PA")){
         window.location.href = "/"
-    }
-    else{
-        console.log(isLoggedin())
     }
 
     

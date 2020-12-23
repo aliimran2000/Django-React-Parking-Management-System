@@ -49,9 +49,8 @@ export default function LoginPage() {
   function SetType(){
   axiosInstance.post('/account/gettype/').then(
     result=>{
-      console.log(result.data)
       sessionStorage.setItem("TYPE",result.data)
-
+        
       if(result.data === "PA" ){
         window.location.href = "/Admin"
       }else if(result.data === "PE"){

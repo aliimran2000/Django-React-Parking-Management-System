@@ -1,5 +1,4 @@
 import React from 'react'
-import { useHistory } from "react-router-dom";
 import {Typography} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField'
@@ -10,32 +9,99 @@ import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import axiosInstance from '../../Axios/AxiosInstance'
+import GoBack from '../../Components/GoBack'
+import Memberverifier from '../../Components/MemberVerifier'
+import { green,red,blue } from '@material-ui/core/colors';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
 
 
-
-const useStyles = makeStyles((theme) => ({
-    paper: {
-      marginTop: theme.spacing(8),
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
+const useStyles = makeStyles({
+    root: {
+      minWidth: 275,
     },
-    avatar: {
-      margin: theme.spacing(1),
-      backgroundColor: theme.palette.secondary.main,
+    bullet: {
+      display: 'inline-block',
+      margin: '0 2px',
+      transform: 'scale(0.8)',
     },
-    form: {
-      width: '100%', // Fix IE 11 issue.
-      marginTop: theme.spacing(1),
+    title: {
+      fontSize: 14,
     },
-    submit: {
-      margin: theme.spacing(3, 0, 2),
+    pos: {
+      marginBottom: 12,
     },
-  }));
-  
+  });
 
 
 export default function AddVehicle(props){
+    const classes = useStyles();
+    const [UID,setUID] = useState(-1);
+    const [success,setsuccess] = useState(false);
+    const [Vehicle_ID,setVID] = useState('');
+    const [Vehicle_Model,setVM] = useState('');
+    
+
+
+
+    function HandleRegVec(){
+        let prom = axiosInstance.post('member/registervehicle/',{
+            Vehicle_ID: Vehicle_ID,
+            Vehicle_Model: Vehicle_Model,
+            Member_ID:UID
+        }).then(
+            result=>{
+                if(result.status === 201){
+                    setsuccess(true)
+                }
+            }
+        ).catch(error=>{
+            console.log(error)
+        })
+    }
+
+
+    function VehicleRegForm(){
+        if(UID !== -1){
+
+            if(success){
+                return ( 
+                <Typography align="center" variant="h4" style={{color:green[500]}}>
+                    Vehicle Added Successfully
+                </Typography>)
+            }
+
+            return(
+            <div>
+                <Card style = {{width:1000,margin:5,backgroundColor:green[100]}} className={classes.root} variant="outlined">
+                <CardContent>
+                    <Grid>
+                        <Typography variant="h4" style={{color:green[500]}}>
+                            Enter Car Details Here
+                        </Typography>
+                    </Grid>
+                    
+                    <Grid>
+                        <TextField style = {{width: 950 ,  margin:5}} variant="outlined" required label="Vehicle ID" value={Vehicle_ID} onChange={(event)=>{setVID(event.target.value)}}/>
+                    </Grid>
+                    
+                    <Grid>
+                        <TextField style = {{width: 950  ,  margin:5}} variant="outlined" required label="Car Model Details"  value={Vehicle_Model} onChange={(event)=>{setVM(event.target.value)}}/>
+                    </Grid>    
+                    <Grid>
+                        <Button style = {{width: 1000 ,  margin:5,backgroundColor:green[800]}} variant="contained"  onClick={()=>{HandleRegVec()}}>
+                            Register Car
+                        </Button>
+                    </Grid>
+                 </CardContent>
+                </Card>
+            </div>    
+            )
+        }else{
+            return(null)
+        }
+    }
+
 
     if(!(isLoggedin() === "PA")){
         console.log(isLoggedin()) 
@@ -45,105 +111,29 @@ export default function AddVehicle(props){
         console.log(isLoggedin())
     }
     
-    let history = useHistory();
-    
-    const [first_name,setfirst_name] = useState('');
-    const [last_name,setlast_name] = useState(''); 
-    const [Address,setAddress] = useState('');
-    const [CNIC, setCNIC] = useState('');
-    const [Phone_No,setPhone] = useState('');
-    const [DateOfBirth,setDateOfBirth] = useState();
-    const [username,setUser] = useState("");
-    const [password,setPassword] = useState("");
-    const [email,setEmail] = useState("");
-    const [errorState,SeterrorState] = useState(true);
-    const [errorState2,SeterrorState2] = useState(true);
-    const [done,isdone] = useState(false)
-    
 
-  
-
-    
-    function handleSubmit(event){
-        axiosInstance.post('member/signup/', {
-            username: username,
-            password: password,
-            first_name : first_name,
-            last_name:last_name,
-            Address:Address,
-            CNIC:CNIC,
-            Phone_No:Phone_No,
-            DateOfBirth:DateOfBirth,
-            email:email,
-        }).then(
-            result => {
-                
-                if(result.status === 201){
-                  isdone(true)
-                  //window.location.href = "/"
-                 }
-            }
-        ).catch (error => {
-            
-          })
-    }
-
-    function SubmitButtonDisplay(){
-        if(errorState || errorState2){
-            return( 
-                <Button fullWidth variant="contained" color="primary" disabled className={useStyles.submit}//onClick={(event)=>{HandleRequest()}}
-                 >
-                Submit 
-                </Button>
-                )
-            }
-        else{
-            return(
-                <Button fullWidth variant="contained" color="primary" className={useStyles.submit}  onClick={(event)=>{handleSubmit()}}>
-                Submit </Button>
-            )
-        }
-    }
-    
-    
    
     return(
         <div>
-        <Button color='primary' onClick={() => {history.goBack()}}>
-                    GO BACK
-        </Button>   
-        <Container component="main" maxWidth="md"> 
-        <Box spacing={3} m={10}>
+            <GoBack/>
+            <Container component="main" maxWidth="lg"> 
+            <Box spacing={3} m={10}>
+
             <Grid>
-                <Typography variant='h3' color="primary" style = {{width: 10000 ,  margin:10}} >
-                    Member Registration Form
+                <Typography align="center" variant='h3' color="primary" style = {{width: 1000 ,  margin:0}} >
+                   ADD VEHICLE
                 </Typography>
             </Grid>
-            <Grid container direction="row" >
-                <TextField style = {{width: 350 ,  margin:10}} required label="First Name" variant="outlined"  value={first_name} onChange={(event)=>{setfirst_name(event.target.value)}}/>
-                <TextField style = {{width: 350 , margin:10}} required label="Last Name" variant="outlined"   value={last_name} onChange={(event)=>{setlast_name(event.target.value)}}/> 
-            </Grid>
-
             <Grid>
-                <TextField style = {{width: 350 ,  margin:10}} required label="Address" multiline rows={4} value={Address} onChange={(event)=>{setAddress(event.target.value)}}/>
+                <Memberverifier  Ddata={[UID,setUID]}/>
             </Grid>
-        
+                {VehicleRegForm()}
             <Grid>
-                <TextField  style = {{width: 350 ,  margin:10}} label="Date of Birth" type="date" defaultValue="2000-01-01" value={DateOfBirth} onChange={(event)=>{setDateOfBirth(event.target.value)}}/>
-            </Grid>
-        
-            <Grid>
-                <TextField style = {{width: 350 ,  margin:10}} required value={username} onChange={(event)=>{setUser(event.target.value)}} label="User ID" variant="outlined" />
-            </Grid>
-      
-
-            {SubmitButtonDisplay()}
-
             
-                
-        </Box>
-        </Container>
-        
+            </Grid>
+
+            </Box>
+            </Container>
         </div>  
     )
    
