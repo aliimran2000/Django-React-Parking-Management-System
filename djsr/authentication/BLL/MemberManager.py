@@ -54,3 +54,9 @@ class MemberManager:
         self.MembershipMan.renewMembership(M1, approvedBy)
 
         return "OK"
+
+    def getMemberAndMembership(self, memberId):
+
+        M1 = self.getMemberById(memberId)
+        Mem1 = self.MembershipMan.getActiveMembership(M1)
+        return M1, Mem1

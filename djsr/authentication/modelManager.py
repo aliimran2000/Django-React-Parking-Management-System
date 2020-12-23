@@ -6,6 +6,8 @@ from .models import Member as MemberDB
 from .models import Membership as MembershipDB
 from .models import Bill as BillDB
 from .models import Vehicle as VehicleDB
+from .models import Parking as ParkingDB
+from .models import Slot as SlotDB
 
 from rest_framework.response import Response
 from rest_framework import status, permissions
@@ -49,6 +51,30 @@ def VehicleSerializer(Member, vehicleID, vehicleModel):
     vehicle = VehicleDB.objects.create(Vehicle_ID = vehicleID, Member_ID = Member, Vehicle_Model = vehicleModel)
     return vehicle
 
+def ParkingSerializer(vehicle, slot):
+
+    ParkingDB.objects.create(Vehicle_ID = vehicle, Slot_Given = slot)
+
+def getFreeSlot():
+
+    slots = SlotDB.objects.filter(Occupied_Status = False)
+
+    try:
+        slot = slots[0]
+        slot.Occupied_Status = True
+        slot.save()
+
+        return slot
+    except:
+        return None
+
+def getSlotIdBySlot(S1):
+
+    slotIdObj = S1._meta.get_field('Slot_ID')
+    slotId = slotIdObj.value_from_object(S1)
+
+    return slotId
+
 def GetMemberObject(memberID):
 
     return MemberDB.objects.get(Member_ID = memberID)
@@ -56,6 +82,21 @@ def GetMemberObject(memberID):
 def getVehicleObject(vehicleID):
 
     return VehicleDB.objects.get(Vehicle_ID = vehicleID)
+
+def validateVehicleByMember(M1, vehicleId):
+
+    memberIdObj = M1._meta.get_field('Member_ID')
+    memberId = memberIdObj.value_from_object(M1)
+
+    vehicle = VehicleDB.objects.get(Member_ID = memberId)
+
+    vehicleIdObj = vehicle._meta.get_field('Vehicle_ID')
+    vehicleId2 = vehicleIdObj.value_from_object(vehicle)
+
+    if vehicleId == vehicleId2:
+        return vehicle
+    else:
+        return None
 
 def DeleteAccountObject(accountId):
     
@@ -110,6 +151,26 @@ def getBillsAmount(membership):
         amount = amountObj.value_from_object(one)
 
         totalAmount += int(amount)
+
+    return totalAmount
+
+def getOverdueBills(Mem1):
+
+    bills = Mem1.bill_set.all()
+
+    totalAmount = 0
+
+    for one in bills:
+
+        dueDateObj = one._meta.get_field('Due_Date')
+        dueDate = dueDateObj.value_from_object(one)
+
+        if (timezone.now() > dueDate) :
+
+            amountObj = one._meta.get_field('Bill_Amount')
+            amount = amountObj.value_from_object(one)
+
+            totalAmount += int(amount)
 
     return totalAmount
 
