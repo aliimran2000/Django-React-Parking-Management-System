@@ -1,6 +1,6 @@
 from .Bill import Bill
 
-from ..modelManager import getBillsAmount, getOverdueBills
+from ..modelManager import getBillsAmount, getOverdueBills, getBillsDetail
 
 class BillingManager:
 
@@ -9,6 +9,12 @@ class BillingManager:
         self.__vehicleRegistration = 500
         self.__membershipRenewal = 800
         self.__parkPerHour = 100
+        self.MemberMan = None
+        self.MembershipMan = None
+
+    def initializeManagers(self, MemberMan, MembershipMan):
+        self.MemberMan = MemberMan
+        self.MembershipMan = MembershipMan
 
     def GenerateMembershipRegistrationBill(self, membership):
 
@@ -38,3 +44,10 @@ class BillingManager:
     def checkOverdueBills(self, Mem1):
 
         return getOverdueBills(Mem1)
+
+    def getBillsDetail(self, memberId):
+
+        M1 = self.MemberMan.getMemberById(memberId)
+        Mems = self.MembershipMan.getAllMemberships(M1)
+
+        return getBillsDetail(Mems)

@@ -4,7 +4,7 @@ from rest_framework_simplejwt import views as jwt_views
 
 from .apiView import initializeManagers
 from .apiView import LogoutAndBlacklistRefreshTokenForUserView, ObtainTokenPairWithAccountsView
-from .apiView import registerMemberApiView, deregisterMemberApiView, renewMembershipApiView, verifyCredentialsApiView, memberDetailsApiView
+from .apiView import registerMemberApiView, deregisterMemberApiView, renewMembershipApiView, verifyCredentialsApiView, memberDetailsApiView, getBillsDetailApiView
 from .apiView import registerEmployeeApiView
 from .apiView import registerVehicleApiView, deregisterVehicleApiView, parkVehicleApiView, exitVehicleApiView, getVehiclesDetailApiView
 from .apiView import accountNameApiView, accountTypeApiView
@@ -59,6 +59,9 @@ class MemberAccountApiCaller(AbsApiCaller):
 
     def getVehiclesDetail(self):
         return getVehiclesDetailApiView.as_view()
+
+    def getBillsDetail(self):
+        return getBillsDetailApiView.as_view()
 
 class EmployeeAccountApiCaller(AbsApiCaller):
 
