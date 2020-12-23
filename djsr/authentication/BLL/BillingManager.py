@@ -1,6 +1,6 @@
 from .Bill import Bill
 
-from ..modelManager import getBillsAmount
+from ..modelManager import getBillsAmount, getOverdueBills
 
 class BillingManager:
 
@@ -24,3 +24,7 @@ class BillingManager:
     def generateMembershipRenewalBill(self, membership):
 
         B1 = Bill(membership, self.__membershipRenewal, 'MR')
+
+    def checkOverdueBills(self, Mem1):
+
+        return getOverdueBills(Mem1)

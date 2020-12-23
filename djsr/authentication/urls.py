@@ -16,6 +16,7 @@ urlpatterns = [
     path('member/getdetails/', MemAccountApiCaller.getDetails(), name='get_member_details'),
     path('member/renewmembership/', MemAccountApiCaller.renewMembership(), name='renew_membership'),
     path('member/verifycredentials/', MemAccountApiCaller.verifyCredentials(), name='verify_credentials'),
+    path('member/parkvehicle/', MemAccountApiCaller.parkVehicle(), name='park_vehicle'),
 
     path('account/getname/', EmpAccountApiCaller.getName(), name='get_account_name'),
     path('account/gettype/', EmpAccountApiCaller.getType(), name='get_account_type'),
