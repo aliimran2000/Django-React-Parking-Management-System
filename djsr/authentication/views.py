@@ -6,7 +6,7 @@ from .apiView import initializeManagers
 from .apiView import LogoutAndBlacklistRefreshTokenForUserView, ObtainTokenPairWithAccountsView
 from .apiView import registerMemberApiView, deregisterMemberApiView, renewMembershipApiView, verifyCredentialsApiView, memberDetailsApiView
 from .apiView import registerEmployeeApiView
-from .apiView import registerVehicleApiView, deregisterVehicleApiView, parkVehicleApiView
+from .apiView import registerVehicleApiView, deregisterVehicleApiView, parkVehicleApiView, exitVehicleApiView
 from .apiView import accountNameApiView, accountTypeApiView
 
 class AbsApiCaller:
@@ -53,6 +53,9 @@ class MemberAccountApiCaller(AbsApiCaller):
 
     def parkVehicle(self):
         return parkVehicleApiView.as_view()
+
+    def exitVehicle(self):
+        return exitVehicleApiView.as_view()
 
 class EmployeeAccountApiCaller(AbsApiCaller):
 

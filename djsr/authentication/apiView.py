@@ -186,6 +186,22 @@ class parkVehicleApiView(APIView):
         else:
             return Response(slot , status=status.HTTP_200_OK)
 
+class exitVehicleApiView(APIView):
+
+    permission_classes = (permissions.IsAuthenticated,)
+    
+    def post(self, request, format='json'):
+
+        Vehicle_ID = request.data['Vehicle_ID']
+        Member_ID = request.data['Member_ID']
+
+        fees = ParkingLotMan.exitVehicle(Member_ID, Vehicle_ID)
+
+        if fees == "NOT REGISTERED":
+            return Response("Vehicle " + Vehicle_ID + " is not registered against this Member", status=status.HTTP_401_UNAUTHORIZED)
+        else:
+            return Response(fees , status=status.HTTP_200_OK)    
+
 class accountTypeApiView(APIView):
 
     permission_classes = (permissions.IsAuthenticated,)
