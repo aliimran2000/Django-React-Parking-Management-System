@@ -1,6 +1,6 @@
 from .Bill import Bill
 
-from ..modelManager import getBillsAmount, getOverdueBills, getBillsDetail
+from ..modelManager import getBillsAmount, getOverdueBills, getBillsDetail, getAllBillObjects
 
 class BillingManager:
 
@@ -51,3 +51,17 @@ class BillingManager:
         Mems = self.MembershipMan.getAllMemberships(M1)
 
         return getBillsDetail(Mems)
+
+    def getAllBills(self, MemX):
+        
+        return getAllBillObjects(MemX)
+
+    def removeMembershipsBills(self, MemX):
+
+        pass
+
+        BX = self.getAllBills(MemX)
+
+        #if BX is not None:
+
+            

@@ -31,6 +31,9 @@ class MembershipManager:
         MemX = self.getAllMemberships(M1)
 
         if MemX is not None:
+
+            self.BillingMan.removeMembershipsBills(Memx)
+
             for one in MemX:
                 DeleteMembershipObject(one)
 

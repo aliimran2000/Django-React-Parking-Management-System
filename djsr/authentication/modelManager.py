@@ -121,8 +121,11 @@ def validateVehicleByMember(M1, vehicleId):
     memberIdObj = M1._meta.get_field('Member_ID')
     memberId = memberIdObj.value_from_object(M1)
 
-    vehicle = VehicleDB.objects.get(Member_ID = memberId)
-
+    try:
+        vehicle = VehicleDB.objects.get(Member_ID = memberId, Vehicle_ID = vehicleId)
+    except:
+        return None
+        
     vehicleIdObj = vehicle._meta.get_field('Vehicle_ID')
     vehicleId2 = vehicleIdObj.value_from_object(vehicle)
 
@@ -241,6 +244,11 @@ def getActiveMembershipObject(member):
 def getAllMembershipObjects(member):
 
     return member.membership_set.all()
+
+def getAllBillObjects(MemX):
+
+    pass
+    #for one in MemX:
 
 def getBillsAmount(membership):
 

@@ -14,6 +14,7 @@ from .BLL.EmployeeManager import EmployeeManager
 from .BLL.BillingManager import BillingManager
 from .BLL.VehicleManager import VehicleManager
 from .BLL.ParkingLotManager import ParkingLotManager
+from .BLL.PaymentManager import PaymentManager
 
 #GLOBAL VARIABLES
 MemberMan = MemberManager()
@@ -22,6 +23,7 @@ BillingMan = BillingManager()
 EmployeeMan = EmployeeManager()
 VehicleMan = VehicleManager()
 ParkingLotMan = ParkingLotManager()
+PaymentMan = PaymentManager()
 
 def initializeManagers():
 

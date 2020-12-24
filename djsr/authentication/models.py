@@ -65,6 +65,25 @@ class Bill(models.Model):
         default='MemberRegistration',
     )    
 
+class Payment(models.Model):
+
+    Payment_ID = models.AutoField(primary_key=True)
+    Bill_ID = models.OneToOneField(Bill, on_delete=CASCADE, blank=False, null=False)
+    Payment_Date = models.DateTimeField(default = timezone.now())
+    Payment_Supervisor = models.ForeignKey(Employee, on_delete=CASCADE, blank=False, null=False)
+
+    Payment_Method_List = [
+        ('V','Visa'),
+        ('M','Mastercard'),
+        ('C','Cash')
+    ]
+
+    Payment_Method = models.CharField(
+        max_length=2,
+        choices= Payment_Method_List,
+        default='Cash',
+    )
+
 class Vehicle(models.Model):
 
     Vehicle_ID = models.CharField(primary_key=True, max_length=10)
