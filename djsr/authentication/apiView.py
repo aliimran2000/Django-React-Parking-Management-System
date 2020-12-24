@@ -116,9 +116,9 @@ class renewMembershipApiView(APIView):
         resp = MemberMan.renewMembership(memberId, Approved_By)
 
         if resp == "Not Expired":
-            return Response("Member "+ str(memberId) +"'s Membership has not yet expired, hence, unable to renew membership", status=status.HTTP_406_NOT_ACCEPTABLE)
+            return Response("Member ID : "+ str(memberId) +"'s Membership has not yet expired, hence, unable to renew membership", status=status.HTTP_406_NOT_ACCEPTABLE)
         else:
-            return Response("Member "+ str(memberId) +" Membership Has Successfully Been Renewed", status=status.HTTP_201_CREATED)
+            return Response("Member ID :"+ str(memberId) +" Membership Has Successfully Been Renewed", status=status.HTTP_201_CREATED)
 
 
 class registerEmployeeApiView(APIView):
@@ -256,6 +256,9 @@ class getVehiclesDetailApiView(APIView):
         if vehiclesDetail is None:
             return Response("No Vehicle is Registered Against Member " + str(memberId), status.HTTP_404_NOT_FOUND)
         else:
+<<<<<<< HEAD
+            return Response({"vehicles":vehiclesDetail}, status.HTTP_200_OK)
+=======
             return Response(vehiclesDetail, status.HTTP_200_OK)
 
 class getBillsDetailApiView(APIView):
@@ -272,3 +275,4 @@ class getBillsDetailApiView(APIView):
             return Response("No Bill is present Against Member " + str(memberId), status.HTTP_404_NOT_FOUND)
         else:
             return Response(billsDetail, status.HTTP_200_OK)
+>>>>>>> ac3bde3ef78574999ad5fd64a08715a4a91c325f

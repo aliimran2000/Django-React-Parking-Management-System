@@ -49,7 +49,9 @@ export default function MemberVerifier(props){
             if(result.status === 200)
   
                 axiosInstance.post('member/getdetails/',{Member_ID:result.data}).then(result1=>{
-                  setUD(result1.data)//this is user details
+                  let Keyval = result1.data
+                  Keyval["ID"] = result.data
+                  setUD(Keyval)//this is user details
                   setverify(true)
                   props.Ddata[1](result.data)//this is user id
                 })
@@ -72,6 +74,9 @@ export default function MemberVerifier(props){
                   <CardContent>
                       <Typography variant="h5" component="h2">
                       Name : {UD.username}   
+                      </Typography>
+                      <Typography variant="h5" component="h2">
+                      ID : {UD.ID}   
                       </Typography>
                       <Typography className={classes.pos} color="textSecondary">
                       Date of Birth : {UD.DateOfBirth}
