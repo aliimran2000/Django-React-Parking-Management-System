@@ -1,5 +1,8 @@
 # VSCODE #
 .vscode
+.gitignore
+
+
 
 # PIP ENV #
 Pipfile
