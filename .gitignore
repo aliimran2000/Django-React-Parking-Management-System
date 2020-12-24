@@ -1,5 +1,8 @@
 # VSCODE #
 .vscode
+.gitignore
+
+node_modules/
 
 # PIP ENV #
 Pipfile
@@ -12,8 +15,5 @@ djsr/authentication/migrations/__pycache__/
 djsr/authentication/BLL/__pycache__/
 
 # DJANGO #
-djsr/db.sqlite3
+# djsr/db.sqlite3
 curlQueries.txt
-
-# REACT #
-frontend/react-frontend/node_modules/
