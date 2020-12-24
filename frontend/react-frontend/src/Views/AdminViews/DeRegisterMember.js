@@ -47,7 +47,7 @@ export default function DeRegisterMember(){
         )        
       }else if(success===2){
         return(
-        <Typography variant="caption" color="error">
+        <Typography variant="caption"  color="error">
           Unable to delete member remaining dues need to be cleared        
         </Typography>
       )
@@ -63,8 +63,9 @@ export default function DeRegisterMember(){
         <Button style = {{width: 1000 ,  margin:5,backgroundColor:red[500]}} variant="contained"  onClick={()=>{HandleDergister()}}>
           DeRegister Member
         </Button>
-          
+        <Grid align="center">  
         {DELSUCCESS()}
+        </Grid>
        </div>
        )
       }
