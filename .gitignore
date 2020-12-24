@@ -12,5 +12,5 @@ djsr/authentication/migrations/__pycache__/
 djsr/authentication/BLL/__pycache__/
 
 # DJANGO #
-djsr/db.sqlite3
+# djsr/db.sqlite3
 curlQueries.txt
