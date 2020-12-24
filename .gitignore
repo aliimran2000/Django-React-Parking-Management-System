@@ -6,11 +6,14 @@ Pipfile
 Pipfile.lock
 
 # CACHE #
-__pycache__
+djsr/djsr/__pycache__/
+djsr/authentication/__pycache__/
+djsr/authentication/migrations/__pycache__/
+djsr/authentication/BLL/__pycache__/
 
 # DJANGO #
-db.sqlite3
+djsr/db.sqlite3
 curlQueries.txt
 
 # REACT #
-node_modules
+frontend/react-frontend/node_modules/
