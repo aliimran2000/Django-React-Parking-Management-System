@@ -1,17 +1,16 @@
+# VSCODE #
 .vscode
+
+# PIP ENV #
 Pipfile
 Pipfile.lock
+
+# CACHE #
 __pycache__
-djsr/authentication/__pycache__
-<<<<<<< HEAD
+
+# DJANGO #
 db.sqlite3
-<<<<<<< HEAD
+curlQueries.txt
+
+# REACT #
 node_modules
-=======
-curlQueries.txt
->>>>>>> e9bfc890e236545563682c819529627be6aa7f4b
-=======
-curlQueries.txt
->>>>>>> ea563a4efb9b943bc221b999637f3c0e9b653df1
-djsr/db.sqlite3
-djsr/authentication/BLL/__pycache__

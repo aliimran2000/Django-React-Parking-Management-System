@@ -1,6 +1,6 @@
 from .Bill import Bill
 
-from ..modelManager import getBillsAmount, getOverdueBills, getBillsDetail, getAllBillObjects
+from ..modelManager import getBillsAmount, getOverdueBills, getBillsDetail, getAllBillObjects, deleteBillObject
 
 class BillingManager:
 
@@ -11,10 +11,12 @@ class BillingManager:
         self.__parkPerHour = 100
         self.MemberMan = None
         self.MembershipMan = None
+        self.PaymentMan = None
 
-    def initializeManagers(self, MemberMan, MembershipMan):
+    def initializeManagers(self, MemberMan, MembershipMan, PaymentMan):
         self.MemberMan = MemberMan
         self.MembershipMan = MembershipMan
+        self.PaymentMan = PaymentMan
 
     def GenerateMembershipRegistrationBill(self, membership):
 
@@ -52,16 +54,16 @@ class BillingManager:
 
         return getBillsDetail(Mems)
 
-    def getAllBills(self, MemX):
+    def getAllBills(self, Mem1):
         
-        return getAllBillObjects(MemX)
+        return getAllBillObjects(Mem1)
 
-    def removeMembershipsBills(self, MemX):
+    def removeMembershipBills(self, Mem1):
 
-        pass
+        BX = self.getAllBills(Mem1)
 
-        BX = self.getAllBills(MemX)
+        if BX is not None:
 
-        #if BX is not None:
-
-            
+            for B1 in BX:
+                self.PaymentMan.removeBillsPayment(B1)
+                deleteBillObject(B1)

@@ -6,6 +6,7 @@ class MemberManager:
 
     def __init__(self):
         self.MembershipMan = None
+        self.VehicleMan = None
 
     def initializeManagers(self, MembershipMan, VehicleMan):
         self.MembershipMan = MembershipMan
@@ -26,6 +27,7 @@ class MemberManager:
 
         else:
             self.MembershipMan.removeMembership(M1)
+            self.VehicleMan.removeAllVehicles(M1)
             DeleteMemberObject(M1)
             return "OK"          
 

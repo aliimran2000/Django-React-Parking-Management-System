@@ -1,16 +1,18 @@
 from .Vehicle import Vehicle
 
-from ..modelManager import getVehicleObject, DeleteVehicleObject, validateVehicleByMember, getVehiclesDetail
+from ..modelManager import getVehicleObject, DeleteVehicleObject, validateVehicleByMember, getVehiclesDetail, getVehicleObjects, DeleteVehicleObject
 
 class VehicleManager:
 
     def __init__(self):
         self.BillingMan = None
         self.MemberMan = None
+        self.ParkingLotMan = None
 
-    def initializeManagers(self, BillingMan, MemberMan):
+    def initializeManagers(self, BillingMan, MemberMan, ParkingLotMan):
         self.BillingMan = BillingMan
         self.MemberMan = MemberMan
+        self.ParkingLotMan = ParkingLotMan
 
     def validateVehicle(self, M1, vehicleId):
 
@@ -38,3 +40,18 @@ class VehicleManager:
     def getVehiclesDetail(self, memberId):
 
         return getVehiclesDetail(memberId)
+
+    def getAllVehicles(self, M1):
+
+        return getVehicleObjects(M1)
+
+    def removeAllVehicles(self, M1):
+
+        VX = self.getAllVehicles(M1)
+
+        if VX is not None:
+
+            for V1 in VX:
+                
+                self.ParkingLotMan.removeAllParkings(V1)
+                DeleteVehicleObject(V1)
