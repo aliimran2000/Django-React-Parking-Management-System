@@ -4,20 +4,20 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import Grid from '@material-ui/core/Grid';
 import { useState } from 'react';
-import isLoggedin from '../../Utils/LoginCheck'
+import isLoggedin from '../Utils/LoginCheck'
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
-import axiosInstance from '../../Axios/AxiosInstance'
-import GoBack from '../../Components/GoBack'
-import Memberverifier from '../../Components/MemberVerifier'
-import { green,grey} from '@material-ui/core/colors';
+import axiosInstance from '../Axios/AxiosInstance'
+import GoBack from '../Components/GoBack'
+import Memberverifier from '../Components/MemberVerifier'
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { green, purple } from '@material-ui/core/colors';
 
 const useStyles = makeStyles({
     root: {
@@ -35,9 +35,8 @@ const useStyles = makeStyles({
       marginBottom: 12,
     },
   });
+export default function ParkCar(props){
 
-
-export default function RemoveVehicle(props){
     const classes = useStyles();
     const [UID,setUID] = useState(-1);
     const [VecLst,SetLst] = useState([{Vehicle_ID: "non",Vehicle_Model: "non"}]);
@@ -51,8 +50,8 @@ export default function RemoveVehicle(props){
     //member/getvehiclesdetail/
     //'member/deregistervehicle/'
 
-    function HandleDeRegVec(Vehicle_ID){
-        axiosInstance.post('member/deregistervehicle/',{
+    function HandleParkVec(Vehicle_ID){
+        axiosInstance.post('member/parkvehicle/',{
             Vehicle_ID: Vehicle_ID,
             Member_ID:UID
         }).then(
@@ -97,8 +96,8 @@ export default function RemoveVehicle(props){
                     {CAR.Vehicle_Model}
                 </Typography>
                 
-                <Button variant="contained" color="secondary" onClick={()=> HandleDeRegVec(CAR.Vehicle_ID)}>
-                    DeRegister
+                <Button variant="contained" style={{color:green[700]}} onClick={()=> HandleParkVec(CAR.Vehicle_ID)}>
+                    Park Car
                 </Button>
 
                 
@@ -113,10 +112,12 @@ export default function RemoveVehicle(props){
         if(success){
             return (
             <div>
-                <Typography variant="caption" color="success" >
-                    Vehicle removed succesfully
+                <Typography variant="caption" style={{color:purple[500]}} >
+                    Vehicle Parked Succesfully
                 </Typography>    
             </div>)
+            setsuccess(false)
+            setVsuccess(1)
         }
         
         if(Vsuccess === 1){
@@ -133,7 +134,7 @@ export default function RemoveVehicle(props){
         }else if (Vsuccess === 2){
             return (
                 <Typography variant="caption" color="error">
-                    Unable to get vehicle data
+                    Unable to Park Vehicle
                 </Typography>
             )}
        }
@@ -161,8 +162,8 @@ export default function RemoveVehicle(props){
         }
     }
 
-
-    if(!(isLoggedin() === "PA")){
+    let val = isLoggedin()
+    if(val !== "PA" || val !== "PE" ){
         console.log(isLoggedin()) 
         window.location.href = "/"
     }
@@ -180,7 +181,7 @@ export default function RemoveVehicle(props){
 
             <Grid>
                 <Typography align="center" variant='h2' color="primary" style = {{width: 1000 ,  margin:0}} >
-                   De-Register Vehicle
+                   Park Car
                 </Typography>
             </Grid>
             <Grid>
@@ -196,6 +197,4 @@ export default function RemoveVehicle(props){
         </div>  
     )
    
-   
-};
-
+}

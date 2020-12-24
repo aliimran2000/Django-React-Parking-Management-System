@@ -13,6 +13,9 @@ import RenewMembership from './Views/AdminViews/RenewMembership'
 import AddVehicle from './Views/AdminViews/AddVehicle'
 import RemoveVehicle from './Views/AdminViews/RemoveVehicle'
 import EmployView from './Views/Employ_View'
+import ParkCar from './Views/ParkCar'
+import UnParkCar from './Views/UnParkCar'
+
 import NotFound from './Views/NotFound'
 
 //import { useHistory } from "react-router-dom";
@@ -47,7 +50,13 @@ function App() {
             <Route exact path = "/RemoveVehicle">
               <RemoveVehicle/>
             </Route>
+            <Route exact path = "/ParkCar">
+              <ParkCar/>
+            </Route>
             
+            <Route exact path = "/UnParkCar">
+              <UnParkCar/>
+            </Route>
 
 
 

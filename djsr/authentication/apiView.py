@@ -256,9 +256,6 @@ class getVehiclesDetailApiView(APIView):
         if vehiclesDetail is None:
             return Response("No Vehicle is Registered Against Member " + str(memberId), status.HTTP_404_NOT_FOUND)
         else:
-<<<<<<< HEAD
-            return Response({"vehicles":vehiclesDetail}, status.HTTP_200_OK)
-=======
             return Response(vehiclesDetail, status.HTTP_200_OK)
 
 class getBillsDetailApiView(APIView):
@@ -275,4 +272,3 @@ class getBillsDetailApiView(APIView):
             return Response("No Bill is present Against Member " + str(memberId), status.HTTP_404_NOT_FOUND)
         else:
             return Response(billsDetail, status.HTTP_200_OK)
->>>>>>> ac3bde3ef78574999ad5fd64a08715a4a91c325f
