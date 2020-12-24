@@ -1,6 +1,6 @@
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
-from .models import Employee as EmployeeDB
+from .models import Employee as EmployeeDB, Payment
 from .models import Accounts as AccountDB
 from .models import Member as MemberDB
 from .models import Membership as MembershipDB
@@ -8,6 +8,7 @@ from .models import Bill as BillDB
 from .models import Vehicle as VehicleDB
 from .models import Parking as ParkingDB
 from .models import Slot as SlotDB
+from .models import Payment as PaymentDB
 
 from rest_framework.response import Response
 from rest_framework import status, permissions
@@ -116,6 +117,10 @@ def getVehicleObject(vehicleID):
 
     return VehicleDB.objects.get(Vehicle_ID = vehicleID)
 
+def getAllParkingObjects(vehicle):
+
+    return vehicle.parking_set.all()
+
 def validateVehicleByMember(M1, vehicleId):
 
     memberIdObj = M1._meta.get_field('Member_ID')
@@ -125,7 +130,7 @@ def validateVehicleByMember(M1, vehicleId):
         vehicle = VehicleDB.objects.get(Member_ID = memberId, Vehicle_ID = vehicleId)
     except:
         return None
-        
+
     vehicleIdObj = vehicle._meta.get_field('Vehicle_ID')
     vehicleId2 = vehicleIdObj.value_from_object(vehicle)
 
@@ -225,6 +230,18 @@ def DeleteVehicleObject(vehicle):
 
     vehicle.delete()
 
+def deleteBillObject(bill):
+
+    bill.delete()
+
+def deletePaymentObject(payment):
+
+    payment.delete()
+
+def deleteParkingObject(parking):
+
+    parking.delete()
+
 def getActiveMembershipObject(member):
 
     memberships = member.membership_set.all()
@@ -245,10 +262,20 @@ def getAllMembershipObjects(member):
 
     return member.membership_set.all()
 
-def getAllBillObjects(MemX):
+def getAllBillObjects(membership):
 
-    pass
-    #for one in MemX:
+    return membership.bill_set.all()
+
+def getPaymentObject(bill):
+
+    try:
+        return PaymentDB.objects.get(Bill_ID = bill)
+    except:
+        return None
+
+def getVehicleObjects(member):
+
+    return member.vehicle_set.all()
 
 def getBillsAmount(membership):
 
@@ -257,6 +284,12 @@ def getBillsAmount(membership):
     totalAmount = 0
 
     for one in bills:
+
+        paidStatusObj = one._meta.get_field('Paid_Status')
+        paidStatus = paidStatusObj.value_from_object(one)
+
+        if paidStatus == True:
+            continue
 
         amountObj = one._meta.get_field('Bill_Amount')
         amount = amountObj.value_from_object(one)

@@ -1,5 +1,5 @@
 from .Parking import Parking
-from ..modelManager import getFreeSlot, getSlotIdBySlot, freeOccupiedSlot
+from ..modelManager import getFreeSlot, getSlotIdBySlot, freeOccupiedSlot, getAllParkingObjects, deleteParkingObject
 
 class ParkingLotManager:
 
@@ -59,3 +59,17 @@ class ParkingLotManager:
         hoursParked = self.freeOccupiedSlot(V1)
 
         return self.BillingMan.generateParkingFee(Mem1, hoursParked)
+
+    def getAllParkings(self, V1):
+
+        getAllParkingObjects(V1)
+
+    def removeAllParkings(self, V1):
+
+        PKX = self.getAllParkings(V1)
+
+        if PKX is not None:
+    
+            for PK1 in PKX:
+
+                deleteParkingObject(PK1)

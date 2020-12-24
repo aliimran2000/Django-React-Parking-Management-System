@@ -32,10 +32,10 @@ class MembershipManager:
 
         if MemX is not None:
 
-            self.BillingMan.removeMembershipsBills(Memx)
+            for Mem1 in MemX:
 
-            for one in MemX:
-                DeleteMembershipObject(one)
+                self.BillingMan.removeMembershipBills(Mem1)
+                DeleteMembershipObject(Mem1)
 
     def getActiveMembershipDues(self, M1):
 

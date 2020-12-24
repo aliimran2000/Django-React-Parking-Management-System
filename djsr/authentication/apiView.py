@@ -29,9 +29,9 @@ def initializeManagers():
 
     MemberMan.initializeManagers(MembershipMan, VehicleMan)
     MembershipMan.initializeManagers(BillingMan)
-    VehicleMan.initializeManagers(BillingMan, MemberMan)
+    VehicleMan.initializeManagers(BillingMan, MemberMan, ParkingLotMan)
     ParkingLotMan.initializeManagers(MemberMan, BillingMan, VehicleMan)
-    BillingMan.initializeManagers(MemberMan, MembershipMan)
+    BillingMan.initializeManagers(MemberMan, MembershipMan, PaymentMan)
 
 class ObtainTokenPairWithAccountsView(TokenObtainPairView):
 
@@ -256,7 +256,7 @@ class getVehiclesDetailApiView(APIView):
         if vehiclesDetail is None:
             return Response("No Vehicle is Registered Against Member " + str(memberId), status.HTTP_404_NOT_FOUND)
         else:
-            return Response(vehiclesDetail, status.HTTP_200_OK)
+            return Response({"vehicles":vehiclesDetail}, status.HTTP_200_OK)
 
 class getBillsDetailApiView(APIView):
 
