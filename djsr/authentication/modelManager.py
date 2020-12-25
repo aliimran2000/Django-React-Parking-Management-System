@@ -57,6 +57,10 @@ def ParkingSerializer(vehicle, slot):
 
     ParkingDB.objects.create(Vehicle_ID = vehicle, Slot_Given = slot)
 
+def PaymentSerializer(bill, method, employee):
+
+    PaymentDB.objects.create(Bill_ID = bill, Payment_Supervisor = employee, Payment_Method = method)
+
 def getFreeSlot():
 
     slots = SlotDB.objects.filter(Occupied_Status = False)
@@ -123,9 +127,17 @@ def GetMemberObject(memberID):
 
     return MemberDB.objects.get(Member_ID = memberID)
 
+def getBillObjectById(billId):
+
+    return BillDB.objects.get(Bill_ID = billId)
+
 def getVehicleObject(vehicleID):
 
     return VehicleDB.objects.get(Vehicle_ID = vehicleID)
+
+def getEmployeeObject(employeeId):
+
+    return EmployeeDB.objects.get(Account_ID = employeeId)
 
 def getAllParkingObjects(vehicle):
 
@@ -175,17 +187,34 @@ def getVehiclesDetail(memberId):
 
     return details
 
-def getBillsDetail(memberships):
+def getBillsDetail(memberships, unpaidOnly):
 
     billDetails = []
 
-    for one in memberships:
+    try:
+        for o in memberships:
+            break
+        temp = memberships
+    except:
+        temp = []
+        temp.append(memberships)
+
+    for one in temp:
 
         bills = BillDB.objects.filter(Membership_ID = one)
 
-        dict = {}
-
         for one_bill in bills:
+
+            dict = {}
+
+            paidStatusObj = one_bill._meta.get_field('Paid_Status')
+            paidStatus = paidStatusObj.value_from_object(one_bill)
+
+            if unpaidOnly == True and paidStatus == True:
+                continue 
+
+            billIdObj = one_bill._meta.get_field('Bill_ID')
+            billId = billIdObj.value_from_object(one_bill)
 
             membershipIdObj = one_bill._meta.get_field('Membership_ID')
             membershipId = membershipIdObj.value_from_object(one_bill)
@@ -196,15 +225,13 @@ def getBillsDetail(memberships):
             dueDateObj = one_bill._meta.get_field('Due_Date')
             dueDate = dueDateObj.value_from_object(one_bill)
 
-            paidStatusObj = one_bill._meta.get_field('Paid_Status')
-            paidStatus = paidStatusObj.value_from_object(one_bill)
-
             billAmountObj = one_bill._meta.get_field('Bill_Amount')
             billAmount = billAmountObj.value_from_object(one_bill)
 
             billTypeObj = one_bill._meta.get_field('Bill_Type')
             billType = billTypeObj.value_from_object(one_bill)
 
+            dict['Bill_ID'] = billId
             dict['Membership_ID'] = membershipId
             dict['Generated_Date'] = genDate
             dict['Due_Date'] = dueDate
@@ -218,6 +245,11 @@ def getBillsDetail(memberships):
         return None
 
     return billDetails
+
+def changePaidStatus(bill):
+
+    bill.Paid_Status = True
+    bill.save()
 
 def DeleteAccountObject(accountId):
     

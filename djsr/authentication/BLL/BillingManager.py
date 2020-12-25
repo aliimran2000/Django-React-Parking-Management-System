@@ -1,6 +1,6 @@
 from .Bill import Bill
 
-from ..modelManager import getBillsAmount, getOverdueBills, getBillsDetail, getAllBillObjects, deleteBillObject
+from ..modelManager import getBillsAmount, getOverdueBills, getBillsDetail, getAllBillObjects, getBillObjectById, deleteBillObject, changePaidStatus
 
 class BillingManager:
 
@@ -9,14 +9,17 @@ class BillingManager:
         self.__vehicleRegistration = 500
         self.__membershipRenewal = 800
         self.__parkPerHour = 100
+        
         self.MemberMan = None
         self.MembershipMan = None
         self.PaymentMan = None
+        self.EmployeeMan = None
 
-    def initializeManagers(self, MemberMan, MembershipMan, PaymentMan):
+    def initializeManagers(self, MemberMan, MembershipMan, PaymentMan, EmployeeMan):
         self.MemberMan = MemberMan
         self.MembershipMan = MembershipMan
         self.PaymentMan = PaymentMan
+        self.EmployeeMan = EmployeeMan
 
     def GenerateMembershipRegistrationBill(self, membership):
 
@@ -52,7 +55,17 @@ class BillingManager:
         M1 = self.MemberMan.getMemberById(memberId)
         Mems = self.MembershipMan.getAllMemberships(M1)
 
-        return getBillsDetail(Mems)
+        return getBillsDetail(Mems, False)
+
+    def getAllUnpaidBills(self, Mem1):
+
+        return getBillsDetail(Mem1, True)
+
+    def getUnpaidBillsDetail(self, memberId):
+
+        M1 = self.MemberMan.getMemberById(memberId)
+        Mem1 = self.MembershipMan.getActiveMembership(M1)
+        return self.getAllUnpaidBills(Mem1)
 
     def getAllBills(self, Mem1):
         
@@ -67,3 +80,22 @@ class BillingManager:
             for B1 in BX:
                 self.PaymentMan.removeBillsPayment(B1)
                 deleteBillObject(B1)
+
+    def getBillById(self, id):
+
+        return getBillObjectById(id)
+
+    def markBillAsPaid(self, B1):
+
+        changePaidStatus(B1)
+
+    def payBill(self, billIds, paymentMethod, supervisorId):
+
+        E1 = self.EmployeeMan.getEmployeeById(supervisorId)
+
+        for one in billIds:
+
+            B1 = self.getBillById(one)
+
+            self.PaymentMan.generatePayment(B1, paymentMethod, E1)
+            self.markBillAsPaid(B1)

@@ -19,3 +19,7 @@ class PaymentManager:
         if P1 is not None:
 
             deletePaymentObject(P1)
+
+    def generatePayment(self, B1, paymentMethod, E1):
+
+        Payment(B1, paymentMethod, E1)

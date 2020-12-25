@@ -1,6 +1,8 @@
+from ..modelManager import PaymentSerializer
 
 class Payment:
 
-    def __init__(self):
+    def __init__(self, bill, paymentMethod, employee):
 
-        pass
+        #CREATE FUNCTION
+        PaymentSerializer(bill, paymentMethod, employee)

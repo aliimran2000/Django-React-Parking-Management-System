@@ -31,7 +31,7 @@ def initializeManagers():
     MembershipMan.initializeManagers(BillingMan, MemberMan)
     VehicleMan.initializeManagers(BillingMan, MemberMan, ParkingLotMan)
     ParkingLotMan.initializeManagers(MemberMan, BillingMan, VehicleMan)
-    BillingMan.initializeManagers(MemberMan, MembershipMan, PaymentMan)
+    BillingMan.initializeManagers(MemberMan, MembershipMan, PaymentMan, EmployeeMan)
 
 class ObtainTokenPairWithAccountsView(TokenObtainPairView):
 
@@ -274,3 +274,32 @@ class getBillsDetailApiView(APIView):
             return Response("No Bill is present Against Member " + str(memberId), status.HTTP_404_NOT_FOUND)
         else:
             return Response(billsDetail, status.HTTP_200_OK)
+
+class getUnpaidBillsDetailApiView(APIView):
+
+    permission_classes = (permissions.IsAuthenticated,)
+    
+    def post(self, request, format='json'):
+
+        memberId = request.data['Member_ID']
+
+        billsDetail = BillingMan.getUnpaidBillsDetail(memberId)
+    
+        if billsDetail is None:
+            return Response("No Unpaid Bill is present Against Member " + str(memberId), status.HTTP_404_NOT_FOUND)
+        else:
+            return Response(billsDetail, status.HTTP_200_OK)
+
+class payBillApiView(APIView):
+
+    permission_classes = (permissions.IsAuthenticated,)
+    
+    def post(self, request, format='json'):
+
+        billIds = request.data['Bill_IDs']
+        paymentMethod = request.data['Payment_Method']
+        supervisorId = request.user.id
+
+        BillingMan.payBill(billIds, paymentMethod, supervisorId)
+    
+        return Response("OK", status.HTTP_200_OK)
