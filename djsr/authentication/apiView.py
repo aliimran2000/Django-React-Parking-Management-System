@@ -188,6 +188,8 @@ class parkVehicleApiView(APIView):
             return Response("Vehicle " + str(Vehicle_ID) + " is not registered against this Member", status=status.HTTP_401_UNAUTHORIZED)
         elif slot == "UNCLEARED DUES":
             return Response("Member " + str(Member_ID) + " has uncleared overdue bills, please pay bill", status=status.HTTP_402_PAYMENT_REQUIRED)            
+        elif slot == "ALREADY PARKED":
+            return Response("Vehicle " + str(Vehicle_ID) + " has already been parked, please exit vehicle first", status=status.HTTP_409_CONFLICT)            
         elif slot == "PARKING FULL":
             return Response("Parking is Full", status=status.HTTP_306_RESERVED)
         else:

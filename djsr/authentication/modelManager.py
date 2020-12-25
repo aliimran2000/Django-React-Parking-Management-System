@@ -110,6 +110,15 @@ def freeOccupiedSlotAndGetTime(V1):
 
     return hoursParked
 
+def isAlreadyParked(vehicle):
+
+    try:
+
+        P1 = ParkingDB.objects.get(Vehicle_ID = vehicle, Out_Time = None)
+        return True
+    except:
+        return False
+
 def GetMemberObject(memberID):
 
     return MemberDB.objects.get(Member_ID = memberID)
