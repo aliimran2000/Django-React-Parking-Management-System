@@ -28,7 +28,7 @@ PaymentMan = PaymentManager()
 def initializeManagers():
 
     MemberMan.initializeManagers(MembershipMan, VehicleMan)
-    MembershipMan.initializeManagers(BillingMan)
+    MembershipMan.initializeManagers(BillingMan, MemberMan)
     VehicleMan.initializeManagers(BillingMan, MemberMan, ParkingLotMan)
     ParkingLotMan.initializeManagers(MemberMan, BillingMan, VehicleMan)
     BillingMan.initializeManagers(MemberMan, MembershipMan, PaymentMan)
@@ -113,7 +113,7 @@ class renewMembershipApiView(APIView):
 
         Approved_By = request.user.id
 
-        resp = MemberMan.renewMembership(memberId, Approved_By)
+        resp = MembershipMan.renewMembership(memberId, Approved_By)
 
         if resp == "Not Expired":
             return Response("Member ID : "+ str(memberId) +"'s Membership has not yet expired, hence, unable to renew membership", status=status.HTTP_406_NOT_ACCEPTABLE)
@@ -151,7 +151,7 @@ class registerVehicleApiView(APIView):
         Member_ID = request.data['Member_ID']
         Vehicle_Model = request.data['Vehicle_Model']
 
-        MemberMan.registerVehicle(Vehicle_ID, Member_ID, Vehicle_Model)
+        VehicleMan.registerVehicle(Member_ID, Vehicle_ID, Vehicle_Model)
 
         return Response("Vehicle " + str(Vehicle_ID) + " has successfully been registered against Member " + str(Member_ID), status=status.HTTP_201_CREATED)
 

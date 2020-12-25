@@ -6,9 +6,11 @@ class MembershipManager:
 
     def __init__(self):
         self.BillingMan = None
+        self.MemberMan = None
 
-    def initializeManagers(self, BillingMan):
+    def initializeManagers(self, BillingMan, MemberMan):
         self.BillingMan = BillingMan
+        self.MemberMan = MemberMan
 
     def getActiveMembership(self, member):
         
@@ -56,10 +58,17 @@ class MembershipManager:
         else:
             return False
 
-    def renewMembership(self, M1, approvedBy):
+    def renewMembership(self, memberId, approvedBy):
 
+        M1 = self.MemberMan.getMemberById(memberId)
+
+        if (self.isActiveMembershipExpired(M1) == False):
+            return "Not Expired"
+        
         Membership(M1, approvedBy)
         
         Mem1 = self.getActiveMembership(M1)
 
         self.BillingMan.generateMembershipRenewalBill(Mem1)
+
+        return "OK"

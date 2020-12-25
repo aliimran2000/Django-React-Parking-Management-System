@@ -18,11 +18,13 @@ class VehicleManager:
 
         return validateVehicleByMember(M1, vehicleId)
 
-    def registerVehicle(self, M1, Mem1, Vehicle_ID, Vehicle_Model):
+    def registerVehicle(self, memberId, vehicleId, vehicleModel):
         
-        Vehicle(M1, Vehicle_ID, Vehicle_Model)
+        M1, Mem1 = self.MemberMan.getMemberAndMembership(memberId)
 
-        V1 = getVehicleObject(Vehicle_ID)
+        Vehicle(M1, vehicleId, vehicleModel)
+        V1 = getVehicleObject(vehicleId)
+
         self.BillingMan.generateVehicleRegistrationBill(Mem1)
     
     def deregisterVehicle(self, memberId, vehicleId):

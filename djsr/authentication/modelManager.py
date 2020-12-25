@@ -1,3 +1,4 @@
+from datetime import datetime
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 from .models import Employee as EmployeeDB, Payment
@@ -96,7 +97,7 @@ def markParkingExitTime(V1):
 
     return P1, hoursParked
 
-def freeOccupiedSlot(V1):
+def freeOccupiedSlotAndGetTime(V1):
 
     P1, hoursParked = markParkingExitTime(V1)
 
@@ -252,7 +253,7 @@ def getActiveMembershipObject(member):
         validTo = validToObj.value_from_object(one)
 
         #NON EXPIRED MEMBERSHIP
-        if timezone.now() < validTo:
+        if datetime.now().date() < validTo.date():
             return one
 
     #NO ACTIVE MEMBERSHIP
