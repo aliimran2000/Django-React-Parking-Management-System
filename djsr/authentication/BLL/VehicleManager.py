@@ -8,25 +8,37 @@ class VehicleManager:
         self.BillingMan = None
         self.MemberMan = None
         self.ParkingLotMan = None
+        self.MembershipMan = None
+        self.EmployeeMan = None
 
-    def initializeManagers(self, BillingMan, MemberMan, ParkingLotMan):
+    def initializeManagers(self, BillingMan, MemberMan, ParkingLotMan, MembershipMan, EmployeeMan):
         self.BillingMan = BillingMan
         self.MemberMan = MemberMan
         self.ParkingLotMan = ParkingLotMan
-
+        self.MembershipMan = MembershipMan
+        self.EmployeeMan = EmployeeMan
+    
     def validateVehicle(self, M1, vehicleId):
 
         return validateVehicleByMember(M1, vehicleId)
 
-    def registerVehicle(self, memberId, vehicleId, vehicleModel):
+    def registerVehicle(self, memberId, vehicleId, vehicleModel, employeeId):
         
-        M1, Mem1 = self.MemberMan.getMemberAndMembership(memberId)
+        M1 = self.MemberMan.getMemberById(memberId)
+        Mem1 = self.MembershipMan.getActiveMembership(M1)
 
-        Vehicle(M1, vehicleId, vehicleModel)
+        if Mem1 is None:
+            return "MEMBERSHIP EXPIRED"
+
+        E1 = self.EmployeeMan.getEmployeeById(employeeId)
+
+        Vehicle(M1, E1, vehicleId, vehicleModel)
         V1 = getVehicleObject(vehicleId)
 
         self.BillingMan.generateVehicleRegistrationBill(Mem1)
     
+        return "OK"
+
     def deregisterVehicle(self, memberId, vehicleId):
 
         M1 = self.MemberMan.getMemberById(memberId)

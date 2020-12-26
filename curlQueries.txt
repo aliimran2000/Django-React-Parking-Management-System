@@ -1,0 +1,51 @@
+#SLOT FILLING
+> python manage.py shell
+from authentication.models import Slot
+Slot.objects.create(Slot_ID="1A")
+Slot.objects.create(Slot_ID="1B")
+Slot.objects.create(Slot_ID="1C")
+Slot.objects.create(Slot_ID="1D")
+Slot.objects.create(Slot_ID="1E")
+Slot.objects.create(Slot_ID="1F")
+Slot.objects.create(Slot_ID="2A")
+Slot.objects.create(Slot_ID="2B")
+Slot.objects.create(Slot_ID="2C")
+Slot.objects.create(Slot_ID="2D")
+Slot.objects.create(Slot_ID="2E")
+Slot.objects.create(Slot_ID="2F")
+Slot.objects.create(Slot_ID="3A")
+Slot.objects.create(Slot_ID="3B")
+Slot.objects.create(Slot_ID="3C")
+Slot.objects.create(Slot_ID="3D")
+Slot.objects.create(Slot_ID="3E")
+Slot.objects.create(Slot_ID="3F")
+Slot.objects.create(Slot_ID="4A")
+Slot.objects.create(Slot_ID="4B")
+Slot.objects.create(Slot_ID="4C")
+Slot.objects.create(Slot_ID="4D")
+Slot.objects.create(Slot_ID="4E")
+Slot.objects.create(Slot_ID="4F")
+
+#PARKING ADMIN
+curl --header "Content-Type: application/json" -X
+ POST http://127.0.0.1:8000/api/employee/signup/ --data
+  '{"email":"i181561@nu.edu.pk","username":"Noman Aziz","password":"nomanaziz", "DateOfBirth":"2000-07-24", "CNIC":"3740591554459", "Address":"F-634 Satellite Town Rawalpindi","Phone_No":"03452901128","Employee_Type":"PA"}'
+
+#PARKING EMPLOYEE
+curl --header "Content-Type: application/json" -X
+ POST http://127.0.0.1:8000/api/employee/signup/ --data
+  '{"email":"i180847@nu.edu.pk","username":"Ali Imran","password":"aliimran", "DateOfBirth":"2000-08-10", "CNIC":"3740581453421", "Address":"D-420 Satellite Town Rawalpindi","Phone_No":"03215580872","Employee_Type":"PE"}'
+
+#MEMBERS
+curl --header "Content-Type: application/json" --header "Authorization: JWT <TOKEN>" -X
+ POST http://127.0.0.1:8000/api/member/signup/ --data
+  '{"email":"i180127@nu.edu.pk","username":"Ali Asgar","password":"aliasgar", "DateOfBirth":"2000-04-04", "CNIC":"3740591213469", "Address":"F-11 Islamabad","Phone_No":"03235612120"}'
+
+curl --header "Content-Type: application/json" --header "Authorization: JWT <TOKEN>" -X
+ POST http://127.0.0.1:8000/api/member/signup/ --data
+  '{"email":"i180127@nu.edu.pk","username":"Affan Arif","password":"affanarif", "DateOfBirth":"2000-04-04", "CNIC":"3740521213369", "Address":"I-10 Islamabad","Phone_No":"03231212120"}'
+
+#VEHICLES
+curl --header "Content-Type: application/json" --header "Authorization: JWT <TOKEN>" -X
+ POST http://127.0.0.1:8000/api/member/registervehicle/ --data
+  '{"Vehicle_ID":"RLA-5772", "Member_ID":"<INSERT>", "Vehicle_Model":"Suzuki Baleno 2007"}'

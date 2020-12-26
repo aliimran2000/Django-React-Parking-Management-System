@@ -37,25 +37,29 @@ def MemberSerializer(Email, Username, Password, Dob, Cnic, Address, PhoneNo):
     account = AccountDB.objects.create(email = Email, username = Username, password = Password, DateOfBirth = Dob , CNIC = Cnic, Address = Address, Phone_No = PhoneNo)
     account.set_password(Password)
     account.save()
-    return MemberDB.objects.create(Account_ID = account)
-
-def MembershipSerializer(member, accountID):
     
-    employee = EmployeeDB.objects.get(Account_ID = accountID)
+    member = MemberDB.objects.create(Account_ID = account)
+    
+    memberIdObj = member._meta.get_field('Member_ID')
+    memberId = memberIdObj.value_from_object(member)
+
+    return memberId
+
+def MembershipSerializer(member, employee):
+    
     MembershipDB.objects.create(Member_ID = member, Approved_By = employee)
 
 def BillSerializer(membership, amount, type):
 
     BillDB.objects.create(Membership_ID = membership, Bill_Amount = amount, Bill_Type = type)
 
-def VehicleSerializer(Member, vehicleID, vehicleModel):
+def VehicleSerializer(Member, Employee, vehicleID, vehicleModel):
 
-    vehicle = VehicleDB.objects.create(Vehicle_ID = vehicleID, Member_ID = Member, Vehicle_Model = vehicleModel)
-    return vehicle
+    VehicleDB.objects.create(Vehicle_ID = vehicleID, Member_ID = Member, Vehicle_Model = vehicleModel, Approved_By = Employee)
 
-def ParkingSerializer(vehicle, slot):
+def ParkingSerializer(vehicle, slot, employee):
 
-    ParkingDB.objects.create(Vehicle_ID = vehicle, Slot_Given = slot)
+    ParkingDB.objects.create(Vehicle_ID = vehicle, Slot_Given = slot, Approved_By = employee)
 
 def PaymentSerializer(bill, method, employee):
 
@@ -284,11 +288,14 @@ def deleteParkingObject(parking):
 
     parking.delete()
 
-def getActiveMembershipObject(member):
+def getActiveMembershipObject(member, evenExpired):
 
     memberships = member.membership_set.all()
+    temp = None
 
     for one in memberships:
+
+        temp = one
 
         validToObj = one._meta.get_field('Valid_To')
         validTo = validToObj.value_from_object(one)
@@ -297,8 +304,12 @@ def getActiveMembershipObject(member):
         if datetime.now().date() < validTo.date():
             return one
 
+    #LAST ACTIVE MEMBERSHIP
+    if evenExpired == True:
+        return temp
     #NO ACTIVE MEMBERSHIP
-    return None
+    else:
+        return None
 
 def getAllMembershipObjects(member):
 
@@ -348,10 +359,16 @@ def getOverdueBills(Mem1):
 
     for one in bills:
 
+        paidStatusObj = one._meta.get_field('Paid_Status')
+        paidStatus = paidStatusObj.value_from_object(one)
+
+        if paidStatus == True:
+            continue
+
         dueDateObj = one._meta.get_field('Due_Date')
         dueDate = dueDateObj.value_from_object(one)
 
-        if (timezone.now() > dueDate) :
+        if (timezone.now().date() > dueDate.date()) :
 
             amountObj = one._meta.get_field('Bill_Amount')
             amount = amountObj.value_from_object(one)

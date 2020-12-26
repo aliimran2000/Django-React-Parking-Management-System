@@ -27,10 +27,10 @@ PaymentMan = PaymentManager()
 
 def initializeManagers():
 
-    MemberMan.initializeManagers(MembershipMan, VehicleMan)
-    MembershipMan.initializeManagers(BillingMan, MemberMan)
-    VehicleMan.initializeManagers(BillingMan, MemberMan, ParkingLotMan)
-    ParkingLotMan.initializeManagers(MemberMan, BillingMan, VehicleMan)
+    MemberMan.initializeManagers(MembershipMan, VehicleMan, EmployeeMan)
+    MembershipMan.initializeManagers(BillingMan, MemberMan, EmployeeMan)
+    VehicleMan.initializeManagers(BillingMan, MemberMan, ParkingLotMan, MembershipMan, EmployeeMan)
+    ParkingLotMan.initializeManagers(MemberMan, BillingMan, VehicleMan, MembershipMan, EmployeeMan)
     BillingMan.initializeManagers(MemberMan, MembershipMan, PaymentMan, EmployeeMan)
 
 class ObtainTokenPairWithAccountsView(TokenObtainPairView):
@@ -117,6 +117,8 @@ class renewMembershipApiView(APIView):
 
         if resp == "Not Expired":
             return Response("Member ID : "+ str(memberId) +"'s Membership has not yet expired, hence, unable to renew membership", status=status.HTTP_406_NOT_ACCEPTABLE)
+        elif resp == "Uncleared Dues":
+            return Response("Member ID : "+ str(memberId) +"'s has uncleared dues, unable to renew membership", status=status.HTTP_402_PAYMENT_REQUIRED)
         else:
             return Response("Member ID :"+ str(memberId) +" Membership Has Successfully Been Renewed", status=status.HTTP_201_CREATED)
 
@@ -150,10 +152,14 @@ class registerVehicleApiView(APIView):
         Vehicle_ID = request.data['Vehicle_ID']        
         Member_ID = request.data['Member_ID']
         Vehicle_Model = request.data['Vehicle_Model']
+        approvedBy = request.user.id
 
-        VehicleMan.registerVehicle(Member_ID, Vehicle_ID, Vehicle_Model)
+        resp = VehicleMan.registerVehicle(Member_ID, Vehicle_ID, Vehicle_Model, approvedBy)
 
-        return Response("Vehicle " + str(Vehicle_ID) + " has successfully been registered against Member " + str(Member_ID), status=status.HTTP_201_CREATED)
+        if resp == "MEMBERSHIP EXPIRED":
+            return Response("Member " + str(Member_ID) + "'s membership is expired, please renew it.", status=status.HTTP_406_NOT_ACCEPTABLE)
+        else:
+            return Response("Vehicle " + str(Vehicle_ID) + " has successfully been registered against Member " + str(Member_ID), status=status.HTTP_201_CREATED)
 
 class deregisterVehicleApiView(APIView):
 
@@ -179,8 +185,9 @@ class parkVehicleApiView(APIView):
 
         Vehicle_ID = request.data['Vehicle_ID']
         Member_ID = request.data['Member_ID']
+        Approved_By = request.user.id
 
-        slot = ParkingLotMan.parkVehicle(Member_ID, Vehicle_ID)
+        slot = ParkingLotMan.parkVehicle(Member_ID, Vehicle_ID, Approved_By)
 
         if slot == "EXPIRED":
             return Response("Member " + str(Member_ID) + " Membership has been expired, please renew it", status=status.HTTP_406_NOT_ACCEPTABLE)
@@ -208,6 +215,8 @@ class exitVehicleApiView(APIView):
 
         if fees == "NOT REGISTERED":
             return Response("Vehicle " + str(Vehicle_ID) + " is not registered against this Member", status=status.HTTP_401_UNAUTHORIZED)
+        elif fees == "EXPIRED MEMBERSHIP":
+            return Response("Member " + Member_ID + "'s membership is expired, please renew it", status = status.HTTP_406_NOT_ACCEPTABLE)
         else:
             return Response(str(fees) , status=status.HTTP_200_OK)    
 

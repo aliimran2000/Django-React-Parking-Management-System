@@ -2,5 +2,5 @@ from ..modelManager import ParkingSerializer
 
 class Parking:
 
-    def __init__(self, vehicle, slot):
-        ParkingSerializer(vehicle, slot)
+    def __init__(self, vehicle, slot, employee):
+        ParkingSerializer(vehicle, slot, employee)

@@ -7,14 +7,21 @@ class MemberManager:
     def __init__(self):
         self.MembershipMan = None
         self.VehicleMan = None
+        self.EmployeeMan = None
 
-    def initializeManagers(self, MembershipMan, VehicleMan):
+    def initializeManagers(self, MembershipMan, VehicleMan, EmployeeMan):
         self.MembershipMan = MembershipMan
         self.VehicleMan = VehicleMan
+        self.EmployeeMan = EmployeeMan
 
     def registerMember(self, email, username, password, DateOfBirth, Cnic, Address, Phone_No, Approved_By):
 
-        Member(email, username, password, DateOfBirth, Cnic, Address, Phone_No, self.MembershipMan, Approved_By)
+        E1 = self.EmployeeMan.getEmployeeById(Approved_By)
+
+        member = Member(email, username, password, DateOfBirth, Cnic, Address, Phone_No, E1)
+        M1 = self.getMemberById(member.getMemberId())
+
+        self.MembershipMan.InitiateMembership(M1, E1)
 
     def deregisterMember(self, memberId):
         
@@ -39,10 +46,3 @@ class MemberManager:
 
         memberDetails = GetMemberDetails(memberId)
         return memberDetails
-
-
-    def getMemberAndMembership(self, memberId):
-
-        M1 = self.getMemberById(memberId)
-        Mem1 = self.MembershipMan.getActiveMembership(M1)
-        return M1, Mem1
