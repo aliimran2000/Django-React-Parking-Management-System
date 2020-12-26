@@ -89,6 +89,8 @@ class Vehicle(models.Model):
     Vehicle_ID = models.CharField(primary_key=True, max_length=10)
     Member_ID = models.ForeignKey(Member, on_delete=CASCADE, blank=False, null=False)
     Vehicle_Model = models.CharField(max_length=50, blank=False, null=False)
+    Registeration_Date = models.DateTimeField(default = timezone.now())
+    Approved_By = models.ForeignKey(Employee, on_delete=CASCADE, blank=False, null=False)
 
 class Slot(models.Model):
 
@@ -102,3 +104,4 @@ class Parking(models.Model):
     In_Time = models.DateTimeField(default = timezone.now())
     Out_Time = models.DateTimeField(blank=True, null=True)
     Slot_Given = models.ForeignKey(Slot, on_delete=CASCADE, blank=False, null=False)
+    Approved_By = models.ForeignKey(Employee, on_delete=CASCADE, blank=False, null=False)

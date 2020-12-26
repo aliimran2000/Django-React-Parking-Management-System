@@ -7,20 +7,26 @@ class MembershipManager:
     def __init__(self):
         self.BillingMan = None
         self.MemberMan = None
-
-    def initializeManagers(self, BillingMan, MemberMan):
+        self.EmployeeMan = None
+        
+    def initializeManagers(self, BillingMan, MemberMan, EmployeeMan):
         self.BillingMan = BillingMan
         self.MemberMan = MemberMan
+        self.EmployeeMan = EmployeeMan
 
     def getActiveMembership(self, member):
         
-        return getActiveMembershipObject(member)
+        return getActiveMembershipObject(member, False)
 
-    def InitiateMembership(self, member, Approved_By):
+    def getLastActiveMembership(self, member):
 
-        Membership(member, Approved_By)
+        return getActiveMembershipObject(member, True)
+
+    def InitiateMembership(self, M1, E1):
+
+        Membership(M1, E1)
         
-        Mem1 = self.getActiveMembership(member)
+        Mem1 = self.getActiveMembership(M1)
 
         self.BillingMan.GenerateMembershipRegistrationBill(Mem1)
     
@@ -58,14 +64,22 @@ class MembershipManager:
         else:
             return False
 
-    def renewMembership(self, memberId, approvedBy):
+    def renewMembership(self, memberId, employeeId):
 
         M1 = self.MemberMan.getMemberById(memberId)
 
         if (self.isActiveMembershipExpired(M1) == False):
             return "Not Expired"
         
-        Membership(M1, approvedBy)
+        MemT = self.getLastActiveMembership(M1)
+        dues = self.BillingMan.getRemainingDues(MemT)
+
+        if dues > 0 :
+            return "Uncleared Dues"
+
+        E1 = self.EmployeeMan.getEmployeeById(employeeId)
+
+        Membership(M1, E1)
         
         Mem1 = self.getActiveMembership(M1)
 

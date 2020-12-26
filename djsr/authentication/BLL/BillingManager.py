@@ -64,7 +64,7 @@ class BillingManager:
     def getUnpaidBillsDetail(self, memberId):
 
         M1 = self.MemberMan.getMemberById(memberId)
-        Mem1 = self.MembershipMan.getActiveMembership(M1)
+        Mem1 = self.MembershipMan.getLastActiveMembership(M1)
         return self.getAllUnpaidBills(Mem1)
 
     def getAllBills(self, Mem1):
