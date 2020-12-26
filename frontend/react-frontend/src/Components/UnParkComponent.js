@@ -4,11 +4,10 @@ import Grid from '@material-ui/core/Grid';
 import { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
+import MemberVerifier from '../Components/MemberVerifier'
 import axiosInstance from '../Axios/AxiosInstance'
 
-
+import { green} from '@material-ui/core/colors';
 const useStyles = makeStyles({
     root: {
       minWidth: 275,
@@ -33,19 +32,22 @@ export default function UnParkComponent(props){
     const [Vehicle_ID,setVehicle_ID] = useState("");
     const [done,setdone] = useState(false);
     const [errorm,seterrorm] = useState(false);
-   
+
+    const [emss,setemess] = useState("")
+    const [UID,setUID] = useState(-1);
     
 
 
     function HandleUnPark(){
       let prom
         axiosInstance.post('member/exitvehicle/',{
-            Member_ID: Member_ID,
+            Member_ID: UID,
             Vehicle_ID: Vehicle_ID,}
         )
         .then(res =>{
           if(res.status === 200)
             setdone(true)
+            setemess("SUCCESS")
           }
         ).catch(
             seterrorm(true)
@@ -74,7 +76,7 @@ export default function UnParkComponent(props){
       }
       else if(done){
         return (
-        <Button style = {{width: 1000 ,  margin:5}} variant="contained" color="secondary" onClick={() => {setdone(false)}}>
+        <Button style = {{width: 1000 ,  margin:5,backgroundColor:green[500]}} variant="contained"  onClick={() => {setdone(false)}}>
                 Vehicle Unparked ...OK 
         </Button>
         )
@@ -84,11 +86,8 @@ export default function UnParkComponent(props){
     
 
     return(
-    <div>
-            <Grid>
-                <TextField style = {{width: 1000 ,  margin:5}} required value={Member_ID} onChange={(event)=>{setUser(event.target.value)}} label="Member ID" variant="outlined" />
-            </Grid>
-            
+    <div> 
+            <MemberVerifier  Ddata={[UID,setUID]}/>       
             <Grid>
                 <TextField style = {{width: 1000 ,  margin:5}} required value={Vehicle_ID} onChange={(event)=>{setVehicle_ID(event.target.value)}}  label="Vehicle_ID" variant="outlined" />
             </Grid>

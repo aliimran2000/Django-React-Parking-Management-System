@@ -43,6 +43,7 @@ export default function RemoveVehicle(props){
     const [VecLst,SetLst] = useState([{Vehicle_ID: "non",Vehicle_Model: "non"}]);
     const [success,setsuccess] = useState(false);
     const [Vsuccess,setVsuccess] = useState(0);
+    const [em,setem] = useState("");
     
 
     
@@ -63,6 +64,7 @@ export default function RemoveVehicle(props){
             }
         ).catch(error=>{
             setsuccess(false)
+            setem(error.response.data)
         })
     }
 
@@ -80,6 +82,7 @@ export default function RemoveVehicle(props){
         ).catch(error=>{
             //setVerror(error.response.data)
             setVsuccess(2)
+            setem(error.response.data)
         })
     }
 
@@ -133,7 +136,7 @@ export default function RemoveVehicle(props){
         }else if (Vsuccess === 2){
             return (
                 <Typography variant="caption" color="error">
-                    Unable to get vehicle data
+                    {em}
                 </Typography>
             )}
        }
@@ -190,7 +193,9 @@ export default function RemoveVehicle(props){
             <Grid>
             
             </Grid>
-
+            <Typography variant="caption" color="error">
+                    {em}
+            </Typography>
             </Box>
             </Container>
         </div>  

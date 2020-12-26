@@ -19,8 +19,7 @@ import ReceiptIcon from '@material-ui/icons/Receipt';
 import LocalAtmIcon from '@material-ui/icons/LocalAtm';
 import DriveEtaIcon from '@material-ui/icons/DriveEta';
 import HowToRegIcon from '@material-ui/icons/HowToReg';
-//import { Button } from '@material-ui/core';
-import { green } from '@material-ui/core/colors';
+import { green,red,blue } from '@material-ui/core/colors';
 import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
 const drawerWidth = 240;
 
@@ -140,19 +139,15 @@ export default function PersistentDrawerLeft(props) {
         <List>
          
         <ListItem button onClick={()=>{window.location.href = "/CarsView"}}>
-              <ListItemIcon><DriveEtaIcon/></ListItemIcon>
+              <ListItemIcon><DriveEtaIcon style={{ color: red[500] }}/></ListItemIcon>
               <ListItemText primary="My Cars" />
         </ListItem> 
-        <ListItem button onClick={()=>{window.location.href = "/Payments"}}>
-              <ListItemIcon><LocalAtmIcon/></ListItemIcon>
-              <ListItemText primary="My Payments" />
-        </ListItem>
         <ListItem button onClick={()=>{window.location.href = "/Bills"}}>
-              <ListItemIcon><ReceiptIcon/></ListItemIcon>
+              <ListItemIcon><ReceiptIcon style={{ color: green[500] }} /></ListItemIcon>
               <ListItemText primary="My Bills" />
         </ListItem>
         <ListItem button onClick={()=>{window.location.href = "/Membership"}}>
-              <ListItemIcon><HowToRegIcon/></ListItemIcon>
+              <ListItemIcon><HowToRegIcon style={{ color: blue[500] }}/></ListItemIcon>
               <ListItemText primary="My Membership" />
         </ListItem>
         <Divider />

@@ -42,10 +42,17 @@ export default function ParkCar(props){
     const [VecLst,SetLst] = useState([{Vehicle_ID: "non",Vehicle_Model: "non"}]);
     const [success,setsuccess] = useState(false);
     const [Vsuccess,setVsuccess] = useState(0);
+    const [emss,setemess] = useState("")
     
 
     
-    
+    function DisplayError(){
+        return (
+            <Typography variant="caption" color="error">
+                {emss}
+            </Typography>
+            )
+    }
 
     //member/getvehiclesdetail/
     //'member/deregistervehicle/'
@@ -62,6 +69,7 @@ export default function ParkCar(props){
             }
         ).catch(error=>{
             setsuccess(false)
+            setemess(error.response.data)
         })
     }
 
@@ -77,7 +85,7 @@ export default function ParkCar(props){
                 
             }
         ).catch(error=>{
-            //setVerror(error.response.data)
+            setemess(error.response.data)
             setVsuccess(2)
         })
     }
@@ -112,6 +120,7 @@ export default function ParkCar(props){
         if(success){
             setsuccess(false)
             setVsuccess(1)
+            setemess("SUCCESS")
             return (
             <div>
                 <Typography variant="caption" style={{color:purple[500]}} >
@@ -120,6 +129,7 @@ export default function ParkCar(props){
             </div>)
             
         }
+        else {
         
         if(Vsuccess === 1){
             return (
@@ -139,6 +149,7 @@ export default function ParkCar(props){
                 </Typography>
             )}
        }
+    }
 
     function VehicleDeReg(){
         if(UID !== -1){
@@ -191,8 +202,9 @@ export default function ParkCar(props){
                 {VehicleDeReg()}
             <Grid>
             
-            </Grid>
 
+            </Grid>
+            {DisplayError()}
             </Box>
             </Container>
         </div>  

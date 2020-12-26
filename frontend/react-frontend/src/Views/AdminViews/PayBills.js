@@ -166,6 +166,7 @@ export default function PayBills(props){
                 <Button style = {{width: 1000 ,  margin:5 ,backgroundColor:green[800]}} variant="contained"  onClick={()=>{GetListofBills()}}>
                     Get Bills
                 </Button>
+                <br/>
                 {DisplayBills()}
                 </div>
             )
