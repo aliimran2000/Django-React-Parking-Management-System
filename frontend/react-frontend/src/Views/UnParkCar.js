@@ -13,7 +13,7 @@ import isLoggedin from '../Utils/LoginCheck'
 export default function UnParkCar(props){
     
     let val = isLoggedin()
-    if(val !== "PA" || val !== "PE" ){
+    if(val !== "PA" && val !== "PE" ){
         console.log(isLoggedin()) 
         window.location.href = "/"
     }

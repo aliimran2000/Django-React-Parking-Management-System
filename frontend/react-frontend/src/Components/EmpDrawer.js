@@ -110,7 +110,7 @@ function foradmin(b1){
               <ListItemIcon><ReceiptIcon style={{ color: blue[500] }}/></ListItemIcon>
               <ListItemText primary="View Bills" />
         </ListItem>
-        <ListItem button onClick={()=>{window.location.href = "/PayBill"}}>
+        <ListItem button onClick={()=>{window.location.href = "/PayBills"}}>
               <ListItemIcon><LocalAtmIcon style={{ color: green[500] }}/></ListItemIcon>
               <ListItemText primary="Pay Bills" />
         </ListItem>

@@ -12,6 +12,7 @@ import AdminView from './Views/AdminViews/Admin_View'
 import RenewMembership from './Views/AdminViews/RenewMembership'
 import AddVehicle from './Views/AdminViews/AddVehicle'
 import RemoveVehicle from './Views/AdminViews/RemoveVehicle'
+import PayBills from './Views/AdminViews/PayBills'
 import EmployView from './Views/Employ_View'
 import ParkCar from './Views/ParkCar'
 import UnParkCar from './Views/UnParkCar'
@@ -73,7 +74,9 @@ function App() {
                   <EmployView />  
             </Route>
             
-
+            <Route exact path = "/PayBills">
+                  <PayBills />  
+            </Route>
             
             
             
