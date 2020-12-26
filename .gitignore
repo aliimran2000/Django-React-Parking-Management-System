@@ -2,7 +2,7 @@
 .vscode
 .gitignore
 
-
+node_modules
 
 # PIP ENV #
 Pipfile
