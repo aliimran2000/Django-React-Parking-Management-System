@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import MemberVerifier from '../Components/MemberVerifier'
 import axiosInstance from '../Axios/AxiosInstance'
+import {Typography} from '@material-ui/core';
 
 import { green} from '@material-ui/core/colors';
 const useStyles = makeStyles({
@@ -49,9 +50,10 @@ export default function UnParkComponent(props){
             setdone(true)
             setemess("SUCCESS")
           }
-        ).catch(
+        ).catch(error =>{
             seterrorm(true)
-        )
+            setemess(error.response.data)
+        })
           
         
 
@@ -59,11 +61,11 @@ export default function UnParkComponent(props){
 
     function DisplayButton(){
       if(!done){
-
+          
         if(errorm){
           return (
             <Button style = {{width: 1000 ,  margin:5}} variant="contained" color="secondary" onClick={() => {setdone(false);seterrorm(false)}}>
-                Error Unparking Car ... Try Again 
+                {emss} 
           </Button>
           )
         }
@@ -79,8 +81,11 @@ export default function UnParkComponent(props){
         <Button style = {{width: 1000 ,  margin:5,backgroundColor:green[500]}} variant="contained"  onClick={() => {setdone(false)}}>
                 Vehicle Unparked ...OK 
         </Button>
+
+        
         )
       }
+      
     }
 
     
@@ -93,6 +98,8 @@ export default function UnParkComponent(props){
             </Grid>
             
             {DisplayButton()}
+
+            
     </div>
       )
     

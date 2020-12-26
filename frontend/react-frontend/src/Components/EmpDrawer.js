@@ -22,8 +22,9 @@ import { green,red,blue } from '@material-ui/core/colors';
 import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
 import LocalParkingIcon from '@material-ui/icons/LocalParking';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import ReceiptIcon from '@material-ui/icons/Receipt';
 import LocalAtmIcon from '@material-ui/icons/LocalAtm';
+import axiosInstance from '../Axios/AxiosInstance'
+
 const drawerWidth = 320;
 
 const useStyles = makeStyles((theme) => ({
@@ -144,6 +145,16 @@ export default function EmpDrawer(props) {
     setOpen(false);
   };
 
+
+  function Logout(){
+    axiosInstance.post('logout/')
+    sessionStorage.clear()
+    localStorage.clear()
+    window.location.href = "/"
+  }
+
+
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -195,11 +206,11 @@ export default function EmpDrawer(props) {
         </ListItem>
         <Divider />
         <Divider />
-        <ListItem button style={{color : green[500] , fontSize: 100 }}>
-        <ListItemIcon><PowerSettingsNewIcon /></ListItemIcon>
-        <ListItemText primary="LOGOUT" />
+        <ListItem button style={{backgroundColor: green[500] , fontSize: 100 }} onClick={() => {Logout()}}>
+        <ListItemText primary="Logout" />
+          <ListItemIcon><PowerSettingsNewIcon /></ListItemIcon>        
         </ListItem>
-        
+
         </List>
       </Drawer>
     

@@ -37,9 +37,9 @@ export default function MemberVerifier(props){
    
     
 
-
+    
     function HandleVerify(){
-      let prom
+      
         axiosInstance.post('member/verifycredentials/',{
             username: username,
             password: password,}
