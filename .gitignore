@@ -1,19 +1,5 @@
 # VSCODE #
 .vscode
-.gitignore
+__pycache__
+node_modules/
 
-node_modules
-
-# PIP ENV #
-Pipfile
-Pipfile.lock
-
-# CACHE #
-djsr/djsr/__pycache__/
-djsr/authentication/__pycache__/
-djsr/authentication/migrations/__pycache__/
-djsr/authentication/BLL/__pycache__/
-
-# DJANGO #
-# djsr/db.sqlite3
-curlQueries.txt
