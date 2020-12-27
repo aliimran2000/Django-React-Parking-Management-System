@@ -1,7 +1,10 @@
 # VSCODE #
 .vscode
-.gitignore
+__pycache__
+node_modules/
 
+<<<<<<< HEAD
+=======
 
 
 # PIP ENV #
@@ -17,3 +20,4 @@ djsr/authentication/BLL/__pycache__/
 # DJANGO #
 # djsr/db.sqlite3
 # curlQueries.txt
+>>>>>>> bb280ccc185439040c7775bd36b276ba5cdd3b49

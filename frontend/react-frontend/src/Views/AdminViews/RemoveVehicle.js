@@ -71,9 +71,9 @@ export default function RemoveVehicle(props){
             Member_ID:UID
         }).then(
             result=>{
-                console.log(result.data.vehicles)    
+                console.log(result.data)    
                 setVsuccess(1)
-                let L = result.data
+                let L = result.data.vehicles
                 SetLst(L)
                 
             }

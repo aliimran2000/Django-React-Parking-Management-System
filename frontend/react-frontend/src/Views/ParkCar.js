@@ -72,7 +72,7 @@ export default function ParkCar(props){
             result=>{
                 console.log(result.data.vehicles)    
                 setVsuccess(1)
-                let L = result.data
+                let L = result.data.vehicles
                 SetLst(L)
                 
             }
@@ -110,14 +110,15 @@ export default function ParkCar(props){
 
     function DisplayListofVehicles(){
         if(success){
+            setsuccess(false)
+            setVsuccess(1)
             return (
             <div>
                 <Typography variant="caption" style={{color:purple[500]}} >
                     Vehicle Parked Succesfully
                 </Typography>    
             </div>)
-            setsuccess(false)
-            setVsuccess(1)
+            
         }
         
         if(Vsuccess === 1){
@@ -163,7 +164,7 @@ export default function ParkCar(props){
     }
 
     let val = isLoggedin()
-    if(val !== "PA" || val !== "PE" ){
+    if(val !== "PA" && val !== "PE" ){
         console.log(isLoggedin()) 
         window.location.href = "/"
     }
