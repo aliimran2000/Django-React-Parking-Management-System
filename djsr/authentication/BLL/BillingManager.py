@@ -52,7 +52,7 @@ class BillingManager:
 
     def getBillsDetail(self, memberId):
 
-        M1 = self.MemberMan.getMemberById(memberId)
+        M1 = self.MemberMan.getMemberByAccountId(memberId)
         Mems = self.MembershipMan.getAllMemberships(M1)
 
         return getBillsDetail(Mems, False)

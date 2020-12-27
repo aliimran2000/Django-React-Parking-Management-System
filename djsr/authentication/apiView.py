@@ -270,13 +270,28 @@ class getVehiclesDetailApiView(APIView):
         else:
             return Response({"vehicles":vehiclesDetail}, status.HTTP_200_OK)
 
+class getParkedVehiclesDetailApiView(APIView):
+
+    permission_classes = (permissions.IsAuthenticated,)
+    
+    def post(self, request, format='json'):
+
+        memberId = request.user.id
+
+        parkedVehiclesDetail = ParkingLotMan.getParkedVehiclesDetail(memberId)
+    
+        if parkedVehiclesDetail is None:
+            return Response("No Vehicle is Parked Against Member " + str(memberId), status.HTTP_404_NOT_FOUND)
+        else:
+            return Response({"parkedVehicles":parkedVehiclesDetail}, status.HTTP_200_OK)
+
 class getBillsDetailApiView(APIView):
 
     permission_classes = (permissions.IsAuthenticated,)
     
     def post(self, request, format='json'):
 
-        memberId = request.data['Member_ID']
+        memberId = request.user.id
 
         billsDetail = BillingMan.getBillsDetail(memberId)
     
