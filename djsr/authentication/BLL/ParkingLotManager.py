@@ -1,5 +1,5 @@
 from .Parking import Parking
-from ..modelManager import getFreeSlot, getSlotIdBySlot, freeOccupiedSlotAndGetTime, getAllParkingObjects, deleteParkingObject, isAlreadyParked, getParkedVehiclesDetail
+from ..modelManager import getFreeSlot, getSlotIdBySlot, freeOccupiedSlotAndGetTime, getAllParkingObjects, deleteParkingObject, isAlreadyParked, getParkedVehiclesDetail, getAllParkingsDetail
 
 class ParkingLotManager:
 
@@ -102,3 +102,7 @@ class ParkingLotManager:
             return []
 
         return getParkedVehiclesDetail(VX)
+
+    def getAllParkingsDetail(self):
+
+        return getAllParkingsDetail()
