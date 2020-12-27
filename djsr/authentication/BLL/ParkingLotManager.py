@@ -1,5 +1,5 @@
 from .Parking import Parking
-from ..modelManager import getFreeSlot, getSlotIdBySlot, freeOccupiedSlotAndGetTime, getAllParkingObjects, deleteParkingObject, isAlreadyParked
+from ..modelManager import getFreeSlot, getSlotIdBySlot, freeOccupiedSlotAndGetTime, getAllParkingObjects, deleteParkingObject, isAlreadyParked, getParkedVehiclesDetail
 
 class ParkingLotManager:
 
@@ -92,3 +92,13 @@ class ParkingLotManager:
             for PK1 in PKX:
 
                 deleteParkingObject(PK1)
+
+    def getParkedVehiclesDetail(self, memberId):
+
+        M1 = self.MemberMan.getMemberByAccountId(memberId)
+        VX = self.VehicleMan.getAllVehicles(M1)
+
+        if VX is None:
+            return []
+
+        return getParkedVehiclesDetail(VX)

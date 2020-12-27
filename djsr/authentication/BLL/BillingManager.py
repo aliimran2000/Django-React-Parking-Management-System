@@ -52,7 +52,7 @@ class BillingManager:
 
     def getBillsDetail(self, memberId):
 
-        M1 = self.MemberMan.getMemberById(memberId)
+        M1 = self.MemberMan.getMemberByAccountId(memberId)
         Mems = self.MembershipMan.getAllMemberships(M1)
 
         return getBillsDetail(Mems, False)
@@ -99,3 +99,5 @@ class BillingManager:
 
             self.PaymentMan.generatePayment(B1, paymentMethod, E1)
             self.markBillAsPaid(B1)
+
+        return "OK"

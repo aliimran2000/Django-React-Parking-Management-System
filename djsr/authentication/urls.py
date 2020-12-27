@@ -22,6 +22,7 @@ urlpatterns = [
     path('member/getunpaidbillsdetail/', MemAccountApiCaller.getUnpaidBillsDetail(), name='get_unpaid_bills_detail'),
     path('member/getbillsdetail/', MemAccountApiCaller.getBillsDetail(), name='get_bills_detail'),
     path('member/paybill/', MemAccountApiCaller.payBill(), name='pay_bill'),
+    path('member/getparkedvehiclesdetail/', MemAccountApiCaller.getParkedVehiclesDetail(), name='get_parked_vehicle_detail'),
 
     path('account/getname/', EmpAccountApiCaller.getName(), name='get_account_name'),
     path('account/gettype/', EmpAccountApiCaller.getType(), name='get_account_type'),

@@ -14,18 +14,28 @@ class MemberManager:
         self.VehicleMan = VehicleMan
         self.EmployeeMan = EmployeeMan
 
-    def registerMember(self, email, username, password, DateOfBirth, Cnic, Address, Phone_No, Approved_By):
+    def getMemberById(self, memberId):
+        
+        return GetMemberObject(memberId, False)
 
-        E1 = self.EmployeeMan.getEmployeeById(Approved_By)
+    def getMemberByAccountId(self, accountId):
 
-        member = Member(email, username, password, DateOfBirth, Cnic, Address, Phone_No, E1)
+        return GetMemberObject(accountId, True)
+
+    def registerMember(self, email, username, password, dateOfBirth, cnic, address, phoneNo, employeeId):
+
+        E1 = self.EmployeeMan.getEmployeeById(employeeId)
+
+        member = Member(email, username, password, dateOfBirth, cnic, address, phoneNo, E1)
         M1 = self.getMemberById(member.getMemberId())
 
         self.MembershipMan.InitiateMembership(M1, E1)
 
+        return "OK"
+
     def deregisterMember(self, memberId):
         
-        M1 = GetMemberObject(memberId)
+        M1 = self.getMemberById(memberId)
 
         remainingDues = self.MembershipMan.getActiveMembershipDues(M1)
 
@@ -37,10 +47,6 @@ class MemberManager:
             self.VehicleMan.removeAllVehicles(M1)
             DeleteMemberObject(M1)
             return "OK"          
-
-    def getMemberById(self, memberId):
-        
-        return GetMemberObject(memberId)
 
     def getMemberDetails(self, memberId):
 
