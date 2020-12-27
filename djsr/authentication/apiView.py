@@ -328,3 +328,13 @@ class payBillApiView(APIView):
         resp = BillingMan.payBill(billIds, paymentMethod, supervisorId)
     
         return Response(str(resp), status.HTTP_200_OK)
+
+class getAllParkingsDetailApiView(APIView):
+
+    permission_classes = (permissions.IsAuthenticated,)
+    
+    def post(self, request, format='json'):
+
+        resp = ParkingLotMan.getAllParkingsDetail()
+    
+        return Response(str(resp), status.HTTP_200_OK)

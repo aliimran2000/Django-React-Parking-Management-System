@@ -230,6 +230,40 @@ def getParkedVehiclesDetail(vehicles):
 
     return details
 
+def getAllParkingsDetail():
+
+    details = []
+
+    parkings = ParkingDB.objects.filter(Out_Time = None)
+
+    for parking in parkings:
+
+        dict = {}
+
+        outTimeObj = parking._meta.get_field('Out_Time')
+        outTime = outTimeObj.value_from_object(parking) 
+
+        if outTime is not None:
+            continue  
+
+        inTimeObj = parking._meta.get_field('In_Time')
+        inTime = inTimeObj.value_from_object(parking) 
+
+        vehicleIdObj = parking._meta.get_field('Vehicle_ID')
+        vehicleId = vehicleIdObj.value_from_object(parking) 
+        
+        slotObj = parking._meta.get_field('Slot_Given')
+        slot = slotObj.value_from_object(parking)
+
+        dict['Vehicle_ID'] = vehicleId
+        dict['In_Time'] = inTime 
+        dict['Out_Time'] = outTime 
+        dict['Slot_Given'] = slot
+
+        details.append(dict) 
+
+    return details
+
 def getBillsDetail(memberships, unpaidOnly):
 
     billDetails = []

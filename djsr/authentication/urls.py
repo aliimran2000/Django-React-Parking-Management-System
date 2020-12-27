@@ -29,6 +29,7 @@ urlpatterns = [
 
     path('employee/signup/', EmpAccountApiCaller.signup(), name="Register_Employee"),
     path('employee/login/', EmpAccountApiCaller.login(), name='employee_token_create'),
+    path('employee/getallparkingsdetail/', EmpAccountApiCaller.getAllParkingsDetail(), name='get_all_parkings_detail'),
 
     path('logout/',EmpAccountApiCaller.logout(),name="logout"),
     path('refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
