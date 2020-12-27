@@ -65,7 +65,7 @@ export default function UnParkComponent(props){
         if(errorm){
           return (
             <Button style = {{width: 1000 ,  margin:5}} variant="contained" color="secondary" onClick={() => {setdone(false);seterrorm(false)}}>
-                {emss} 
+                Error Parking Car 
           </Button>
           )
         }

@@ -11,31 +11,17 @@ import Box from '@material-ui/core/Box';
 import axiosInstance from '../../Axios/AxiosInstance'
 import GoBack from '../../Components/GoBack'
 import Memberverifier from '../../Components/MemberVerifier'
-import { green,grey} from '@material-ui/core/colors';
+import { green} from '@material-ui/core/colors';
 
-
-const useStyles = makeStyles({
-    root: {
-      minWidth: 275,
-    },
-    bullet: {
-      display: 'inline-block',
-      margin: '0 2px',
-      transform: 'scale(0.8)',
-    },
-    title: {
-      fontSize: 14,
-    },
-    pos: {
-      marginBottom: 12,
-    },
-  });
 
 
 export default function PayBills(props){
-    const classes = useStyles();
-    const [UID,setUID] = useState(-1);
     
+    const [UID,setUID] = useState(-1);
+    const [selectedbills,setselectedbills] = useState([])
+    const [Bill,setbill] = useState(0)
+    const [success,setsuccess] = useState(false);
+    const [Bsuccess,setBsuccess] = useState(0);
     const [Blst,SetLst] = useState([{'Bill_ID': "none",
     'Membership_ID': "none",
     'Generated_Date': "none",
@@ -45,8 +31,6 @@ export default function PayBills(props){
     'Bill_Type': "none",}]);
     
     
-    const [success,setsuccess] = useState(false);
-    const [Bsuccess,setBsuccess] = useState(0);
     
     if(!(isLoggedin() === "PA")){
       console.log(isLoggedin()) 
@@ -57,7 +41,8 @@ export default function PayBills(props){
     }
 
     const columns = [
-      { field: 'id', headerName: 'Bill N.o', width: 100 },
+      { field: 'id', headerName: 'ID', width: 100 },
+      { field: 'Bill_ID', headerName: 'Bill No.', width: 100 },  
       { field: 'Bill_Amount', headerName: 'Amount', width: 130 },
       { field: 'Bill_Type', headerName:'Type', width: 130 },
       { field: 'Membership_ID', headerName: 'M_Code', width: 130 },
@@ -65,14 +50,15 @@ export default function PayBills(props){
       { field: 'Due_Date', headerName: 'Due Date', width: 300 },
     ];
     
-    let id = 0
+    
     const rows = [];
+    
     
     let selected = []
 
     function PaySelectedBills(){
       axiosInstance.post('member/paybill/',{
-        Bill_IDs:selected,
+        Bill_IDs:selectedbills,
         Payment_Method:"C"
       }).then(
         result=>{
@@ -86,8 +72,24 @@ export default function PayBills(props){
     }
     
 
-    
+    function sumselected(){
+      let SUM = 0
+      selected.forEach((e)=>{
+        SUM = SUM + parseInt(Blst[parseInt(e)-1].Bill_Amount)
+        
+      }
+      )
+      return SUM
+    }
 
+    function funcselectedbills(){
+      let temp = []
+      selected.forEach((e)=>{
+        temp.push(Blst[parseInt(e)-1].Bill_ID)        
+      }
+      )
+      setselectedbills(temp)
+    }
    
 
     function GetListofBills(){
@@ -100,8 +102,6 @@ export default function PayBills(props){
                 let L = result.data
                 SetLst(L)
 
-                
-                
             }
         ).catch(error=>{
             //setVerror(error.response.data)
@@ -124,20 +124,23 @@ export default function PayBills(props){
       if(Bsuccess === 1){
         for (var i = 0 ; i < Blst.length; i++ ){
           let Gdata = Blst[i]
-          Gdata["id"] = Blst[i]["Bill_ID"]
+          //Gdata["id"] = Blst[i]["Bill_ID"]
+          Gdata["id"] = i+1
           rows.push(Gdata)
-          console.log(Gdata)
+          
         }
         return (
             <div>
             <div style={{ height: 400, width: '94%' }}>
               <DataGrid rows={rows} columns={columns} pageSize={5} checkboxSelection onSelectionChange={(event)=>{
                 selected = (event.rowIds)
-                console.log(selected)
+                console.log(event.rowIds)
+                setbill(sumselected())
+                funcselectedbills()
               }}/>
             </div>
             <Button style = {{width: 1000 ,  margin:5 ,backgroundColor:green[300]}} variant="contained"  onClick={()=>{PaySelectedBills()}}>
-              Pay Selected Bills
+              Pay Selected Bills TOTAL : {Bill}
             </Button>
 
             </div>

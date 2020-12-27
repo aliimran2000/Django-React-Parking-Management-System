@@ -1,21 +1,23 @@
 import React from 'react'
-import { useState } from 'react';
 import {Typography} from '@material-ui/core';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import EmpDrawer from '../../Components/EmpDrawer';
-import axiosInstance from '../../Axios/AxiosInstance'
-import isLoggedin from '../../Utils/LoginCheck'
-
-
-
-
+import ParkingDisplay from '../../Components/ParkingDisplay'
 export default function AdminView(props){
     
+    
+
+
+    
+
     if(sessionStorage.getItem("TYPE") !== "PA"){
         window.location.href = "/"
     }
 
+
+
+    
     
     return(
         <div>
@@ -23,8 +25,11 @@ export default function AdminView(props){
             <EmpDrawer adminpage={true}></EmpDrawer>
             
             <Container component="main" maxWidth="lg">
-                <Box color="secondary.main" spacing={2} m={10} >
-                    <Typography variant="h2" color="error">  this is the admin view </Typography>
+                <Box  spacing={2} m={10} >
+                <Typography variant="h3" align="center">
+                    Welcome
+                </Typography>
+                <ParkingDisplay/>
                 </Box>
             </Container>    
             

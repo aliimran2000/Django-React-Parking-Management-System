@@ -337,4 +337,4 @@ class getAllParkingsDetailApiView(APIView):
 
         resp = ParkingLotMan.getAllParkingsDetail()
     
-        return Response(str(resp), status.HTTP_200_OK)
+        return Response(resp, status.HTTP_200_OK)

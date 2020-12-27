@@ -256,7 +256,7 @@ def getAllParkingsDetail():
         slot = slotObj.value_from_object(parking)
 
         dict['Vehicle_ID'] = vehicleId
-        dict['In_Time'] = inTime 
+        dict['In_Time'] = inTime.strftime("%m/%d/%Y, %H:%M:%S") 
         dict['Out_Time'] = outTime 
         dict['Slot_Given'] = slot
 
