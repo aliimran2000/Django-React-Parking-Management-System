@@ -99,3 +99,5 @@ class BillingManager:
 
             self.PaymentMan.generatePayment(B1, paymentMethod, E1)
             self.markBillAsPaid(B1)
+
+        return "OK"

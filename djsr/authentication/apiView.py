@@ -84,9 +84,10 @@ class registerMemberApiView(APIView):
         Phone_No = request.data['Phone_No']
         Approved_By = request.user.id
 
-        MemberMan.registerMember(email, username, password, DateOfBirth, Cnic, Address, Phone_No, Approved_By)
+        resp = MemberMan.registerMember(email, username, password, DateOfBirth, Cnic, Address, Phone_No, Approved_By)
 
-        return Response("Member has been Successfully Registered", status=status.HTTP_201_CREATED)
+        if resp == "OK":
+            return Response("Member has been Successfully Registered", status=status.HTTP_201_CREATED)
 
 class deregisterMemberApiView(APIView):
 
@@ -309,6 +310,6 @@ class payBillApiView(APIView):
         paymentMethod = request.data['Payment_Method']
         supervisorId = request.user.id
 
-        BillingMan.payBill(billIds, paymentMethod, supervisorId)
+        resp = BillingMan.payBill(billIds, paymentMethod, supervisorId)
     
-        return Response("OK", status.HTTP_200_OK)
+        return Response(str(resp), status.HTTP_200_OK)
