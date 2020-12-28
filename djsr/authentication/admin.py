@@ -4,7 +4,7 @@ from .models import Accounts, Employee, Member, Membership, Vehicle, Bill, Parki
 class AccountsAdmin(admin.ModelAdmin):
     model = Accounts
 
-@admin.register(Employee, Member, Membership, Vehicle, Bill, Payment, Parking, Slot)
+@admin.register(Accounts,Employee, Member, Membership, Vehicle, Bill, Payment, Parking, Slot)
 class UniversalAdmin(admin.ModelAdmin):
     def get_list_display(self, request):
         return [field.name for field in self.model._meta.concrete_fields]

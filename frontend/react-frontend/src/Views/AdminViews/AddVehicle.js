@@ -1,6 +1,6 @@
 import React from 'react'
 import {Typography} from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { emphasize, makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField'
 import Grid from '@material-ui/core/Grid';
 import { useState } from 'react';
@@ -40,12 +40,17 @@ export default function AddVehicle(props){
     const [success,setsuccess] = useState(false);
     const [Vehicle_ID,setVID] = useState('');
     const [Vehicle_Model,setVM] = useState('');
-    
+    const [em,setem] = useState("");
 
 
 
     function HandleRegVec(){
-        let prom = axiosInstance.post('member/registervehicle/',{
+        if(Vehicle_Model === ""){
+            setem("Unable to Register Vehicle Enter Model")
+            return 
+        }
+
+        axiosInstance.post('member/registervehicle/',{
             Vehicle_ID: Vehicle_ID,
             Vehicle_Model: Vehicle_Model,
             Member_ID:UID
@@ -53,10 +58,24 @@ export default function AddVehicle(props){
             result=>{
                 if(result.status === 201){
                     setsuccess(true)
+                    setem('')
                 }
             }
         ).catch(error=>{
-            console.log(error)
+            
+            try {
+                
+                if(error.response.status === 406)
+                    setem(error.response.data)
+                else
+                    setem("Unable to Register Vehicle")
+
+                console.log(error.response.status)
+            } 
+            catch {
+                setem("Unable to Register Vehicle")
+            }
+            
         })
     }
 
@@ -131,7 +150,9 @@ export default function AddVehicle(props){
             <Grid>
             
             </Grid>
-
+            <Typography variant='h4' color="error" style = {{width: 10000 ,  margin:10}}>
+            {em}
+            </Typography>
             </Box>
             </Container>
         </div>  

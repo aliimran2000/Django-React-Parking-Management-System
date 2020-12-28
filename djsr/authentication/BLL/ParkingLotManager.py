@@ -39,6 +39,8 @@ class ParkingLotManager:
 
         dues = self.BillingMan.checkOverdueBills(Mem1)
 
+        print("DUESSSSSS : ",dues)
+
         if dues > 0 :
             return "UNCLEARED DUES"
 

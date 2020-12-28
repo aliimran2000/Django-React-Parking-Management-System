@@ -36,6 +36,12 @@ curl --header "Content-Type: application/json" -X
  POST http://127.0.0.1:8000/api/employee/signup/ --data
   '{"email":"i180847@nu.edu.pk","username":"Ali Imran","password":"aliimran", "DateOfBirth":"2000-08-10", "CNIC":"3740581453421", "Address":"D-420 Satellite Town Rawalpindi","Phone_No":"03215580872","Employee_Type":"PE"}'
 
+#AND 
+curl --header "Content-Type: application/json" -X
+ POST http://127.0.0.1:8000/api/employee/signup/ --data
+'{"email":"i180619@nu.edu.pk","username":"Saif Dar","password":"saifdar", "DateOfBirth":"2000-08-10", "CNIC":"3740581453422", "Address":"D-420 Satellite Town Rawalpindi","Phone_No":"03215580873","Employee_Type":"PE"}'
+
+
 #MEMBERS
 curl --header "Content-Type: application/json" --header "Authorization: JWT <TOKEN>" -X
  POST http://127.0.0.1:8000/api/member/signup/ --data

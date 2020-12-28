@@ -42,7 +42,7 @@ export default function PayBills(props){
 
     const columns = [
       { field: 'id', headerName: 'ID', width: 100 },
-      { field: 'Bill_ID', headerName: 'Bill No.', width: 100 },  
+      /*{ field: 'Bill_ID', headerName: 'Bill No.', width: 100 }, */
       { field: 'Bill_Amount', headerName: 'Amount', width: 130 },
       { field: 'Bill_Type', headerName:'Type', width: 130 },
       { field: 'Membership_ID', headerName: 'M_Code', width: 130 },

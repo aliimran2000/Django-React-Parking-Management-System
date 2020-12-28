@@ -437,7 +437,7 @@ def getOverdueBills(Mem1):
 
         if paidStatus == True:
             continue
-
+            
         dueDateObj = one._meta.get_field('Due_Date')
         dueDate = dueDateObj.value_from_object(one)
 

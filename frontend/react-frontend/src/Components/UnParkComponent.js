@@ -3,33 +3,16 @@ import TextField from '@material-ui/core/TextField'
 import Grid from '@material-ui/core/Grid';
 import { useState } from 'react';
 import Button from '@material-ui/core/Button';
-import { makeStyles } from '@material-ui/core/styles';
 import MemberVerifier from '../Components/MemberVerifier'
 import axiosInstance from '../Axios/AxiosInstance'
-import {Typography} from '@material-ui/core';
+
 
 import { green} from '@material-ui/core/colors';
-const useStyles = makeStyles({
-    root: {
-      minWidth: 275,
-    },
-    bullet: {
-      display: 'inline-block',
-      margin: '0 2px',
-      transform: 'scale(0.8)',
-    },
-    title: {
-      fontSize: 14,
-    },
-    pos: {
-      marginBottom: 12,
-    },
-  });
 
 
 export default function UnParkComponent(props){
     
-    const [Member_ID,setUser] = useState("");
+    
     const [Vehicle_ID,setVehicle_ID] = useState("");
     const [done,setdone] = useState(false);
     const [errorm,seterrorm] = useState(false);
@@ -40,7 +23,7 @@ export default function UnParkComponent(props){
 
 
     function HandleUnPark(){
-      let prom
+      
         axiosInstance.post('member/exitvehicle/',{
             Member_ID: UID,
             Vehicle_ID: Vehicle_ID,}
@@ -48,7 +31,7 @@ export default function UnParkComponent(props){
         .then(res =>{
           if(res.status === 200)
             setdone(true)
-            setemess("SUCCESS")
+            setemess(res.data)
           }
         ).catch(error =>{
             seterrorm(true)
@@ -79,7 +62,7 @@ export default function UnParkComponent(props){
       else if(done){
         return (
         <Button style = {{width: 1000 ,  margin:5,backgroundColor:green[500]}} variant="contained"  onClick={() => {setdone(false)}}>
-                Vehicle Unparked ...OK 
+                Vehicle Unparked ...OK   | COST {emss}
         </Button>
 
         

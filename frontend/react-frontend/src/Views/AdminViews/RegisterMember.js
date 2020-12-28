@@ -60,7 +60,7 @@ export default function RegisterMember(props){
     const [errorState,SeterrorState] = useState(true);
     const [errorState2,SeterrorState2] = useState(true);
     const [done,isdone] = useState(false)
-    
+    const [errorm,setm] = useState("")
 
     function alphanumeric(value){
        if(value.match(/((^[0-9]+[a-z]+)|(^[a-z]+[0-9]+))+[0-9a-z]$/i)){
@@ -131,7 +131,7 @@ export default function RegisterMember(props){
                  }
             }
         ).catch (error => {
-            
+            setm("Invalid User Details")
           })
     }
 
@@ -207,6 +207,10 @@ export default function RegisterMember(props){
 
             {SubmitButtonDisplay()}
 
+            <Typography variant='h4' color="error" style = {{width: 10000 ,  margin:10}}>
+            {errorm}
+            </Typography>
+            
             
                 
         </Box>

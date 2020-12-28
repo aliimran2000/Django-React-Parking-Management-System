@@ -74,7 +74,8 @@ class registerMemberApiView(APIView):
     permission_classes = (permissions.IsAuthenticated,)
     
     def post(self, request, format='json'):
-
+        
+        
         email = request.data['email']
         username = request.data['username']
         password = request.data['password']
