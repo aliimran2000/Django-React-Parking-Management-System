@@ -67,6 +67,23 @@ export default function LoginPage() {
   }
 
 
+  function HandleVerify(){
+      
+    axiosInstance.post('member/verifycredentials/',{
+        username: username,
+        password: password,}
+    )
+    .then(
+      result=>{
+        if(result.status === 200)
+
+            axiosInstance.post('member/getdetails/',{Member_ID:result.data}).then(result1=>{
+              sessionStorage.setItem("Mem_ID",result.data)
+            })
+             
+        }
+    )
+}
   function HandleLogin(event) {
     
    axiosInstance.post('/member/login/', {
@@ -80,9 +97,11 @@ export default function LoginPage() {
 
               if(result.status === 200){
                 sessionStorage.setItem("USER_NAME",username)
-                console.log(localStorage.getItem('access_token'))
-                SetType()
+                
+                SetType().then(()=>{HandleVerify()})
                }
+
+               
           }
       ).catch (error => {
         setWrongPass(true)

@@ -31,6 +31,21 @@ export default function ParkingDisplay(props){
         })
     }
 
+    function getmyparkedvehicles(){
+        axiosInstance.post('member/getparkedvehiclesdetail/').then(
+            result=>{
+                //console.log(result.data)
+                setParkData(result.data.parkedVehicles)
+                
+            
+            }
+        ).catch(error=>{
+            console.log(error)
+        })
+    }
+
+
+
     
     
 
@@ -49,12 +64,21 @@ export default function ParkingDisplay(props){
     function displayparkedcars(){
         
         if(ParkData.length == 0){
+            if(!props.my){
             return ( <Box >
                 <Typography variant="h3" align="center" color="primary">
                     LOT EMPTY
                 </Typography>
             </Box>
             )
+        }else {
+            return ( <Box >
+                <Typography variant="h3" align="center" color="primary">
+                    No Car Parked :)
+                </Typography>
+            </Box>
+            )
+        }
         }
         return (
             <Box >
@@ -67,7 +91,9 @@ export default function ParkingDisplay(props){
         )
     }
     
+    if(!props.my){
     return(
+        
         <div>
             
            
@@ -87,7 +113,30 @@ export default function ParkingDisplay(props){
            
             
         </div>
-    )
+    )}
+    else{
+        return(
+        
+            <div>
+                
+               
+              
+                    
+                    <Grid align="center">
+                    <Button style = {{width: 400 ,  margin:10 ,backgroundColor:green[300]}} variant="contained" onClick={()=>{getmyparkedvehicles()}}>
+                        Refresh Parking
+                    </Button>
+                    </Grid>
+                    <Grid>
+                        {displayparkedcars()}
+                    </Grid>
+    
+                    
+               
+                
+            </div>
+        )
+    }
 
 };
 

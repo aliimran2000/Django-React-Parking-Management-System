@@ -16,7 +16,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ReceiptIcon from '@material-ui/icons/Receipt';
-import LocalAtmIcon from '@material-ui/icons/LocalAtm';
+import axiosInstance from '../Axios/AxiosInstance'
 import DriveEtaIcon from '@material-ui/icons/DriveEta';
 import HowToRegIcon from '@material-ui/icons/HowToReg';
 import { green,red,blue } from '@material-ui/core/colors';
@@ -87,6 +87,13 @@ export default function PersistentDrawerLeft(props) {
 
 
   
+  function Logout(){
+    axiosInstance.post('logout/')
+    sessionStorage.clear()
+    localStorage.clear()
+    window.location.href = "/"
+  }
+  
 
 
   const handleDrawerOpen = () => {
@@ -152,8 +159,8 @@ export default function PersistentDrawerLeft(props) {
         </ListItem>
         <Divider />
         <ListItem button style={{color : green[500] , fontSize: 100 }}>
-        <ListItemIcon><PowerSettingsNewIcon /></ListItemIcon>
-        <ListItemText primary="LOGOUT" />
+        <ListItemIcon><PowerSettingsNewIcon /></ListItemIcon >
+        <ListItemText onClick={() => {Logout()}} primary="LOGOUT" />
         </ListItem>
         
         </List>
